@@ -304,27 +304,27 @@ header h1 {
   color: var(--mauchuchinh);
 }
 
-/* --- Danh mục món siêu gọn --- */
+/* --- Danh mục món --- */
 .order-categories {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 4px 6px;         /* 🔹 khoảng cách dọc 4px, ngang 6px */
-  margin: 6px 0 10px;
+  gap: 8px;
+  padding: 10px 12px;
+  background: white;
 }
 
 .danh-muc-btn {
   background: var(--nutnennhat);
   color: var(--mauchuchinh);
   border: none;
-  border-radius: 6px;    /* 🔹 bo nhẹ, cảm giác app hơn */
-  padding: 4px 10px;     /* 🔹 nhỏ gọn hơn trước */
+  border-radius: 8px;
+  padding: 6px 12px;           /* 🔹 giảm padding */
+  margin: 4px;
   font-weight: 600;
-  font-size: 13px;       /* 🔹 font nhỏ hơn một chút */
+  font-size: 14px;             /* 🔹 nhỏ gọn hơn */
   cursor: pointer;
   transition: all 0.2s ease;
-  line-height: 1.2;
-  white-space: nowrap;   /* tránh xuống dòng chữ */
+  white-space: nowrap;         /* 🔹 tránh xuống dòng */
 }
 
 .danh-muc-btn.active {
@@ -363,24 +363,27 @@ header h1 {
 }
 
 /* --- Nút +/- số lượng --- */
-/* --- Khu vực chọn số lượng --- */
-.mon-qty button {
-  background: var(--nutnennhat);
-  border: none;
+.mon-qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--nenapp);
   border-radius: 8px;
-  padding: 4px 8px;           /* 🔹 nhỏ gọn hơn */
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--mauchuchinh);
-  cursor: pointer;
+  padding: 4px 6px;
 }
 
-.mon-qty span {
-  min-width: 20px;
-  text-align: center;
-  font-weight: 600;
+.mon-qty button {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
   color: var(--mauchuchinh);
-  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 20px;
 }
 
 /* --- Danh sách món đã chọn --- */
