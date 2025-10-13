@@ -168,50 +168,116 @@ function timMon() {
     </div>
   `).join("");
 }
+
 /* ================================
-   🧩 Tự động sắp danh mục cho kín hàng (BlackTea v2)
+   🧩 SẮP XẾP DANH MỤC TỰ ĐỘNG (Cách 2 - robust)
    ================================ */
 
-function sapXepDanhMuc() {
-  const container = document.querySelector('.order-categories');
-  if (!container) return;
+(function(){
+  // Debounce helper
+  function debounce(fn, wait=120){
+    let t;
+    return (...args) => {
+      clearTimeout(t);
+      t = setTimeout(()=>fn(...args), wait);
+    };
+  }
 
-  // Lấy danh sách nút
-  const buttons = Array.from(container.children);
+  // Lấy khoảng gap giữa các item (hỗ trợ gap, columnGap, fallback)
+  function getGap(container){
+    const style = getComputedStyle(container);
+    // modern: columnGap or gap
+    const g1 = parseFloat(style.columnGap || style.getPropertyValue('column-gap') || 0);
+    const g2 = parseFloat(style.gap || style.getPropertyValue('gap') || 0);
+    return (g1 || g2) || 6; // fallback 6px if none
+  }
 
-  // Reset thứ tự về ban đầu (tránh xếp chồng nhiều lần)
-  buttons.forEach(btn => container.appendChild(btn));
+  // Đo width thật sự của phần tử (bao gồm margin left/right)
+  function fullWidth(el){
+    const rect = el.getBoundingClientRect();
+    const s = getComputedStyle(el);
+    const ml = parseFloat(s.marginLeft) || 0;
+    const mr = parseFloat(s.marginRight) || 0;
+    return rect.width + ml + mr;
+  }
 
-  const rowWidth = container.clientWidth;
-  let currentRow = [];
-  let currentWidth = 0;
-  const finalOrder = [];
+  function sapXepDanhMucOnce(){
+    const container = document.querySelector('.order-categories');
+    if (!container) return;
 
-  // Đo chiều rộng thực tế từng nút
-  const widths = buttons.map(btn => btn.offsetWidth + 6); // + gap 6px
+    // Nếu container rỗng chưa render đủ, thử lùi lại chút
+    if (container.children.length === 0) return;
 
-  buttons.forEach((btn, i) => {
-    const w = widths[i];
-    if (currentWidth + w <= rowWidth) {
-      currentRow.push(btn);
-      currentWidth += w;
-    } else {
-      // Khi hàng đầy, thêm hàng đó vào thứ tự cuối cùng
-      finalOrder.push(...currentRow);
-      currentRow = [btn];
-      currentWidth = w;
+    // Lưu thứ tự gốc 1 lần để không phá dữ liệu nguồn
+    if (!container._originalOrder) {
+      container._originalOrder = Array.from(container.children);
     }
-  });
-  // Thêm hàng cuối
-  finalOrder.push(...currentRow);
 
-  // Gắn lại theo thứ tự tối ưu
-  finalOrder.forEach(btn => container.appendChild(btn));
-}
+    // Use original set (in case current DOM was reordered earlier)
+    let buttons = Array.from(container._originalOrder);
 
-// Chạy khi load và khi xoay màn hình / resize
-window.addEventListener('load', sapXepDanhMuc);
-window.addEventListener('resize', () => {
-  clearTimeout(window.__sapxepTimeout);
-  window.__sapxepTimeout = setTimeout(sapXepDanhMuc, 200);
-});
+    // Re-attach each so we measure consistent elements in DOM
+    buttons.forEach(btn => {
+      if (!container.contains(btn)) container.appendChild(btn);
+    });
+
+    // Force a reflow to ensure measurements are correct
+    // (browser will have rendered, but ensure up-to-date)
+    // eslint-disable-next-line no-unused-expressions
+    container.offsetWidth;
+
+    const rowWidth = container.clientWidth; // available width
+    const gap = getGap(container);
+
+    // Measure each button's displayed width
+    const widths = buttons.map(btn => Math.ceil(fullWidth(btn)));
+
+    // Pack rows greedily (first-fit per row)
+    let currentRow = [];
+    let curWidth = 0;
+    const finalOrder = [];
+
+    for (let i = 0; i < buttons.length; i++){
+      const w = widths[i];
+      // if currentRow empty, always put first
+      const addWidth = currentRow.length === 0 ? w : (w + gap);
+      if (curWidth + addWidth <= rowWidth || currentRow.length === 0) {
+        currentRow.push(buttons[i]);
+        curWidth += addWidth;
+      } else {
+        finalOrder.push(...currentRow);
+        currentRow = [buttons[i]];
+        curWidth = w;
+      }
+    }
+    if (currentRow.length) finalOrder.push(...currentRow);
+
+    // Append in final order
+    finalOrder.forEach(btn => container.appendChild(btn));
+  }
+
+  // wrapper that waits for fonts & render then runs
+  function scheduleArrange(){
+    const run = () => {
+      // run a couple times to be safe (fonts, images)
+      sapXepDanhMucOnce();
+      setTimeout(sapXepDanhMucOnce, 80);
+      setTimeout(sapXepDanhMucOnce, 220);
+    };
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(run).catch(run);
+    } else {
+      // fallback
+      setTimeout(run, 50);
+    }
+  }
+
+  // Run on load + resize (debounced)
+  window.addEventListener('load', scheduleArrange);
+  window.addEventListener('orientationchange', scheduleArrange);
+  window.addEventListener('resize', debounce(scheduleArrange, 160));
+  // If your app re-renders category buttons dynamically, call scheduleArrange() after that update.
+  // Expose for manual calls:
+  window.sapXepDanhMuc = scheduleArrange;
+})();
