@@ -1,92 +1,118 @@
 // ================================
-// 🍵 BlackTea POS v2 - Chọn món & giỏ hàng
+// ☕ Giao diện Order món
 // ================================
 
-// Hiển thị danh sách món
-function hienThiDanhSachMon() {
-  const main = document.querySelector(".main-container");
-  main.innerHTML = `
-    <div class="order-header">
-      <button id="btnBack" class="btn-back">⬅</button>
-      <h2>${currentTable.name}</h2>
-    </div>
+// Giả sử biến MENU đã được load từ file menu.js
+// MENU = [{ id, name, price, cat }, ...]
 
-    <div class="order-search">
-      <input type="text" id="timMon" placeholder="Tìm món..." />
-    </div>
+let danhMucHienTai = "Cà phê";
+let gioHang = {};
+let banHienTai = null;
 
-    <div class="order-category">
-      ${[...new Set(MENU.map(m => m.cat))].map(cat => `<button class="cat-btn">${cat}</button>`).join("")}
-    </div>
+// Hàm hiển thị giao diện order
+function hienThiManOrder(tenBan) {
+  banHienTai = tenBan;
+  document.body.innerHTML = `
+    <div class="order-container">
+      <div class="order-header">
+        <div class="order-title">BlackTea <span>${tenBan}</span></div>
+        <button class="btn-close" onclick="troVeManHinhChinh()">×</button>
+      </div>
 
-    <div class="menu-list">
-      ${MENU.map(m => `
-        <div class="menu-row">
-          <div class="menu-left">
-            <div class="menu-name">${m.name}</div>
-            <div class="menu-price">${dinhDangTien(m.price)}đ</div>
-          </div>
-          <div class="qty-controls">
-            <button onclick="giamMon(${m.id})">−</button>
-            <span id="qty-${m.id}">${laySoLuongMon(m.id)}</span>
-            <button onclick="themMon(${m.id})">+</button>
-          </div>
+      <div class="order-search">
+        <input type="text" id="timMonInput" placeholder="Nhập món cần tìm..." oninput="timMon()">
+      </div>
+
+      <div class="order-categories" id="danhMucContainer">
+        ${taoDanhMucHTML()}
+      </div>
+
+      <div class="order-list" id="danhSachMon">
+        ${taoDanhSachMonHTML(danhMucHienTai)}
+      </div>
+
+      <div class="order-footer">
+        <div class="order-total">Tổng: <span id="tongTien">0</span> VND</div>
+        <div class="order-buttons">
+          <button onclick="datLaiDon()">Đặt lại</button>
+          <button class="btn-primary" onclick="luuDon()">Lưu đơn</button>
         </div>
-      `).join("")}
-    </div>
-
-    <div class="cart-summary">
-      <div class="cart-total">Tổng: ${dinhDangTien(tinhTong())}đ</div>
-      <div class="cart-actions">
-        <button class="btn btn-primary">Thanh toán</button>
       </div>
     </div>
   `;
-
-  document.getElementById("btnBack").addEventListener("click", () => {
-    hienThiDanhSachBan();
-  });
 }
 
-// Thêm món
-function themMon(idMon) {
-  const mon = MENU.find(m => m.id === idMon);
-  if (!mon) return;
-  const existing = currentTable.items.find(i => i.id === idMon);
-  if (existing) existing.qty++;
-  else currentTable.items.push({ ...mon, qty: 1 });
-  capNhatGioHang();
+// ====== Các hàm phụ ======
+
+function taoDanhMucHTML() {
+  const danhMuc = [...new Set(MENU.map(m => m.cat))];
+  return danhMuc.map(cat => `
+    <button class="danh-muc-btn ${cat === danhMucHienTai ? 'active' : ''}" onclick="chonDanhMuc('${cat}')">${cat}</button>
+  `).join("");
 }
 
-// Giảm món
-function giamMon(idMon) {
-  const item = currentTable.items.find(i => i.id === idMon);
-  if (!item) return;
-  item.qty--;
-  if (item.qty <= 0) {
-    currentTable.items = currentTable.items.filter(i => i.id !== idMon);
+function taoDanhSachMonHTML(cat) {
+  const ds = MENU.filter(m => m.cat === cat);
+  return ds.map(mon => `
+    <div class="mon-item">
+      <div>
+        <div class="mon-ten">${mon.name}</div>
+        <div class="mon-gia">${mon.price.toLocaleString()} VND</div>
+      </div>
+      <div class="mon-qty">
+        <button onclick="giamMon(${mon.id})">–</button>
+        <span id="soLuong_${mon.id}">${gioHang[mon.id]?.soLuong || 0}</span>
+        <button onclick="tangMon(${mon.id})">+</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function chonDanhMuc(cat) {
+  danhMucHienTai = cat;
+  document.getElementById("danhMucContainer").innerHTML = taoDanhMucHTML();
+  document.getElementById("danhSachMon").innerHTML = taoDanhSachMonHTML(cat);
+}
+
+function tangMon(id) {
+  if (!gioHang[id]) gioHang[id] = { soLuong: 0 };
+  gioHang[id].soLuong++;
+  capNhatSoLuong(id);
+}
+
+function giamMon(id) {
+  if (gioHang[id]?.soLuong > 0) {
+    gioHang[id].soLuong--;
+    if (gioHang[id].soLuong === 0) delete gioHang[id];
+    capNhatSoLuong(id);
   }
-  capNhatGioHang();
 }
 
-// Lấy số lượng món đang có
-function laySoLuongMon(idMon) {
-  const item = currentTable.items.find(i => i.id === idMon);
-  return item ? item.qty : 0;
+function capNhatSoLuong(id) {
+  document.getElementById(`soLuong_${id}`).textContent = gioHang[id]?.soLuong || 0;
+  tinhTongTien();
 }
 
-// Cập nhật giỏ hàng và tổng tiền
-function capNhatGioHang() {
-  luuToanBoDuLieu();
-  hienThiDanhSachMon();
+function tinhTongTien() {
+  let tong = 0;
+  for (const id in gioHang) {
+    const mon = MENU.find(m => m.id == id);
+    tong += mon.price * gioHang[id].soLuong;
+  }
+  document.getElementById("tongTien").textContent = tong.toLocaleString();
 }
 
-// Tính tổng tiền
-function tinhTong() {
-  return currentTable.items.reduce((sum, i) => sum + i.price * i.qty, 0);
+function datLaiDon() {
+  gioHang = {};
+  tinhTongTien();
+  document.querySelectorAll('[id^="soLuong_"]').forEach(el => el.textContent = 0);
 }
 
-// Định dạng tiền
-function dinhDangTien(v) {
-  return v.toLocaleString("vi-VN");
+function luuDon() {
+  alert("Đã lưu đơn cho " + banHienTai + "!");
+  troVeManHinhChinh();
+}
+
+function troVeManHinhChinh() {
+  location.reload(); // tạm thời quay lại màn hình chính
 }
