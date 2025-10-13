@@ -38,7 +38,7 @@ function khoiTaoOrder(loaiKhach) {
   `;
 
   taoDanhMuc();
-  hienThiMonTheoDanhMuc("Tất cả");
+  hienThiMonTheoDanhMuc("");
 
   // ⚡ Gắn sự kiện lại sau khi DOM render
   document.getElementById("btnDatLai").addEventListener("click", datLaiDon);
@@ -49,7 +49,7 @@ function khoiTaoOrder(loaiKhach) {
 // -------------------------------
 // Hiển thị danh mục món
 function taoDanhMuc() {
-  const dsDanhMuc = ["Tất cả", ...new Set(MENU.map((m) => m.cat))];
+  const dsDanhMuc = [ ...new Set(MENU.map((m) => m.cat))];
   const container = document.getElementById("danhMucContainer");
   container.innerHTML = "";
 
@@ -195,4 +195,5 @@ function timMon() {
 function quayLaiTrangChinh() {
   location.reload();
 }
+
 
