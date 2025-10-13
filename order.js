@@ -23,17 +23,15 @@ function khoiTaoOrder(loaiKhach) {
 
       <div class="order-content">
         <div class="order-list" id="dsMon"></div>
-
         <div class="hoa-don-tam empty" id="hoaDonTam">Chưa có món nào</div>
       </div>
 
+      <!-- ⚡ chỉ 1 footer duy nhất -->
       <div class="order-footer">
-        <div class="order-footer-inner">
-          <div class="order-total" id="tongTien">Tổng: 0₫</div>
-          <div class="order-buttons">
-            <button onclick="datLai()">Đặt lại</button>
-            <button class="btn-primary" onclick="luuDon()">Lưu đơn</button>
-          </div>
+        <div class="order-total">Tổng: <span id="tongTien">0đ</span></div>
+        <div class="order-buttons">
+          <button id="btnDatLai">Đặt lại</button>
+          <button id="btnLuuDon" class="btn-primary">Lưu đơn</button>
         </div>
       </div>
     </div>
@@ -41,7 +39,12 @@ function khoiTaoOrder(loaiKhach) {
 
   taoDanhMuc();
   hienThiMonTheoDanhMuc("Tất cả");
+
+  // ⚡ Gắn sự kiện lại sau khi DOM render
+  document.getElementById("btnDatLai").addEventListener("click", datLaiDon);
+  document.getElementById("btnLuuDon").addEventListener("click", luuDon);
 }
+
 
 // -------------------------------
 // Hiển thị danh mục món
@@ -135,7 +138,7 @@ function capNhatHoaDon() {
 
   // Cập nhật tổng tiền
   const tong = hoaDonTam.reduce((t, m) => t + m.price * m.soluong, 0);
-  document.getElementById("tongTien").textContent = `Tổng: ${tong.toLocaleString()}₫`;
+  document.getElementById("tongTien").textContent = `${tong.toLocaleString()}₫`;
 
   // Cập nhật lại số lượng hiển thị
   hoaDonTam.forEach((m) => {
@@ -192,3 +195,4 @@ function timMon() {
 function quayLaiTrangChinh() {
   location.reload();
 }
+
