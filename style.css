@@ -311,12 +311,11 @@ header h1 {
 
 /* --- Danh mục món --- */
 .order-categories {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 6px;              /* sát nhau hơn theo hàng và cột */
+  display: grid;  
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 4px 6px;
   padding: 8px 8px;
   background: white;
-  justify-content: flex-start;
 }
 
 .danh-muc-btn {
@@ -415,7 +414,7 @@ header h1 {
   margin: 10px 16px 4px;   /*  gkhoảng cách dưới */
   padding: 10px 14px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  height: 140px;           /*  chiều cao cố định (kể cả trống) */
+  height: 110px;           /*  chiều cao cố định (kể cả trống) */
   overflow-y: auto;
   scroll-behavior: smooth;
   display: flex;
