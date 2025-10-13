@@ -1,17 +1,20 @@
 // ================================
-// ☕ Giao diện Order món
+// ☕ Giao diện Order món - BlackTea v2.0
 // ================================
 
-// Giả sử biến MENU đã được load từ file menu.js
+// MENU được load từ menu.js
 // MENU = [{ id, name, price, cat }, ...]
 
 let danhMucHienTai = "Cà phê";
 let gioHang = {};
 let banHienTai = null;
 
-// Hàm hiển thị giao diện order
+// -----------------------------
+// Hiển thị giao diện order món
+// -----------------------------
 function hienThiManOrder(tenBan) {
   banHienTai = tenBan;
+
   document.body.innerHTML = `
     <div class="order-container">
       <div class="order-header">
@@ -31,8 +34,11 @@ function hienThiManOrder(tenBan) {
         ${taoDanhSachMonHTML(danhMucHienTai)}
       </div>
 
+      <div class="hoa-don-tam" id="hoaDonTam">
+        <p style="color:#999;font-size:14px;">Chưa chọn món nào</p>
+      </div>
+
       <div class="order-footer">
-        <div class="order-total">Tổng: <span id="tongTien">0</span> VND</div>
         <div class="order-buttons">
           <button onclick="datLaiDon()">Đặt lại</button>
           <button class="btn-primary" onclick="luuDon()">Lưu đơn</button>
@@ -42,8 +48,9 @@ function hienThiManOrder(tenBan) {
   `;
 }
 
-// ====== Các hàm phụ ======
-
+// -----------------------------
+// Các hàm tạo HTML
+// -----------------------------
 function taoDanhMucHTML() {
   const danhMuc = [...new Set(MENU.map(m => m.cat))];
   return danhMuc.map(cat => `
@@ -68,6 +75,9 @@ function taoDanhSachMonHTML(cat) {
   `).join("");
 }
 
+// -----------------------------
+// Chức năng chính
+// -----------------------------
 function chonDanhMuc(cat) {
   danhMucHienTai = cat;
   document.getElementById("danhMucContainer").innerHTML = taoDanhMucHTML();
@@ -90,22 +100,40 @@ function giamMon(id) {
 
 function capNhatSoLuong(id) {
   document.getElementById(`soLuong_${id}`).textContent = gioHang[id]?.soLuong || 0;
-  tinhTongTien();
+  hoaDonTam(); // cập nhật danh sách món đã chọn
 }
 
-function tinhTongTien() {
-  let tong = 0;
-  for (const id in gioHang) {
-    const mon = MENU.find(m => m.id == id);
-    tong += mon.price * gioHang[id].soLuong;
+// -----------------------------
+// Hiển thị danh sách món đã chọn
+// -----------------------------
+function hoaDonTam() {
+  const khungHoaDon = document.getElementById("hoaDonTam");
+  if (!khungHoaDon) return;
+
+  const monDaChon = Object.entries(gioHang);
+  if (monDaChon.length === 0) {
+    khungHoaDon.innerHTML = `<p style="color:#999;font-size:14px;">Chưa chọn món nào</p>`;
+    return;
   }
-  document.getElementById("tongTien").textContent = tong.toLocaleString();
+
+  khungHoaDon.innerHTML = monDaChon.map(([id, item]) => {
+    const mon = MENU.find(m => m.id == id);
+    return `
+      <div class="hoa-don-item">
+        <span>${mon.name}</span>
+        <span>${item.soLuong} × ${mon.price.toLocaleString()}</span>
+      </div>
+    `;
+  }).join("");
 }
 
+// -----------------------------
+// Các nút điều khiển đơn
+// -----------------------------
 function datLaiDon() {
   gioHang = {};
-  tinhTongTien();
   document.querySelectorAll('[id^="soLuong_"]').forEach(el => el.textContent = 0);
+  hoaDonTam();
 }
 
 function luuDon() {
@@ -115,4 +143,25 @@ function luuDon() {
 
 function troVeManHinhChinh() {
   location.reload(); // tạm thời quay lại màn hình chính
+}
+
+// -----------------------------
+// Tìm món trong danh sách
+// -----------------------------
+function timMon() {
+  const tuKhoa = document.getElementById("timMonInput").value.toLowerCase();
+  const ds = MENU.filter(m => m.cat === danhMucHienTai && m.name.toLowerCase().includes(tuKhoa));
+  document.getElementById("danhSachMon").innerHTML = ds.map(mon => `
+    <div class="mon-item">
+      <div>
+        <div class="mon-ten">${mon.name}</div>
+        <div class="mon-gia">${mon.price.toLocaleString()} VND</div>
+      </div>
+      <div class="mon-qty">
+        <button onclick="giamMon(${mon.id})">–</button>
+        <span id="soLuong_${mon.id}">${gioHang[mon.id]?.soLuong || 0}</span>
+        <button onclick="tangMon(${mon.id})">+</button>
+      </div>
+    </div>
+  `).join("");
 }
