@@ -291,14 +291,14 @@ header h1 {
 
 /* --- Ô tìm kiếm --- */
 .order-search {
-  padding: 10px 16px;
+  padding: 3px 10px;
   background: white;
   flex-shrink: 0;
 }
 
 .order-search input {
   width: 100%;
-  padding: 10px 40px 10px 36px;
+  padding: 9px 36px 9px 34px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background: var(--nenapp)
@@ -307,6 +307,7 @@ header h1 {
   background-size: 16px;
   font-size: 15px;
   color: var(--mauchuchinh);
+  box-sizing: border-box;
 }
 
 /* --- Danh mục món --- */
@@ -314,7 +315,7 @@ header h1 {
   display: grid;  
   grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   gap: 4px 6px;
-  padding: 8px 8px;
+  padding: 4px 8px;
   background: white;
 }
 
