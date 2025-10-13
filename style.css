@@ -349,7 +349,8 @@ header h1 {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: 0 0 57px;
+  padding: 0 0 160px;
+  overflow: hidden;
 }
 
 /* --- Danh sách món --- */
@@ -359,6 +360,7 @@ header h1 {
   padding: 12px 16px;
   background: var(--nenapp);
   scroll-behavior: smooth;
+  margin-bottom: 8px;
 }
 
 .mon-item {
@@ -407,24 +409,28 @@ header h1 {
   line-height: 20px;
 }
 
-/* --- Hóa đơn tạm (cố định chiều cao, cuộn khi nhiều món) --- */
+/* --- Hóa đơn tạm --- */
 .hoa-don-tam {
   background: #fff;
   border-radius: 10px;
-  margin: 10px 16px 4px;   /*  gkhoảng cách dưới */
+  margin: 0 16px 8px;
   padding: 10px 14px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  height: 110px;           /*  chiều cao cố định (kể cả trống) */
+
+  height: 120px;          /* ✅ luôn cố định độ cao (kể cả khi trống) */
+  max-height: 120px;      /* cho phép cuộn nếu vượt quá */
   overflow-y: auto;
   scroll-behavior: smooth;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   font-size: 14px;
   color: var(--mauchuchinh);
+  flex-shrink: 0;          /* không bị ép co lại */
 }
 
-
+/* --- Khi chưa có món --- */
 .hoa-don-tam.empty {
   align-items: center;
   justify-content: center;
