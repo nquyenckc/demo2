@@ -349,7 +349,7 @@ header h1 {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: 0 0 160px;
+  padding: 0 0 70px;
   overflow: hidden;
 }
 
@@ -413,7 +413,7 @@ header h1 {
 .hoa-don-tam {
   background: #fff;
   border-radius: 10px;
-  margin: 0 16px 8px;
+  margin: 0 16px 4px;
   padding: 10px 14px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 
