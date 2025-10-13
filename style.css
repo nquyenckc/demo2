@@ -62,7 +62,7 @@ header h1 {
   display: flex;
   gap: 10px;
   justify-content: center;
-  margin: 10px 0 16px;    /* thu nhỏ khoảng cách trên/dưới */
+  margin: 10px 0 16px;
 }
 
 .btn {
@@ -71,28 +71,26 @@ header h1 {
   font-family: var(--fontchinh);
   font-size: 16px;
   font-weight: 600;
-  padding: 12px 20px;     /* giảm padding => nút nhỏ gọn hơn */
+  padding: 12px 20px;
   cursor: pointer;
   transition: all 0.2s ease;
   flex: 1;
-  max-width: 200px;       /* vừa phải với màn hình điện thoại */
-}
-
-.btn-primary {
-  background: var(--mauchinh);
+  max-width: 200px;
   color: #fff;
+  background: var(--mauchinh); /* ✅ luôn theo màu chủ đạo */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.btn-primary:hover {
-  background: #3a5b96;
+.btn:hover {
+  background: #3a5b96; /* hơi đậm hơn 1 chút khi hover */
   transform: translateY(-1px);
 }
 
-.btn-primary:active {
+.btn:active {
   transform: scale(0.97);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
+
 
 
 /* === Danh sách bàn === */
