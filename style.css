@@ -398,28 +398,52 @@ header h1 {
   line-height: 20px;
 }
 
-/* --- Hóa đơn tạm --- */
+/* --- Hóa đơn tạm (luôn cố định chiều cao ~4 món, cuộn khi vượt quá) --- */
 .hoa-don-tam {
   background: #fff;
   border-radius: 10px;
   margin: 10px 16px;
   padding: 10px 14px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  max-height: 150px; /* cuộn nếu nhiều món */
+  height: 135px;           /* ⚡ luôn giữ chiều cao ổn định (kể cả khi chưa có món) */
+  max-height: 135px;
   overflow-y: auto;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: var(--mauchuchinh);
+  font-size: 14px;
 }
 
+/* --- Khi chưa có món nào --- */
+.hoa-don-tam.empty {
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-style: italic;
+}
+
+/* --- Item trong hóa đơn tạm --- */
 .hoa-don-item {
   display: flex;
   justify-content: space-between;
-  padding: 4px 0;
-  font-size: 14px;
-  color: var(--mauchuchinh);
+  padding: 6px 0;
   border-bottom: 1px solid #f1f1f1;
 }
 
 .hoa-don-item:last-child {
   border-bottom: none;
+}
+
+/* --- Thanh cuộn đẹp hơn --- */
+.hoa-don-tam::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hoa-don-tam::-webkit-scrollbar-thumb {
+  background-color: #d0d6e2;
+  border-radius: 4px;
 }
 
 /* --- Footer (nút Lưu / Đặt lại) --- */
