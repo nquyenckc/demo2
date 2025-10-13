@@ -16,12 +16,13 @@ function hienThiManOrder(tenBan) {
   banHienTai = tenBan;
 
   document.body.innerHTML = `
-    <div class="order-container">
-      <div class="order-header">
-        <div class="order-title">BlackTea <span>${tenBan}</span></div>
-        <button class="btn-close" onclick="troVeManHinhChinh()">×</button>
-      </div>
+  <div class="order-container">
+    <div class="order-header">
+      <div class="order-title">BlackTea <span>${tenBan}</span></div>
+      <button class="btn-close" onclick="troVeManHinhChinh()">×</button>
+    </div>
 
+    <div class="order-content">
       <div class="order-search">
         <input type="text" id="timMonInput" placeholder="Nhập món cần tìm..." oninput="timMon()">
       </div>
@@ -37,15 +38,17 @@ function hienThiManOrder(tenBan) {
       <div class="hoa-don-tam" id="hoaDonTam">
         <p style="color:#999;font-size:14px;">Chưa chọn món nào</p>
       </div>
+    </div>
 
-      <div class="order-footer">
-        <div class="order-buttons">
-          <button onclick="datLaiDon()">Đặt lại</button>
-          <button class="btn-primary" onclick="luuDon()">Lưu đơn</button>
-        </div>
+    <div class="order-footer">
+      <div class="order-buttons">
+        <button onclick="datLaiDon()">Đặt lại</button>
+        <button class="btn-primary" onclick="luuDon()">Lưu đơn</button>
       </div>
     </div>
-  `;
+  </div>
+`;
+
 }
 
 // -----------------------------

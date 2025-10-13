@@ -250,15 +250,16 @@ header h1 {
 }
 
 /* ================================
-   ☕ ORDER MÓN - BlackTea v2.0
+   ☕ ORDER MÓN - BlackTea v2.1
    ================================ */
 
 .order-container {
   background: var(--nenapp);
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   font-family: var(--fontchu);
+  overflow: hidden; /* tránh cuộn toàn trang */
 }
 
 /* --- Header --- */
@@ -272,6 +273,7 @@ header h1 {
   font-weight: 600;
   font-size: 18px;
   border-radius: 0 0 10px 10px;
+  flex-shrink: 0;
 }
 
 .order-header span {
@@ -291,6 +293,7 @@ header h1 {
 .order-search {
   padding: 10px 16px;
   background: white;
+  flex-shrink: 0;
 }
 
 .order-search input {
@@ -298,7 +301,9 @@ header h1 {
   padding: 10px 40px 10px 36px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  background: var(--nenapp) url('https://cdn-icons-png.flaticon.com/512/149/149852.png') no-repeat 10px center;
+  background: var(--nenapp)
+    url('https://cdn-icons-png.flaticon.com/512/149/149852.png') no-repeat 10px
+    center;
   background-size: 16px;
   font-size: 15px;
   color: var(--mauchuchinh);
@@ -308,9 +313,10 @@ header h1 {
 .order-categories {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  padding: 10px 12px;
+  gap: 4px;
+  padding: 8px 10px;
   background: white;
+  flex-shrink: 0;
 }
 
 .danh-muc-btn {
@@ -318,13 +324,12 @@ header h1 {
   color: var(--mauchuchinh);
   border: none;
   border-radius: 8px;
-  padding: 6px 12px;           /* 🔹 giảm padding */
-  margin: 4px;
+  padding: 4px 10px;
   font-weight: 600;
-  font-size: 14px;             /* 🔹 nhỏ gọn hơn */
+  font-size: 13px;
   cursor: pointer;
   transition: all 0.2s ease;
-  white-space: nowrap;         /* 🔹 tránh xuống dòng */
+  white-space: nowrap;
 }
 
 .danh-muc-btn.active {
@@ -332,9 +337,16 @@ header h1 {
   color: white;
 }
 
+/* --- Khu vực chính cuộn được --- */
+.order-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 90px; /* chừa chỗ cho footer */
+}
+
 /* --- Danh sách món --- */
 .order-list {
-  flex: 1;
+  max-height: 250px; /* hiển thị khoảng 5 món */
   overflow-y: auto;
   padding: 12px 16px;
   background: var(--nenapp);
@@ -346,19 +358,19 @@ header h1 {
   align-items: center;
   background: white;
   border-radius: 12px;
-  padding: 12px 14px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .mon-ten {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   color: var(--mauchuchinh);
 }
 
 .mon-gia {
-  font-size: 14px;
+  font-size: 13px;
   color: #666;
 }
 
@@ -386,19 +398,21 @@ header h1 {
   line-height: 20px;
 }
 
-/* --- Danh sách món đã chọn --- */
+/* --- Hóa đơn tạm --- */
 .hoa-don-tam {
   background: #fff;
   border-radius: 10px;
   margin: 10px 16px;
   padding: 10px 14px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  max-height: 150px; /* cuộn nếu nhiều món */
+  overflow-y: auto;
 }
 
 .hoa-don-item {
   display: flex;
   justify-content: space-between;
-  padding: 6px 0;
+  padding: 4px 0;
   font-size: 14px;
   color: var(--mauchuchinh);
   border-bottom: 1px solid #f1f1f1;
@@ -410,10 +424,15 @@ header h1 {
 
 /* --- Footer (nút Lưu / Đặt lại) --- */
 .order-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background: white;
   padding: 12px 16px;
   border-top: 1px solid #eee;
   border-radius: 10px 10px 0 0;
+  z-index: 10;
 }
 
 .order-buttons {
@@ -447,25 +466,14 @@ header h1 {
   background: #3a5590;
 }
 
-/* --- Danh sách món (cuộn khi quá dài) --- */
-.order-list {
-  max-height: 330px;        /* ~5 món vừa đủ, tuỳ chỉnh theo chiều cao mỗi dòng */
-  overflow-y: auto;
-  padding-right: 6px;       /* tránh che chữ khi có thanh cuộn */
-  margin-bottom: 10px;
-  scroll-behavior: smooth;
+/* --- Thanh cuộn đẹp hơn --- */
+.order-list::-webkit-scrollbar,
+.hoa-don-tam::-webkit-scrollbar {
+  width: 5px;
 }
 
-/* --- Tuỳ chỉnh thanh cuộn cho đẹp hơn --- */
-.order-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.order-list::-webkit-scrollbar-thumb {
+.order-list::-webkit-scrollbar-thumb,
+.hoa-don-tam::-webkit-scrollbar-thumb {
   background-color: #d0d6e2;
   border-radius: 4px;
-}
-
-.order-list::-webkit-scrollbar-thumb:hover {
-  background-color: #b5bed1;
 }
