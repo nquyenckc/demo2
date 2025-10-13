@@ -109,7 +109,7 @@ header h1 {
 }
 
 /* ================================
-   🪑 POPUP CHỌN BÀN - BlackTea v2.0
+   🪑 POPUP CHỌN BÀN - Final layout
    ================================ */
 
 .popup-overlay {
@@ -147,16 +147,14 @@ header h1 {
   font-size: 14px;
   color: var(--mauchuchinh);
   font-weight: 600;
-  text-align: center;
-  margin: 0 auto;
-  padding: 0 6px;
+  white-space: nowrap; /* tránh xuống dòng chữ "Bàn tường" */
 }
 
 /* --- Canh giữa các nhóm ngang --- */
 .popup-table .group {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* không xuống dòng */
   gap: 10px;
   margin-top: 8px;
 }
@@ -176,15 +174,17 @@ header h1 {
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 10px;
+  min-width: 0; /* tránh đẩy khung rộng quá */
 }
 
 .table-col legend {
   font-size: 13px;
   color: var(--mauchuchinh);
   font-weight: 600;
+  white-space: nowrap; /* giữ legend trên một dòng */
 }
 
-/* --- Nút bàn (to hơn, bo mềm hơn) --- */
+/* --- Nút bàn (to hơn, full chiều ngang nhóm) --- */
 .ban-btn {
   background-color: var(--nutnennhat);
   color: var(--mauchuchinh);
@@ -194,8 +194,10 @@ header h1 {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 70px;              /* tăng chiều rộng */
+  width: 100%;              /* giãn full cột */
+  max-width: 85px;          /* nhưng không vượt quá khung */
   font-size: 15px;
+  text-align: center;
 }
 
 .ban-btn.active {
@@ -219,7 +221,6 @@ header h1 {
   gap: 10px;
   margin-top: 16px;
   padding-top: 8px;
-  border-top: 1px solid #eee;
 }
 
 .btn-cancel,
