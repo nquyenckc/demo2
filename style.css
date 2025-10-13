@@ -390,25 +390,38 @@ header h1 {
 .mon-qty {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: var(--nenapp);
+  gap: 6px;                    
+  background: transparent;    
   border-radius: 8px;
-  padding: 4px 6px;
+  padding: 2px 4px;           
 }
 
 .mon-qty button {
-  background: white;
-  border: 1px solid #ccc;
-  padding: 4px 8px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bold;
+  background: var(--nutnennhat);  
+  border: none;                   
+  border-radius: 8px;
+  width: 26px;                    
+  height: 26px;
+  font-size: 16px;
+  font-weight: 700;
   color: var(--mauchuchinh);
-  width: 30px;
-  height: 30px;
-  line-height: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
+
+.mon-qty button:hover {
+  background: var(--mauchinh);
+  color: #fff;                    
+}
+
+.mon-qty span {
+  min-width: 20px;                
+  text-align: center;
+  font-weight: 600;
+  color: var(--mauchuchinh);
+}
+
 
 /* --- Hóa đơn tạm --- */
 .hoa-don-tam {
