@@ -313,29 +313,36 @@ header h1 {
 .order-categories {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 4px 6px;              /* sát nhau hơn theo hàng và cột */
   padding: 8px 10px;
   background: white;
-  flex-shrink: 0;
+  justify-content: flex-start;
 }
 
 .danh-muc-btn {
-  background: var(--nutnennhat);
+  background: #ffffff;        /* nền trắng pha xanh nhạt */
   color: var(--mauchuchinh);
-  border: none;
+  border: 1px solid #d6def3;  /* viền xanh nhạt hơn */
   border-radius: 8px;
-  padding: 4px 10px;
+  padding: 6px 14px;          /* to hơn nhẹ cho dễ bấm */
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14.5px;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-.danh-muc-btn.active {
-  background: var(--mauchinh);
-  color: white;
+.danh-muc-btn:hover {
+  background: #e9edfb;        /* hover nhẹ màu xanh tinh tế */
 }
+
+/* 🔹 Khi nút được chọn (active) */
+.danh-muc-btn.active {
+  background: var(--mauchinh);  /* màu chính */
+  color: white;
+  border: 1px solid var(--mauchinh);
+}
+
 
 /* --- Khu vực chính (cuộn được) --- */
 .order-content {
