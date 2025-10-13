@@ -107,3 +107,141 @@ header h1 {
   font-size: 15px;
   margin-top: 40px;
 }
+
+/* ================================
+   🪑 POPUP CHỌN BÀN - BlackTea v2.0
+   ================================ */
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-table {
+  background: #fff;
+  padding: 24px 20px;
+  border-radius: 14px;
+  width: 92%;
+  max-width: 520px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* --- Nhóm bàn ngang (Lầu + Ngoài trời) --- */
+.popup-table fieldset {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-align: center;
+}
+
+.popup-table legend {
+  font-size: 14px;
+  color: var(--mauchuchinh);
+  font-weight: 600;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0 6px;
+}
+
+/* --- Canh giữa các nhóm ngang --- */
+.popup-table .group {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* --- Hàng 3 nhóm song song (Tường / Giữa / Nệm) --- */
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.table-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.table-col legend {
+  font-size: 13px;
+  color: var(--mauchuchinh);
+  font-weight: 600;
+}
+
+/* --- Nút bàn (to hơn, bo mềm hơn) --- */
+.ban-btn {
+  background-color: var(--nutnennhat);
+  color: var(--mauchuchinh);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 70px;              /* tăng chiều rộng */
+  font-size: 15px;
+}
+
+.ban-btn.active {
+  background-color: var(--mauchinh);
+  color: #fff;
+}
+
+/* --- Nhóm dọc (T1–T4, G1–G4, N1–N4) --- */
+.table-col .group-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* --- Nút hành động --- */
+.popup-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+}
+
+.btn-cancel,
+.btn-primary {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.btn-cancel {
+  background: #f1f1f1;
+  color: #333;
+}
+
+.btn-primary {
+  background-color: var(--mauchinh);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #3a5590;
+}
