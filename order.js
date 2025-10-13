@@ -168,3 +168,50 @@ function timMon() {
     </div>
   `).join("");
 }
+/* ================================
+   🧩 Tự động sắp danh mục cho kín hàng (BlackTea v2)
+   ================================ */
+
+function sapXepDanhMuc() {
+  const container = document.querySelector('.order-categories');
+  if (!container) return;
+
+  // Lấy danh sách nút
+  const buttons = Array.from(container.children);
+
+  // Reset thứ tự về ban đầu (tránh xếp chồng nhiều lần)
+  buttons.forEach(btn => container.appendChild(btn));
+
+  const rowWidth = container.clientWidth;
+  let currentRow = [];
+  let currentWidth = 0;
+  const finalOrder = [];
+
+  // Đo chiều rộng thực tế từng nút
+  const widths = buttons.map(btn => btn.offsetWidth + 6); // + gap 6px
+
+  buttons.forEach((btn, i) => {
+    const w = widths[i];
+    if (currentWidth + w <= rowWidth) {
+      currentRow.push(btn);
+      currentWidth += w;
+    } else {
+      // Khi hàng đầy, thêm hàng đó vào thứ tự cuối cùng
+      finalOrder.push(...currentRow);
+      currentRow = [btn];
+      currentWidth = w;
+    }
+  });
+  // Thêm hàng cuối
+  finalOrder.push(...currentRow);
+
+  // Gắn lại theo thứ tự tối ưu
+  finalOrder.forEach(btn => container.appendChild(btn));
+}
+
+// Chạy khi load và khi xoay màn hình / resize
+window.addEventListener('load', sapXepDanhMuc);
+window.addEventListener('resize', () => {
+  clearTimeout(window.__sapxepTimeout);
+  window.__sapxepTimeout = setTimeout(sapXepDanhMuc, 200);
+});
