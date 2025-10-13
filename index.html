@@ -16,16 +16,19 @@
   </header>
 
   <main class="main-container">
-    <div class="btn-group">
-      <button class="btn btn-primary">Khách mang đi</button>
-      <button class="btn btn-primary">Khách ghé quán</button>
-    </div>
+  <div class="btn-group">
+    <button class="btn btn-primary" id="btn-takeaway">Khách mang đi</button>
+    <button class="btn btn-primary" id="btn-dinein">Khách ghé quán</button>
+  </div>
 
-    <div class="table-list">
-      <!-- Danh sách bàn sẽ hiển thị ở đây -->
-      <p class="empty-state">Chưa có đơn hàng nào</p>
-    </div>
-  </main>
+  <div class="table-list">
+    <p class="empty-state">Chưa có đơn hàng nào</p>
+  </div>
+
+  <!-- ✅ Thêm vùng gọi món (ẩn trước) -->
+  <div id="order-container" style="display:none;"></div>
+</main>
+
   <script src="order.js"></script>
   <script src="menu.js"></script>
   <script src="app.js"></script>
