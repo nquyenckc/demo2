@@ -314,7 +314,7 @@ header h1 {
   display: flex;
   flex-wrap: wrap;
   gap: 4px 6px;              /* sát nhau hơn theo hàng và cột */
-  padding: 8px 10px;
+  padding: 8px 8px;
   background: white;
   justify-content: flex-start;
 }
@@ -324,9 +324,9 @@ header h1 {
   color: var(--mauchuchinh);
   border: 1px solid #d6def3;  /* viền xanh nhạt hơn */
   border-radius: 8px;
-  padding: 6px 14px;          /* to hơn nhẹ cho dễ bấm */
+  padding: 6px 12px;          /* to hơn nhẹ cho dễ bấm */
   font-weight: 600;
-  font-size: 14.5px;
+  font-size: 13.5px;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
