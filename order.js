@@ -62,21 +62,10 @@ function khoiTaoOrder(loaiKhach) {
 }
 
 // -------------------------------
-// Danh mục
-function taoDanhMuc() {
+/function taoDanhMuc() {
   const dsDanhMuc = [...new Set(MENU.map((m) => m.cat))];
   const container = document.getElementById("danhMucContainer");
   container.innerHTML = "";
-
-  const btnAll = document.createElement("button");
-  btnAll.textContent = "Tất cả";
-  btnAll.className = "danh-muc-btn active";
-  btnAll.onclick = () => {
-    document.querySelectorAll(".danh-muc-btn").forEach(b => b.classList.remove("active"));
-    btnAll.classList.add("active");
-    hienThiMonTheoDanhMuc("");
-  };
-  container.appendChild(btnAll);
 
   dsDanhMuc.forEach((ten) => {
     const btn = document.createElement("button");
