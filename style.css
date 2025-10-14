@@ -398,7 +398,7 @@ header h1 {
 }
 
 .mon-qty button {
-  background: var(--nutnennhat);
+  background-color: var(--nutnennhat);
   border: none;
   border-radius: 6px;
   width: 22px;
@@ -408,14 +408,31 @@ header h1 {
   color: var(--mauchuchinh);
   line-height: 1;
   cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.1s ease; /* 🎯 chỉ chuyển nền, không động bo góc */
-  overflow: hidden;       /* 🔹 đảm bảo màu hover không “vuông” */
+  position: relative;
+  overflow: hidden; /* 🩵 ép mọi thứ bên trong bo góc */
+  z-index: 0;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.mon-qty button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--mauchinh);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: -1;
+}
+
+.mon-qty button:hover::before,
+.mon-qty button:active::before {
+  opacity: 1;
 }
 
 .mon-qty button:hover,
 .mon-qty button:active {
-  background: var(--mauchinh);
-  color: #fff;
+  color: #fff; /* chỉ đổi chữ, nền do ::before xử lý */
 }
 
 .mon-qty span {
