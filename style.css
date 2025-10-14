@@ -398,22 +398,24 @@ header h1 {
 }
 
 .mon-qty button {
-  background: var(--nutnennhat);  
-  border: none;                   
-  border-radius: 8px;
-  width: 26px;                    
-  height: 26px;
-  font-size: 16px;
+  background: var(--nutnennhat);
+  border: none;
+  border-radius: 6px;
+  width: 22px;
+  height: 22px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--mauchuchinh);
   line-height: 1;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.15s ease, transform 0.1s ease; /* 🎯 chỉ chuyển nền, không động bo góc */
+  overflow: hidden;       /* 🔹 đảm bảo màu hover không “vuông” */
 }
 
-.mon-qty button:hover {
+.mon-qty button:hover,
+.mon-qty button:active {
   background: var(--mauchinh);
-  color: #fff;                    
+  color: #fff;
 }
 
 .mon-qty span {
