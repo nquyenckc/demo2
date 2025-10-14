@@ -1,20 +1,63 @@
 // ================================
-// 📦 BlackTea POS v2.2 - app.js
+// 📦 BlackTea POS v2.3 - app.js (có đếm mang đi + tên bàn chuẩn)
 // ================================
 
 // 💾 Lưu danh sách đơn tại đây
 let TABLES = [];
 
+// 🔢 Biến đếm đơn "Mang đi"
+let demMangDi = 0;
+
 // ✅ Tải dữ liệu khi mở trang
 window.addEventListener("load", () => {
   const saved = localStorage.getItem("BT_TABLES");
   if (saved) TABLES = JSON.parse(saved);
+  loadDemMangDi();
 });
 
 // ✅ Lưu dữ liệu ra localStorage
 function saveAll() {
   localStorage.setItem("BT_TABLES", JSON.stringify(TABLES));
 }
+
+// ✅ Lưu và tải bộ đếm mang đi (reset mỗi ngày)
+function loadDemMangDi() {
+  const data = JSON.parse(localStorage.getItem("BT_DEM_MANGDI") || "{}");
+  const today = new Date().toLocaleDateString("vi-VN");
+
+  if (data.date === today) {
+    demMangDi = data.count || 0;
+  } else {
+    demMangDi = 0;
+    localStorage.setItem("BT_DEM_MANGDI", JSON.stringify({ date: today, count: 0 }));
+  }
+}
+
+function saveDemMangDi() {
+  const today = new Date().toLocaleDateString("vi-VN");
+  localStorage.setItem("BT_DEM_MANGDI", JSON.stringify({ date: today, count: demMangDi }));
+}
+
+// ✅ Sinh tên khách theo loại
+function taoTenKhach(loai, maBan = "") {
+  if (loai === "Khách mang đi") {
+    // Tăng khi lưu đơn thành công
+    demMangDi++;
+    saveDemMangDi();
+    return `Mang đi ${demMangDi}`;
+  }
+
+  if (loai.startsWith("Khách tại bàn")) {
+    if (maBan.startsWith("L")) return `Bàn lầu ${maBan.slice(1)}`;
+    if (maBan.startsWith("NT")) return `Bàn ngoài trời ${maBan.slice(2)}`;
+    if (maBan.startsWith("T")) return `Bàn tường ${maBan.slice(1)}`;
+    if (maBan.startsWith("G")) return `Bàn giữa ${maBan.slice(1)}`;
+    if (maBan.startsWith("N")) return `Bàn nệm ${maBan.slice(1)}`;
+  }
+
+  return loai;
+}
+
 
 // ================================
 // 🚀 Khởi động ứng dụng
@@ -24,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function khoiTaoUngDung() {
-  console.log("🚀 Khởi động BlackTea POS v2...");
+  console.log("🚀 Khởi động BlackTea POS v2.3...");
   hienThiManHinhChinh();
 }
 
@@ -42,16 +85,16 @@ function hienThiManHinhChinh() {
     <div class="table-list"></div>
   `;
 
-  // Gắn sự kiện cho nút chính
-  document.getElementById("btnMangDi").addEventListener("click", () => {
-    khoiTaoOrder("Khách mang đi");
-  });
+  // 👉 Gắn sự kiện
+document.getElementById("btnMangDi").addEventListener("click", () => {
+  khoiTaoOrder("Khách mang đi"); // chưa có số, chờ đến khi lưu đơn
+});
+
 
   document.getElementById("btnGheQuan").addEventListener("click", () => {
-    themKhachTaiQuan(); // hiện popup chọn bàn
+    themKhachTaiQuan();
   });
 
-  // Hiển thị danh sách đơn hiện có
   renderTables();
 }
 
@@ -149,8 +192,9 @@ function themKhachTaiQuan() {
       alert("Vui lòng chọn bàn!");
       return;
     }
-
     overlay.remove();
-    khoiTaoOrder(`Khách tại bàn ${banDuocChon}`);
+
+    const tenDon = taoTenKhach("Khách tại bàn", banDuocChon);
+    khoiTaoOrder(tenDon);
   });
 }

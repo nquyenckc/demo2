@@ -196,6 +196,11 @@ function luuDon() {
     return;
   }
 
+  // 🔹 Nếu là khách mang đi thì chỉ khi lưu đơn mới tăng số thứ tự
+  if (loaiKhachHienTai === "Khách mang đi") {
+    loaiKhachHienTai = taoTenKhach("Khách mang đi"); // Sinh tên thật sự (Mang đi 1, 2, 3…)
+  }
+
   const donMoi = {
     id: Date.now(),
     name: loaiKhachHienTai,
@@ -225,6 +230,7 @@ function luuDon() {
   hienThiManHinhChinh();
   renderTables();
 }
+
 
 
 // -------------------------------
