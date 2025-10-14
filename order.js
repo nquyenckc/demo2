@@ -1,15 +1,15 @@
 // ===============================
-// ☕ ORDER.JS - BlackTea v2.2 (đã tinh chỉnh)
+// ☕ ORDER.JS - BlackTea v2.3 (có logic sao động)
 // ===============================
 
 let hoaDonTam = [];
 let loaiKhachHienTai = "";
 
+// -------------------------------
 // Khởi tạo màn hình Order
 function khoiTaoOrder(loaiKhach) {
   loaiKhachHienTai = loaiKhach;
 
-  // 🔷 Cập nhật header (giữ style gốc, chỉ thay nội dung)
   const header = document.querySelector("header");
   header.innerHTML = `
     <h1>${loaiKhach}</h1>
@@ -18,7 +18,6 @@ function khoiTaoOrder(loaiKhach) {
     </div>
   `;
 
-  // 👉 Gắn sự kiện nút × để quay về màn hình chính
   document.getElementById("btnCloseHeader").addEventListener("click", () => {
     header.innerHTML = `
       <h1>BlackTea</h1>
@@ -31,7 +30,6 @@ function khoiTaoOrder(loaiKhach) {
     renderTables();
   });
 
-  // ⚡ Nội dung phần order
   const main = document.querySelector(".main-container");
   main.innerHTML = `
     <div class="order-container">
@@ -59,12 +57,9 @@ function khoiTaoOrder(loaiKhach) {
   taoDanhMuc();
   hienThiMonTheoDanhMuc("");
 
-  // ⚙️ Gắn sự kiện cho các nút
   document.getElementById("btnDatLai").addEventListener("click", datLai);
   document.getElementById("btnLuuDon").addEventListener("click", luuDon);
 }
-
-
 
 // -------------------------------
 // Danh mục
@@ -75,15 +70,23 @@ function taoDanhMuc() {
 
   const btnAll = document.createElement("button");
   btnAll.textContent = "Tất cả";
-  btnAll.className = "danh-muc-btn";
-  btnAll.onclick = () => hienThiMonTheoDanhMuc("");
+  btnAll.className = "danh-muc-btn active";
+  btnAll.onclick = () => {
+    document.querySelectorAll(".danh-muc-btn").forEach(b => b.classList.remove("active"));
+    btnAll.classList.add("active");
+    hienThiMonTheoDanhMuc("");
+  };
   container.appendChild(btnAll);
 
   dsDanhMuc.forEach((ten) => {
     const btn = document.createElement("button");
     btn.className = "danh-muc-btn";
     btn.textContent = ten;
-    btn.onclick = () => hienThiMonTheoDanhMuc(ten);
+    btn.onclick = () => {
+      document.querySelectorAll(".danh-muc-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      hienThiMonTheoDanhMuc(ten);
+    };
     container.appendChild(btn);
   });
 }
@@ -97,6 +100,7 @@ function hienThiMonTheoDanhMuc(danhMuc) {
   const loc = danhMuc === "" ? MENU : MENU.filter((m) => m.cat === danhMuc);
 
   loc.forEach((mon) => {
+    const sl = timSoLuong(mon.id);
     const div = document.createElement("div");
     div.className = "mon-item";
     div.innerHTML = `
@@ -104,13 +108,12 @@ function hienThiMonTheoDanhMuc(danhMuc) {
         <div class="mon-ten">${mon.name}</div>
         <div class="mon-gia">${mon.price.toLocaleString()}₫</div>
       </div>
-<div class="mon-qty">
-  <button class="note-btn" onclick="toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">☆</button>
-  <button onclick="giamMon(${mon.id})">−</button>
-  <span id="sl-${mon.id}">${timSoLuong(mon.id)}</span>
-  <button onclick="themMon(${mon.id})">+</button>
-</div>
-
+      <div class="mon-qty" id="qty-${mon.id}">
+        <button class="note-btn ${sl > 0 ? '' : 'hidden'}" onclick="toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">☆</button>
+        <button onclick="giamMon(${mon.id})">−</button>
+        <span id="sl-${mon.id}">${sl}</span>
+        <button onclick="themMon(${mon.id})">+</button>
+      </div>
     `;
     dsMon.appendChild(div);
   });
@@ -126,29 +129,29 @@ function timSoLuong(id) {
 function themMon(id) {
   const mon = MENU.find((m) => m.id === id);
   const tonTai = hoaDonTam.find((m) => m.id === id);
-
   if (tonTai) tonTai.soluong++;
   else hoaDonTam.push({ ...mon, soluong: 1 });
 
   capNhatHoaDon();
+
+  // ⭐ Cập nhật sao hiển thị
+  const noteBtn = document.querySelector(`#qty-${id} .note-btn`);
+  if (noteBtn) noteBtn.classList.remove("hidden");
 }
 
 function giamMon(id) {
   const idx = hoaDonTam.findIndex((m) => m.id === id);
   if (idx > -1) {
     hoaDonTam[idx].soluong--;
-    if (hoaDonTam[idx].soluong <= 0) {
-      hoaDonTam.splice(idx, 1);
-    }
-    capNhatHoaDon();
-
-    // 🔁 Cập nhật lại danh sách món trên màn hình
-    const currentCategoryBtn = document.querySelector(".danh-muc-btn.active");
-    const currentCategory = currentCategoryBtn ? currentCategoryBtn.textContent : "";
-    hienThiMonTheoDanhMuc(currentCategory);
+    if (hoaDonTam[idx].soluong <= 0) hoaDonTam.splice(idx, 1);
   }
-}
 
+  capNhatHoaDon();
+
+  // ⭐ Ẩn sao nếu số lượng = 0
+  const noteBtn = document.querySelector(`#qty-${id} .note-btn`);
+  if (noteBtn && timSoLuong(id) === 0) noteBtn.classList.add("hidden");
+}
 
 // -------------------------------
 // Cập nhật hóa đơn
@@ -186,19 +189,19 @@ function capNhatHoaDon() {
 function datLai() {
   hoaDonTam = [];
   capNhatHoaDon();
+  hienThiMonTheoDanhMuc("");
 }
 
 // -------------------------------
-// Lưu đơn ra màn chính
+// Lưu đơn
 function luuDon() {
   if (hoaDonTam.length === 0) {
     alert("Chưa có món nào để lưu!");
     return;
   }
 
-  // 🔹 Nếu là khách mang đi thì chỉ khi lưu đơn mới tăng số thứ tự
   if (loaiKhachHienTai === "Khách mang đi") {
-    loaiKhachHienTai = taoTenKhach("Khách mang đi"); // Sinh tên thật sự (Mang đi 1, 2, 3…)
+    loaiKhachHienTai = taoTenKhach("Khách mang đi");
   }
 
   const donMoi = {
@@ -216,7 +219,6 @@ function luuDon() {
 
   alert("✅ Đã lưu đơn!");
 
-  // 🔁 Khôi phục lại header về trạng thái ban đầu
   const header = document.querySelector("header");
   header.innerHTML = `
     <h1>BlackTea</h1>
@@ -226,12 +228,9 @@ function luuDon() {
     </div>
   `;
 
-  // 👉 Quay về màn hình chính và render lại danh sách
   hienThiManHinhChinh();
   renderTables();
 }
-
-
 
 // -------------------------------
 // Tìm món theo từ khóa
@@ -242,6 +241,7 @@ function timMon() {
   dsMon.innerHTML = "";
 
   ketQua.forEach((mon) => {
+    const sl = timSoLuong(mon.id);
     const div = document.createElement("div");
     div.className = "mon-item";
     div.innerHTML = `
@@ -249,19 +249,13 @@ function timMon() {
         <div class="mon-ten">${mon.name}</div>
         <div class="mon-gia">${mon.price.toLocaleString()}₫</div>
       </div>
-      <div class="mon-qty">
+      <div class="mon-qty" id="qty-${mon.id}">
+        <button class="note-btn ${sl > 0 ? '' : 'hidden'}" onclick="toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">☆</button>
         <button onclick="giamMon(${mon.id})">−</button>
-        <span id="sl-${mon.id}">${timSoLuong(mon.id)}</span>
+        <span id="sl-${mon.id}">${sl}</span>
         <button onclick="themMon(${mon.id})">+</button>
       </div>
     `;
     dsMon.appendChild(div);
   });
-}
-
-// -------------------------------
-// Quay lại màn hình chính
-function quayLaiTrangChinh() {
-  hienThiManHinhChinh();
-  renderTables();
 }
