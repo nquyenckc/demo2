@@ -302,7 +302,7 @@ header h1 {
   padding: 9px 36px 9px 34px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  background: var(--nenapp)
+  background: var(--nenphu)
     url('https://cdn-icons-png.flaticon.com/512/149/149852.png') no-repeat 10px
     center;
   background-size: 16px;
@@ -322,7 +322,7 @@ header h1 {
 
 .danh-muc-btn {
   background: #ffffff;        /* nền trắng pha xanh nhạt */
-  color: var(--mauchuchinh);
+  color: var(--nenphu);
   border: 1px solid #d6def3;  /* viền xanh nhạt hơn */
   border-radius: 8px;
   padding: 6px 12px;          /* to hơn nhẹ cho dễ bấm */
