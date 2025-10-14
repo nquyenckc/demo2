@@ -1,7 +1,24 @@
 // ================================
-// 📦 BlackTea POS v2 - app.js (đã tinh chỉnh)
+// 📦 BlackTea POS v2.2 - app.js
 // ================================
 
+// 💾 Lưu danh sách đơn tại đây
+let TABLES = [];
+
+// ✅ Tải dữ liệu khi mở trang
+window.addEventListener("load", () => {
+  const saved = localStorage.getItem("BT_TABLES");
+  if (saved) TABLES = JSON.parse(saved);
+});
+
+// ✅ Lưu dữ liệu ra localStorage
+function saveAll() {
+  localStorage.setItem("BT_TABLES", JSON.stringify(TABLES));
+}
+
+// ================================
+// 🚀 Khởi động ứng dụng
+// ================================
 document.addEventListener("DOMContentLoaded", () => {
   khoiTaoUngDung();
 });
@@ -14,7 +31,6 @@ function khoiTaoUngDung() {
 // ================================
 // 🏠 Màn hình chính
 // ================================
-
 function hienThiManHinhChinh() {
   const main = document.querySelector(".main-container");
   main.innerHTML = `
@@ -23,12 +39,10 @@ function hienThiManHinhChinh() {
       <button id="btnGheQuan" class="btn">Khách ghé quán</button>
     </div>
 
-    <div class="table-list">
-      <p class="empty-state">Chưa có đơn hàng nào</p>
-    </div>
+    <div class="table-list"></div>
   `;
 
-  // 👉 Gọi hàm order mới
+  // Gắn sự kiện cho nút chính
   document.getElementById("btnMangDi").addEventListener("click", () => {
     khoiTaoOrder("Khách mang đi");
   });
@@ -36,12 +50,34 @@ function hienThiManHinhChinh() {
   document.getElementById("btnGheQuan").addEventListener("click", () => {
     themKhachTaiQuan(); // hiện popup chọn bàn
   });
+
+  // Hiển thị danh sách đơn hiện có
+  renderTables();
 }
 
 // ================================
-// 🪑 Chọn bàn cho khách tại quán
+// 🧾 Hiển thị danh sách đơn ngoài màn hình chính
 // ================================
+function renderTables() {
+  const div = document.querySelector(".table-list");
 
+  if (TABLES.length === 0) {
+    div.innerHTML = `<p class="empty-state">Chưa có đơn hàng nào</p>`;
+    return;
+  }
+
+  div.innerHTML = TABLES.map(t => `
+    <div class="order-card">
+      <div><b>${t.name}</b></div>
+      <div>${t.cart.length} món • ${t.cart.reduce((a,m)=>a+m.price*m.soluong,0).toLocaleString()}₫</div>
+      <div class="small">${new Date(t.createdAt).toLocaleString("vi-VN")}</div>
+    </div>
+  `).join("");
+}
+
+// ================================
+// 🪑 Popup chọn bàn cho khách tại quán
+// ================================
 function themKhachTaiQuan() {
   const overlay = document.createElement("div");
   overlay.className = "popup-overlay";
@@ -96,7 +132,6 @@ function themKhachTaiQuan() {
   overlay.appendChild(popup);
   document.body.appendChild(overlay);
 
-  // --- Xử lý chọn bàn ---
   let banDuocChon = null;
 
   popup.querySelectorAll(".ban-btn").forEach((btn) => {
@@ -107,12 +142,8 @@ function themKhachTaiQuan() {
     });
   });
 
-  // --- Nút Huỷ ---
-  popup.querySelector(".btn-cancel").addEventListener("click", () => {
-    overlay.remove();
-  });
+  popup.querySelector(".btn-cancel").addEventListener("click", () => overlay.remove());
 
-  // --- Nút Chọn bàn ---
   popup.querySelector(".btn-primary").addEventListener("click", () => {
     if (!banDuocChon) {
       alert("Vui lòng chọn bàn!");
