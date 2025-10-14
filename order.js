@@ -62,7 +62,7 @@ function khoiTaoOrder(loaiKhach) {
 }
 
 // -------------------------------
-/function taoDanhMuc() {
+function taoDanhMuc() {
   const dsDanhMuc = [...new Set(MENU.map((m) => m.cat))];
   const container = document.getElementById("danhMucContainer");
   container.innerHTML = "";
@@ -248,3 +248,4 @@ function timMon() {
     dsMon.appendChild(div);
   });
 }
+
