@@ -387,44 +387,44 @@ header h1 {
   color: #666;
 }
 
-/* --- Nút +/- số lượng (chuẩn mobile – to hơn, phản hồi chạm) --- */
+/* --- Nút +/- số lượng (gọn hơn, nhanh, sát hơn) --- */
 .mon-qty {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 0;                       /* 🔹 sát nút */
   background: transparent;
   border-radius: 8px;
-  padding: 2px 4px;
+  padding: 0;
 }
 
 .mon-qty button {
   background-color: var(--nutnennhat);
   border: none;
-  border-radius: 8px;
-  width: 30px;                /* 🔹 to hơn cho dễ bấm */
-  height: 30px;
-  font-size: 18px;            /* 🔹 biểu tượng rõ hơn */
+  border-radius: 6px;
+  width: 26px;                  /* 🔹 nhỏ hơn 30px */
+  height: 26px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--mauchuchinh);
   line-height: 1;
   cursor: pointer;
-  transition: background-color 0.12s ease, color 0.12s ease, transform 0.08s ease;
-  -webkit-tap-highlight-color: transparent; /* 💥 chặn flash vuông trên mobile */
+  -webkit-tap-highlight-color: transparent;
   user-select: none;
+  transition: none;             /* ⚡ tắt transition để phản hồi tức thời */
 }
 
 .mon-qty button:active {
-  background-color: var(--mauchinh); /* 💙 đậm hơn khi bấm */
+  background-color: var(--mauchinh);
   color: #fff;
-  transform: scale(0.95);            /* 💫 hiệu ứng “nhấn lún” nhẹ */
+  transform: scale(0.95);
 }
 
 .mon-qty span {
-  min-width: 24px;
+  min-width: 22px;
   text-align: center;
   font-weight: 700;
-  color: var(--mauchinh);            /* 🔹 đồng màu thương hiệu */
-  font-size: 16px;                   /* 🔹 to hơn cho cân với nút */
+  color: var(--mauchinh);
+  font-size: 15px;
 }
 
 /* --- Hóa đơn tạm --- */
