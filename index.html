@@ -28,11 +28,24 @@
   <!-- ✅ Thêm vùng gọi món (ẩn trước) -->
   <div id="order-container" style="display:none;"></div>
 </main>
+<!-- ✅ Nạp Firebase trước -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
+<script>
+  // 🔧 Cấu hình Firebase của bạn
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
 <script src="menu.js"></script>
+<script src="tables.js"></script>
 <script src="notes.js"></script>
-<script src="app.js"></script>
 <script src="order.js"></script>
+<script src="app.js"></script>
 
 
 </body>

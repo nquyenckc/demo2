@@ -2,8 +2,6 @@
 // 📦 BlackTea POS v2.3 - app.js (có đếm mang đi + tên bàn chuẩn)
 // ================================
 
-// 💾 Lưu danh sách đơn tại đây
-let TABLES = [];
 
 // 🔢 Biến đếm đơn "Mang đi"
 let demMangDi = 0;
