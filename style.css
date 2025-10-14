@@ -552,55 +552,96 @@ header h1 {
   transform: scale(1.1);
 }
 
-/* popup note */
+/* ===============================
+   ⭐ Popup Ghi chú (Đường / Đá)
+   =============================== */
+
 .popup-note {
-  background: white;
+  position: absolute;
+  background: #fff;
   border-radius: 12px;
-  padding: 16px 20px;
-  width: 260px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  padding: 16px 18px;
+  width: 240px;
+  font-family: inherit;
+  color: #333;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.popup-row {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 10px;
 }
 
-.popup-note h3 {
-  font-size: 16px;
-  margin-bottom: 4px;
-}
-
-.note-group label {
-  display: block;
+.popup-row label {
+  flex: 1;
   font-size: 14px;
-  margin-bottom: 4px;
+  color: #333;
 }
 
-.note-group select {
-  width: 100%;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+.popup-row .slider {
+  flex: 2;
+  accent-color: var(--mauchinh);
+  cursor: pointer;
+}
+
+.popup-row .slider-label {
+  flex: 1.2;
+  font-size: 13px;
+  color: var(--mauchinh);
+  text-align: right;
+  font-weight: 600;
 }
 
 .popup-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.btn-cancel {
-  background: #ccc;
+.popup-actions button {
   border: none;
+  padding: 6px 12px;
   border-radius: 6px;
-  padding: 6px 10px;
   cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
 
-.btn-primary {
+.popup-actions .cancel {
+  background: #eee;
+  color: #444;
+}
+
+.popup-actions .cancel:hover {
+  background: #ddd;
+}
+
+.popup-actions .confirm {
   background: var(--mauchinh);
   color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 10px;
-  cursor: pointer;
+  font-weight: 500;
 }
+
+.popup-actions .confirm:hover {
+  opacity: 0.9;
+}
+
+/* ⭐ Nút sao trên menu */
+.note-btn {
+  border: 2px solid var(--mauchinh);
+  background: white;
+  color: var(--mauchinh);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
