@@ -327,7 +327,7 @@ header h1 {
   border-radius: 8px;
   padding: 6px 12px;          /* to hơn nhẹ cho dễ bấm */
   font-weight: 600;
-  font-size: 13.5px;
+  font-size: 11px;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
