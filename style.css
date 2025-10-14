@@ -390,7 +390,7 @@ header h1 {
 .mon-qty {
   display: flex;
   align-items: center;
-  gap: 6px;                    
+  gap: 3px;                    
   background: transparent;    
   border-radius: 8px;
   padding: 2px 4px;           
