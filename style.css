@@ -527,3 +527,27 @@ header h1 {
   background-color: #d0d6e2;
   border-radius: 4px;
 }
+
+/* === Nút sao ghi chú === */
+.note-btn {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--mauchinh); /* 💙 Màu chủ đạo mặc định */
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+  transition: color 0.2s, transform 0.1s;
+}
+
+.note-btn:hover {
+  color: #3a5590; /* xanh đậm hơn khi hover */
+  transform: scale(1.1);
+}
+
+/* Khi món có ghi chú (active) → dùng màu chủ đạo luôn */
+.note-btn.active {
+  color: var(--mauchinh);
+  transform: scale(1.1);
+}

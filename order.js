@@ -104,11 +104,13 @@ function hienThiMonTheoDanhMuc(danhMuc) {
         <div class="mon-ten">${mon.name}</div>
         <div class="mon-gia">${mon.price.toLocaleString()}₫</div>
       </div>
-      <div class="mon-qty">
-        <button onclick="giamMon(${mon.id})">−</button>
-        <span id="sl-${mon.id}">${timSoLuong(mon.id)}</span>
-        <button onclick="themMon(${mon.id})">+</button>
-      </div>
+<div class="mon-qty">
+  <button class="note-btn" onclick="toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">☆</button>
+  <button onclick="giamMon(${mon.id})">−</button>
+  <span id="sl-${mon.id}">${timSoLuong(mon.id)}</span>
+  <button onclick="themMon(${mon.id})">+</button>
+</div>
+
     `;
     dsMon.appendChild(div);
   });
