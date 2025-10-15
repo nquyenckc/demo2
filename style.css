@@ -289,16 +289,21 @@ header h1 {
   cursor: pointer;
 }
 
-/* --- Ô tìm kiếm --- */
+/* --- Ô tìm kiếm (tràn ngang full width) --- */
 .order-search {
-  padding: 3px 10px;
-  background: white;
+  position: relative;
+  width: 100vw;           /* ✅ full chiều ngang màn hình */
+  margin-left: -16px;     /* ✅ xóa khoảng cách padding cha */
+  background: #fff;
+  padding: 10px 16px;
   flex-shrink: 0;
+  border-bottom: 1px solid #eee;
+  box-sizing: border-box;
 }
 
 .order-search input {
   width: 100%;
-  padding: 9px 36px 9px 34px;
+  padding: 10px 36px 10px 34px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background: var(--nenapp)
@@ -309,23 +314,22 @@ header h1 {
   color: var(--mauchuchinh);
   box-sizing: border-box;
 }
-/* --- Danh mục món --- */
-.order-categories {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 4px 8px;
-  background: white;
-  justify-content: flex-start; /* 🔹 căn trái mặc định */
-}
 
-/* Khi có quá nhiều nút thì cho phép cuộn ngang thay vì ép đều */
+/* --- Danh mục món (tràn ngang full width, cuộn ngang được) --- */
 .order-categories {
+  width: 100vw;            /* ✅ full chiều ngang */
+  margin-left: -16px;      /* ✅ xóa lề trái */
+  background: #fff;
+  display: flex;
+  flex-wrap: nowrap;
   overflow-x: auto;
-  scrollbar-width: none; /* ẩn thanh cuộn Firefox */
+  gap: 6px;
+  padding: 6px 12px;
+  border-bottom: 1px solid #eee;
+  scrollbar-width: none;
 }
 .order-categories::-webkit-scrollbar {
-  display: none; /* ẩn thanh cuộn Chrome/Safari */
+  display: none;
 }
 
 /* --- Nút danh mục --- */
