@@ -310,38 +310,49 @@ header h1 {
   color: var(--mauchuchinh);
   box-sizing: border-box;
 }
-
 /* --- Danh mục món --- */
 .order-categories {
-  display: grid;  
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  gap: 4px 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
   padding: 4px 8px;
   background: white;
+  justify-content: flex-start; /* 🔹 căn trái mặc định */
 }
 
+/* Khi có quá nhiều nút thì cho phép cuộn ngang thay vì ép đều */
+.order-categories {
+  overflow-x: auto;
+  scrollbar-width: none; /* ẩn thanh cuộn Firefox */
+}
+.order-categories::-webkit-scrollbar {
+  display: none; /* ẩn thanh cuộn Chrome/Safari */
+}
+
+/* --- Nút danh mục --- */
 .danh-muc-btn {
-  background: #ffffff;        /* nền trắng pha xanh nhạt */
+  background: #fff;
   color: var(--mauchuchinh);
-  border: 1px solid #d6def3;  /* viền xanh nhạt hơn */
+  border: 1px solid #d6def3;
   border-radius: 8px;
-  padding: 6px 12px;          /* to hơn nhẹ cho dễ bấm */
+  padding: 6px 14px;
   font-weight: 600;
   font-size: 11px;
   cursor: pointer;
   transition: all 0.2s ease;
-  white-space: nowrap;
+  white-space: nowrap;        /* 🔹 giữ ôm sát chữ */
+  flex: 0 0 auto;             /* 🔹 không co giãn đều */
 }
 
+/* Hover & Active */
 .danh-muc-btn:hover {
-  background: #e9edfb;        /* hover nhẹ màu xanh tinh tế */
+  background: #e9edfb;
 }
 
-/* 🔹 Khi nút được chọn (active) */
 .danh-muc-btn.active {
-  background: var(--mauchinh);  /* màu chính */
-  color: white;
-  border: 1px solid var(--mauchinh);
+  background: var(--mauchinh);
+  color: #fff;
+  border-color: var(--mauchinh);
 }
 
 
