@@ -495,16 +495,17 @@ header h1 {
   border-bottom: none;
 }
 
-/* --- Footer --- */
+/* --- Footer (Thanh đặt/lưu đơn) --- */
 .order-footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background: white;
+  background: #fff;
   padding: 10px 16px;
   border-top: 1px solid #eee;
-  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05); /* 👈 tạo khe mờ nhẹ */
+  border-radius: 12px 12px 0 0;               /* 👈 bo nhẹ góc trên */
   z-index: 10;
 
   display: flex;
@@ -512,39 +513,46 @@ header h1 {
   align-items: center;
 }
 
+/* Tổng tiền bên trái */
 .order-total {
   font-weight: 600;
   font-size: 15px;
   color: var(--mauchuchinh);
 }
 
+/* Nhóm nút bên phải */
 .order-buttons {
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 
+/* Nút chung */
 .order-buttons button {
-  padding: 8px 14px; /* 🔹 nhỏ lại cho gọn */
-  border-radius: 8px;
+  padding: 9px 16px;
+  border-radius: 10px;
   border: none;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s, transform 0.15s;
+}
+.order-buttons button:active {
+  transform: scale(0.97); /* hiệu ứng bấm */
 }
 
+/* Nút phụ “Đặt lại” */
 .order-buttons button:first-child {
   background: var(--nutnennhat);
   color: var(--mauchuchinh);
 }
 
+/* Nút chính “Lưu đơn” */
 .order-buttons .btn-primary {
   background: var(--mauchinh);
-  color: white;
+  color: #fff;
 }
-
 .order-buttons .btn-primary:hover {
-  background: #3a5590;
+  background: #234dc5;
 }
 
 
