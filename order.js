@@ -31,28 +31,38 @@ function khoiTaoOrder(loaiKhach) {
   });
 
   const main = document.querySelector(".main-container");
-  main.innerHTML = `
-    <div class="order-container">
-      <div class="order-search">
-        <input type="text" id="timMonInput" placeholder="Tìm món..." oninput="timMon()" />
-      </div>
+<div class="order-container">
 
-      <div class="order-categories" id="danhMucContainer"></div>
-
-      <div class="order-content">
-        <div class="order-list" id="dsMon"></div>
-        <div class="hoa-don-tam empty" id="hoaDonTam">Chưa có món nào</div>
-      </div>
-
-      <div class="order-footer">
-        <div class="order-total">Tổng: <span id="tongTien">0đ</span></div>
-        <div class="order-buttons">
-          <button id="btnDatLai">Đặt lại</button>
-          <button id="btnLuuDon" class="btn-primary">Lưu đơn</button>
-        </div>
-      </div>
+  <!-- 🟦 Header -->
+  <div class="order-header">
+    <div class="order-search">
+      <input type="text" id="timMonInput" placeholder="Tìm kiếm món..." oninput="timMon()" />
     </div>
-  `;
+    <div class="order-categories" id="danhMucContainer"></div>
+  </div>
+
+  <!-- 📜 Danh sách món -->
+  <div class="order-scroll">
+    <div class="order-list" id="dsMon"></div>
+  </div>
+
+  <!-- 🧾 Hóa đơn tạm (cố định, nội dung cuộn riêng) -->
+  <div class="hoa-don-tam">
+    <div class="hoa-don-noi-dung" id="hoaDonTam">
+      <!-- các món tạm -->
+    </div>
+  </div>
+
+  <!-- 🟩 Footer -->
+  <div class="order-footer">
+    <div class="order-total">Tổng: <span id="tongTien">0đ</span></div>
+    <div class="order-buttons">
+      <button id="btnDatLai">Đặt lại</button>
+      <button id="btnLuuDon" class="btn-primary">Lưu đơn</button>
+    </div>
+  </div>
+
+</div>
 
   taoDanhMuc();
   hienThiMonTheoDanhMuc("");
@@ -248,4 +258,5 @@ function timMon() {
     dsMon.appendChild(div);
   });
 }
+
 
