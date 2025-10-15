@@ -325,7 +325,7 @@ header h1 {
   outline: none;
   box-sizing: border-box;
 }
-/* ===== DANH MỤC MÓN (TỰ GIÃN KHI GẦN ĐẦY) ===== */
+/* ===== DANH MỤC MÓN (KHÔNG NỀN, GIÃN KHI GẦN ĐẦY) ===== */
 .order-categories {
   position: fixed;
   top: calc(52px + 48px + 10px); /* header 52 + search 48 + cách 10px */
@@ -334,27 +334,27 @@ header h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;  /* mặc định căn trái */
-  gap: 10px;
+  gap: 5px;                     /* ✅ cách giữa các nút & hàng = 5px */
   background: transparent;
   z-index: 18;
 }
 
-/* Khi hàng có nhiều phần tử (tạm xem là “gần đầy”), tự giãn đều */
+/* Khi hàng gần đầy (nhiều nút) -> giãn đều 2 bên */
 .order-categories:has(.danh-muc-btn:nth-child(4):last-child),
 .order-categories:has(.danh-muc-btn:nth-child(5):last-child),
 .order-categories:has(.danh-muc-btn:nth-child(6):last-child) {
-  justify-content: space-between; /* ✅ hàng gần đầy thì giãn đều */
+  justify-content: space-between;
 }
 
 /* ===== NÚT DANH MỤC ===== */
 .danh-muc-btn {
-  flex: 0 0 auto;          /* giữ kích thước thật, không giãn mặc định */
-  padding: 7px 14px;
+  flex: 0 0 auto;
+  padding: 8px 14px;
   border-radius: 8px;
   border: 1px solid #d6def3;
   background: #fff;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14px;              /* ✅ chữ 14px */
   color: var(--mauchuchinh);
   cursor: pointer;
   transition: all 0.2s ease;
