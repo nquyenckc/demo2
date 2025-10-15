@@ -289,47 +289,35 @@ header h1 {
   cursor: pointer;
 }
 
-/* --- Ô tìm kiếm (tràn hết chiều ngang) --- */
+/* --- Ô tìm kiếm --- */
 .order-search {
-  width: 100vw; /* ✅ full width màn hình */
-  margin-left: calc(50% - 50vw); /* ✅ xóa padding cha, kéo sát mép trái */
-  margin-right: calc(50% - 50vw); /* ✅ kéo sát mép phải */
-  background: #fff;
-  padding: 10px 16px;
+  padding: 3px 10px;
+  background: white;
   flex-shrink: 0;
-  border-bottom: 1px solid #eee;
-  box-sizing: border-box;
 }
 
 .order-search input {
   width: 100%;
-  padding: 10px 36px 10px 34px;
+  padding: 9px 36px 9px 34px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background: var(--nenapp)
-    url('https://cdn-icons-png.flaticon.com/512/149/149852.png') no-repeat 10px center;
+    url('https://cdn-icons-png.flaticon.com/512/149/149852.png') no-repeat 10px
+    center;
   background-size: 16px;
   font-size: 15px;
   color: var(--mauchuchinh);
   box-sizing: border-box;
 }
-
-/* --- Danh mục món (tràn hết chiều ngang, liền khối với ô tìm kiếm) --- */
+/* --- Danh mục món --- */
 .order-categories {
-  width: 100vw; /* ✅ full width */
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  background: #fff;
   display: flex;
-  flex-wrap: nowrap; /* giữ 1 hàng cuộn ngang */
-  overflow-x: auto;
+  flex-wrap: wrap;
   gap: 6px;
-  padding: 6px 10px;
-  border-bottom: 1px solid #eee;
-  justify-content: flex-start;
-  scrollbar-width: none; /* ẩn thanh cuộn Firefox */
+  padding: 4px 8px;
+  background: white;
+  justify-content: flex-start; /* 🔹 căn trái mặc định */
 }
-
 
 /* Khi có quá nhiều nút thì cho phép cuộn ngang thay vì ép đều */
 .order-categories {
