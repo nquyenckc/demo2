@@ -521,61 +521,70 @@ header h1 {
   color: var(--mauchinh);
   font-weight: 600;
 }
-/* --- Footer (Thanh đặt/lưu đơn) --- */
+/* ===== FOOTER THANH TOÁN (FULL WIDTH, CỐ ĐỊNH DƯỚI, MÀU TỔNG ĐẸP) ===== */
 .order-footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   background: #fff;
-  padding: 10px 16px;
+  padding: 14px 16px;            /* cao hơn để dễ bấm */
   border-top: 1px solid #eee;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05); /* 👈 tạo khe mờ nhẹ */
-  border-radius: 12px 12px 0 0;               /* 👈 bo nhẹ góc trên */
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
   z-index: 10;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 0;              /* bỏ bo cong container */
 }
 
-/* Tổng tiền bên trái */
+/* --- Tổng tiền --- */
 .order-total {
-  font-weight: 600;
   font-size: 15px;
-  color: var(--mauchuchinh);
+  font-weight: 600;
+  color: var(--mauchuchinh);     /* chữ “Tổng:” */
 }
 
-/* Nhóm nút bên phải */
+/* --- Giá tiền trong tổng --- */
+.order-total span:last-child {
+  color: var(--mauchinh);        /* ✅ màu chính cho số tiền */
+  font-weight: 700;
+}
+
+/* --- Nhóm nút bên phải --- */
 .order-buttons {
   display: flex;
   gap: 8px;
 }
 
-/* Nút chung */
+/* --- Nút chung --- */
 .order-buttons button {
-  padding: 9px 16px;
-  border-radius: 10px;
+  padding: 8px 14px;
+  border-radius: 8px;
   border: none;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
+  transition: all 0.2s;
 }
 .order-buttons button:active {
-  transform: scale(0.97); /* hiệu ứng bấm */
+  transform: scale(0.97);
 }
 
-/* Nút phụ “Đặt lại” */
+/* --- Nút phụ (“Đặt lại”) --- */
 .order-buttons button:first-child {
   background: var(--nutnennhat);
   color: var(--mauchuchinh);
 }
 
-/* Nút chính “Lưu đơn” */
+/* --- Nút chính (“Lưu đơn”) --- */
 .order-buttons .btn-primary {
   background: var(--mauchinh);
   color: #fff;
+}
+.order-buttons .btn-primary:hover {
+  background: #234dc5;
 }
 .order-buttons .btn-primary:hover {
   background: #234dc5;
