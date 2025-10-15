@@ -453,14 +453,19 @@ header h1 {
 
 /* --- Hóa đơn tạm --- */
 .hoa-don-tam {
+  position: fixed;           /* ✅ cố định trên màn hình */
+  left: 0;
+  right: 0;
+  bottom: 74px;              /* ✅ nằm ngay trên footer, cách 4px */
   background: #fff;
   border-radius: 10px;
-  margin: 0 16px 4px;
+  margin: 0 auto;
   padding: 10px 14px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  width: calc(100% - 32px);  /* giữ lề 16px hai bên cho gọn */
 
-  height: 120px;          /* ✅ luôn cố định độ cao (kể cả khi trống) */
-  max-height: 120px;      /* cho phép cuộn nếu vượt quá */
+  height: 120px;
+  max-height: 120px;
   overflow-y: auto;
   scroll-behavior: smooth;
 
@@ -469,7 +474,7 @@ header h1 {
   justify-content: flex-start;
   font-size: 14px;
   color: var(--mauchuchinh);
-  flex-shrink: 0;          /* không bị ép co lại */
+  z-index: 9;                /* nằm dưới footer */
 }
 
 /* --- Khi chưa có món --- */
