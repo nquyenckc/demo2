@@ -470,29 +470,28 @@ header h1 {
   font-size: 15px;
 }
 
-/* --- Hóa đơn tạm (chỉ hiển thị món, không có tổng) --- */
+/* ===== HÓA ĐƠN TẠM (CỐ ĐỊNH, CÁCH ĐỀU 10PX, FULL NGANG VỚI CÁC KHỐI) ===== */
 .hoa-don-tam {
   position: fixed;
-  bottom: 72px;                 /* ✅ nằm ngay trên footer, cách 2px */
-  left: 16px;
-  right: 16px;
+  left: 10px;
+  right: 10px;
+  bottom: calc(70px + 10px);  /* ✅ footer cao ~70px + cách 10px */
   background: #fff;
   border-radius: 10px;
   padding: 10px 14px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  margin: 0;
-
-  height: 120px;
-  max-height: 120px;
-  overflow-y: auto;
-  scroll-behavior: smooth;
+  z-index: 9;
 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   font-size: 14px;
   color: var(--mauchuchinh);
-  z-index: 9;
+
+  height: 120px;               /* ✅ chiều cao cố định */
+  max-height: 120px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 /* --- Khi chưa có món --- */
@@ -503,7 +502,7 @@ header h1 {
   font-style: italic;
 }
 
-/* --- Mỗi dòng món --- */
+/* --- Từng dòng món --- */
 .hoa-don-item {
   display: flex;
   justify-content: space-between;
@@ -516,7 +515,7 @@ header h1 {
   border-bottom: none;
 }
 
-/* --- Tô màu cho giá tiền --- */
+/* --- Giá tiền màu chính --- */
 .hoa-don-item span:last-child {
   color: var(--mauchinh);
   font-weight: 600;
