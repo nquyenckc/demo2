@@ -373,6 +373,15 @@ header h1 {
   color: #fff;
   border-color: var(--mauchinh);
 }
+/* ===== DANH SÁCH MÓN (CÁCH DANH MỤC 10PX) ===== */
+.order-content {
+  padding-top: calc(52px + 48px + 10px + 40px + 10px);
+  /* Header (52px) + Search (48px) + cách (10px)
+     + chiều cao danh mục tầm 40px + cách 10px dưới */
+  padding-left: 10px;
+  padding-right: 10px;
+  overflow-y: auto;
+}
 /* Phần nội dung chính (cuộn riêng) */
 .order-content {
   flex: 1;
