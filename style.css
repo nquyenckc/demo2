@@ -249,17 +249,30 @@ header h1 {
   background-color: #3a5590;
 }
 
-/* ================================
-   ☕ ORDER MÓN - BlackTea v2.2
-   ================================ */
-
-.order-container {
+/* ===== DANH SÁCH MÓN (PHẦN CUỘN GIỮA) ===== */
+.order-content {
+  position: absolute;
+  top: 160px;    /* ngay dưới danh mục */
+  bottom: 210px; /* chừa hóa đơn + footer */
+  left: 0;
+  right: 0;
+  overflow-y: auto;
   background: var(--nenapp);
-  height: 100dvh;
+  padding: 10px 16px;
   display: flex;
   flex-direction: column;
-  font-family: var(--fontchu);
-  overflow: hidden; /* tránh cuộn toàn trang */
+  gap: 8px;
+  scroll-behavior: smooth;
+}
+
+.mon-item {
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 /* --- Header --- */
