@@ -289,21 +289,16 @@ header h1 {
   cursor: pointer;
 }
 
-/* --- Ô tìm kiếm (tràn ngang full width) --- */
+/* --- Ô tìm kiếm --- */
 .order-search {
-  position: relative;
-  width: 100vw;           /* ✅ full chiều ngang màn hình */
-  margin-left: -16px;     /* ✅ xóa khoảng cách padding cha */
-  background: #fff;
-  padding: 10px 16px;
+  padding: 3px 10px;
+  background: white;
   flex-shrink: 0;
-  border-bottom: 1px solid #eee;
-  box-sizing: border-box;
 }
 
 .order-search input {
   width: 100%;
-  padding: 10px 36px 10px 34px;
+  padding: 9px 36px 9px 34px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background: var(--nenapp)
@@ -314,22 +309,23 @@ header h1 {
   color: var(--mauchuchinh);
   box-sizing: border-box;
 }
-
-/* --- Danh mục món (tràn ngang full width, cuộn ngang được) --- */
+/* --- Danh mục món --- */
 .order-categories {
-  width: 100vw;            /* ✅ full chiều ngang */
-  margin-left: -16px;      /* ✅ xóa lề trái */
-  background: #fff;
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-wrap: wrap;
   gap: 6px;
-  padding: 6px 12px;
-  border-bottom: 1px solid #eee;
-  scrollbar-width: none;
+  padding: 4px 8px;
+  background: white;
+  justify-content: flex-start; /* 🔹 căn trái mặc định */
+}
+
+/* Khi có quá nhiều nút thì cho phép cuộn ngang thay vì ép đều */
+.order-categories {
+  overflow-x: auto;
+  scrollbar-width: none; /* ẩn thanh cuộn Firefox */
 }
 .order-categories::-webkit-scrollbar {
-  display: none;
+  display: none; /* ẩn thanh cuộn Chrome/Safari */
 }
 
 /* --- Nút danh mục --- */
@@ -457,19 +453,14 @@ header h1 {
 
 /* --- Hóa đơn tạm --- */
 .hoa-don-tam {
-  position: fixed;           /* ✅ cố định trên màn hình */
-  left: 0;
-  right: 0;
-  bottom: 74px;              /* ✅ nằm ngay trên footer, cách 4px */
   background: #fff;
   border-radius: 10px;
-  margin: 0 auto;
+  margin: 0 16px 4px;
   padding: 10px 14px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  width: calc(100% - 32px);  /* giữ lề 16px hai bên cho gọn */
 
-  height: 120px;
-  max-height: 120px;
+  height: 120px;          /* ✅ luôn cố định độ cao (kể cả khi trống) */
+  max-height: 120px;      /* cho phép cuộn nếu vượt quá */
   overflow-y: auto;
   scroll-behavior: smooth;
 
@@ -478,7 +469,7 @@ header h1 {
   justify-content: flex-start;
   font-size: 14px;
   color: var(--mauchuchinh);
-  z-index: 9;                /* nằm dưới footer */
+  flex-shrink: 0;          /* không bị ép co lại */
 }
 
 /* --- Khi chưa có món --- */
