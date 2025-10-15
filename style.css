@@ -195,7 +195,7 @@ header h1 {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 80px;       /* ✅ kích thước giống bàn trên lầu */
+  width: 75px;       /* ✅ kích thước giống bàn trên lầu */
   height: 38px;      /* ✅ đồng bộ chiều cao */
   font-size: 15px;
   text-align: center;
