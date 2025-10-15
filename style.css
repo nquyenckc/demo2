@@ -191,16 +191,16 @@ header h1 {
   color: var(--mauchuchinh);
   border: none;
   border-radius: 10px;
-  padding: 10px 0;
+  padding: 12px 0;           /* 🔹 cao hơn 1 chút */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 100%;              /* giãn full cột */
-  max-width: 85px;          /* nhưng không vượt quá khung */
+  width: 90px;               /* 🔹 kích thước cố định đồng đều */
+  height: 42px;              /* 🔹 cho chiều cao ổn định */
   font-size: 15px;
   text-align: center;
+  flex-shrink: 0;
 }
-
 .ban-btn.active {
   background-color: var(--mauchinh);
   color: #fff;
