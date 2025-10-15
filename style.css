@@ -484,7 +484,7 @@ header h1 {
 /* --- Hóa đơn tạm (chỉ hiển thị món, không có tổng) --- */
 .hoa-don-tam {
   position: fixed;
-  bottom: 74px;                 /* ✅ nằm ngay trên footer, cách 4px */
+  bottom: 72px;                 /* ✅ nằm ngay trên footer, cách 2px */
   left: 16px;
   right: 16px;
   background: #fff;
