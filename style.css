@@ -301,18 +301,16 @@ header h1 {
   font-size: 24px;
   cursor: pointer;
 }
-
-/* ===== Ô TÌM KIẾM (CÙNG CHIỀU NGANG VỚI HÓA ĐƠN TẠM) ===== */
+/* ===== Ô TÌM KIẾM ===== */
 .order-search {
   position: fixed;
-  top: 52px;            /* ✅ nằm ngay dưới header */
-  left: 16px;           /* ✅ cách mép ngang bằng hóa đơn tạm */
+  top: calc(52px + 2px);   /* ✅ header cao 52px + cách 2px */
+  left: 16px;
   right: 16px;
-  background: transparent; /* ✅ bỏ nền ngoài */
+  background: transparent;
   z-index: 19;
 }
 
-/* ===== Input bên trong ===== */
 .order-search input {
   width: 100%;
   padding: 10px 34px;
@@ -323,7 +321,7 @@ header h1 {
   background-size: 16px;
   font-size: 15px;
   color: var(--mauchuchinh);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05); /* nhẹ như hóa đơn tạm */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   outline: none;
   box-sizing: border-box;
 }
