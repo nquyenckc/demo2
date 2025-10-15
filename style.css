@@ -313,23 +313,37 @@ header h1 {
   color: var(--mauchuchinh);
   outline: none;
 }
-/* --- Danh mục món --- */
+/* ===== DANH MỤC MÓN (FULL-WIDTH, CỐ ĐỊNH DƯỚI Ô TÌM KIẾM) ===== */
 .order-categories {
+  position: fixed;         /* giữ cố định phía trên */
+  top: 108px;              /* nếu header ~52px + search ~56px => categories nằm ngay dưới search */
+  left: 0;
+  right: 0;
+  background: #fff;        /* khối trắng như demo */
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 4px 8px;
-  background: white;
-  justify-content: flex-start; /* 🔹 căn trái mặc định */
-}
-
-/* Khi có quá nhiều nút thì cho phép cuộn ngang thay vì ép đều */
-.order-categories {
+  flex-wrap: nowrap;       /* 1 hàng, cuộn ngang khi overflow */
+  gap: 8px;
+  padding: 8px 16px 10px;
+  border-bottom: 1px solid #eee; /* khe ngăn nhẹ phía dưới */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04); /* bóng rất nhẹ để tách khối */
+  z-index: 18;
   overflow-x: auto;
-  scrollbar-width: none; /* ẩn thanh cuộn Firefox */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;   /* ẩn thanh cuộn Firefox */
 }
-.order-categories::-webkit-scrollbar {
-  display: none; /* ẩn thanh cuộn Chrome/Safari */
+.order-categories::-webkit-scrollbar { display: none; } /* ẩn thanh cuộn Chrome/Safari */
+
+/* giữ nút danh mục ở dạng pill và không co dãn */
+.danh-muc-btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #d6def3;
+  background: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--mauchinh);
 }
 
 /* --- Nút danh mục --- */
