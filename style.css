@@ -325,57 +325,44 @@ header h1 {
   outline: none;
   box-sizing: border-box;
 }
-/* ===== DANH MỤC MÓN (FULL-WIDTH, CỐ ĐỊNH DƯỚI Ô TÌM KIẾM) ===== */
+/* ===== DANH MỤC MÓN (TỰ GIÃN KHI GẦN ĐẦY) ===== */
 .order-categories {
-  position: fixed;         /* giữ cố định phía trên */
-  top: 108px;              /* nếu header ~52px + search ~56px => categories nằm ngay dưới search */
-  left: 0;
-  right: 0;
-  background: #fff;        /* khối trắng như demo */
+  position: fixed;
+  top: calc(52px + 48px + 10px); /* header 52 + search 48 + cách 10px */
+  left: 10px;
+  right: 10px;
   display: flex;
-  flex-wrap: nowrap;       /* 1 hàng, cuộn ngang khi overflow */
-  gap: 8px;
-  padding: 8px 16px 10px;
-  border-bottom: 1px solid #eee; /* khe ngăn nhẹ phía dưới */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04); /* bóng rất nhẹ để tách khối */
+  flex-wrap: wrap;
+  justify-content: flex-start;  /* mặc định căn trái */
+  gap: 10px;
+  background: transparent;
   z-index: 18;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;   /* ẩn thanh cuộn Firefox */
 }
-.order-categories::-webkit-scrollbar { display: none; } /* ẩn thanh cuộn Chrome/Safari */
 
-/* giữ nút danh mục ở dạng pill và không co dãn */
+/* Khi hàng có nhiều phần tử (tạm xem là “gần đầy”), tự giãn đều */
+.order-categories:has(.danh-muc-btn:nth-child(4):last-child),
+.order-categories:has(.danh-muc-btn:nth-child(5):last-child),
+.order-categories:has(.danh-muc-btn:nth-child(6):last-child) {
+  justify-content: space-between; /* ✅ hàng gần đầy thì giãn đều */
+}
+
+/* ===== NÚT DANH MỤC ===== */
 .danh-muc-btn {
-  flex: 0 0 auto;
-  white-space: nowrap;
-  padding: 6px 14px;
+  flex: 0 0 auto;          /* giữ kích thước thật, không giãn mặc định */
+  padding: 7px 14px;
   border-radius: 8px;
   border: 1px solid #d6def3;
   background: #fff;
   font-weight: 600;
-  font-size: 12px;
-  color: var(--mauchinh);
-}
-
-/* --- Nút danh mục --- */
-.danh-muc-btn {
-  background: #fff;
+  font-size: 13px;
   color: var(--mauchuchinh);
-  border: 1px solid #d6def3;
-  border-radius: 8px;
-  padding: 6px 14px;
-  font-weight: 600;
-  font-size: 11px;
   cursor: pointer;
   transition: all 0.2s ease;
-  white-space: nowrap;        /* 🔹 giữ ôm sát chữ */
-  flex: 0 0 auto;             /* 🔹 không co giãn đều */
+  white-space: nowrap;
 }
 
-/* Hover & Active */
 .danh-muc-btn:hover {
-  background: #e9edfb;
+  background: #f3f6ff;
 }
 
 .danh-muc-btn.active {
@@ -383,7 +370,6 @@ header h1 {
   color: #fff;
   border-color: var(--mauchinh);
 }
-
 /* Phần nội dung chính (cuộn riêng) */
 .order-content {
   flex: 1;
