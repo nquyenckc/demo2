@@ -289,25 +289,29 @@ header h1 {
   cursor: pointer;
 }
 
-/* --- Ô tìm kiếm --- */
+/* ===== Ô TÌM KIẾM ===== */
 .order-search {
-  padding: 3px 10px;
-  background: white;
-  flex-shrink: 0;
+  position: fixed;
+  top: 52px; /* ngay dưới header */
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 10px 16px;
+  border-bottom: 1px solid #eee;
+  z-index: 19;
 }
 
 .order-search input {
   width: 100%;
-  padding: 9px 36px 9px 34px;
-  border: 1px solid #ccc;
+  padding: 10px 34px;
+  border: 1px solid #ddd;
   border-radius: 10px;
-  background: var(--nenapp)
-    url('https://cdn-icons-png.flaticon.com/512/149/149852.png') no-repeat 10px
-    center;
+  background: #f9f9f9
+    url("https://cdn-icons-png.flaticon.com/512/149/149852.png") no-repeat 10px center;
   background-size: 16px;
   font-size: 15px;
   color: var(--mauchuchinh);
-  box-sizing: border-box;
+  outline: none;
 }
 /* --- Danh mục món --- */
 .order-categories {
