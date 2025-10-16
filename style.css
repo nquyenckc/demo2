@@ -748,3 +748,75 @@ header h1 {
 .order-content .mon-item + .mon-item {
   margin-top: 5px !important;
 }
+
+/* ===============================
+   🪄 Thông báo ngắn & Xác nhận
+   =============================== */
+.thong-bao {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 14px;
+  opacity: 0;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  z-index: 9999;
+  pointer-events: none;
+}
+.thong-bao.hien {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.thong-bao.thanhcong {
+  background: var(--mauchinh);
+}
+.thong-bao.loi {
+  background: #e53935;
+}
+.thong-bao.thongtin {
+  background: #444;
+}
+
+/* Popup xác nhận */
+.xac-nhan {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  padding: 18px 20px;
+  width: 280px;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease-out;
+}
+.xac-nhan h3 {
+  font-size: 16px;
+  margin: 0 0 14px 0;
+  color: #333;
+  text-align: center;
+}
+.xac-nhan .nut {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.xac-nhan button {
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.xac-nhan .dongy {
+  background: var(--mauchinh);
+  color: #fff;
+}
+.xac-nhan .huy {
+  background: #eee;
+}
