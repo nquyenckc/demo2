@@ -213,6 +213,7 @@ function datLai() {
 }
 
 // -------------------------------
+// -------------------------------
 // Lưu đơn
 function luuDon() {
   if (hoaDonTam.length === 0) {
@@ -231,7 +232,8 @@ function luuDon() {
     createdAt: Date.now()
   };
 
-  TABLES.push(donMoi);
+  // ✅ Đổi TABLES → hoaDonChinh để đồng bộ với tables.js mới
+  hoaDonChinh.push(donMoi);
   saveAll();
 
   hoaDonTam = [];
@@ -309,6 +311,7 @@ function updateOrderOffsets() {
 
 // Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
+
 
 
 
