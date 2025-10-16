@@ -105,8 +105,8 @@ function hienThiMonTheoDanhMuc(danhMuc) {
         <div class="mon-gia">${mon.price.toLocaleString()}₫</div>
       </div>
       <div class="mon-qty" id="qty-${mon.id}">
-        <button class="note-btn ${sl > 0 ? '' : 'hidden'}" onclick="toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">☆</button>
-        <button onclick="giamMon(${mon.id})">−</button>
+        <button class="note-btn ${sl > 0 ? '' : 'faded'}" onclick="toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">☆</button>
+        <button class="btn-minus ${sl > 0 ? '' : 'faded'}" onclick="giamMon(${mon.id})">−</button>
         <span id="sl-${mon.id}">${sl}</span>
         <button onclick="themMon(${mon.id})">+</button>
       </div>
@@ -125,7 +125,6 @@ function timSoLuong(id) {
 function themMon(id) {
   const mon = MENU.find((m) => m.id === id);
   const tonTai = hoaDonTam.find((m) => m.id === id);
-
   if (tonTai) tonTai.soluong++;
   else hoaDonTam.push({ ...mon, soluong: 1 });
 
@@ -133,37 +132,33 @@ function themMon(id) {
 
   const qtyBox = document.querySelector(`#qty-${id}`);
   const noteBtn = qtyBox.querySelector(".note-btn");
-  const giamBtn = qtyBox.querySelector("button:nth-child(2)"); // nút giảm
+  const giamBtn = qtyBox.querySelector(".btn-minus");
 
-  // Khi có ít nhất 1 món → hiện sao và bật nút giảm
-  if (noteBtn) noteBtn.classList.remove("hidden");
-  if (giamBtn) giamBtn.classList.remove("disabled");
+  // Khi có ít nhất 1 món → hiện rõ sao và nút trừ
+  if (noteBtn) noteBtn.classList.remove("faded");
+  if (giamBtn) giamBtn.classList.remove("faded");
 }
-
 
 function giamMon(id) {
   const idx = hoaDonTam.findIndex((m) => m.id === id);
   if (idx > -1) {
     hoaDonTam[idx].soluong--;
-    if (hoaDonTam[idx].soluong <= 0) {
-      hoaDonTam.splice(idx, 1);
-    }
+    if (hoaDonTam[idx].soluong <= 0) hoaDonTam.splice(idx, 1);
   }
 
-  // Cập nhật hiển thị ngay lập tức
   const qtyBox = document.querySelector(`#qty-${id}`);
   const slEl = document.getElementById(`sl-${id}`);
   const noteBtn = qtyBox.querySelector(".note-btn");
-  const giamBtn = qtyBox.querySelector("button:nth-child(2)"); // nút giảm
+  const giamBtn = qtyBox.querySelector(".btn-minus");
 
   const mon = hoaDonTam.find((m) => m.id === id);
   const sl = mon ? mon.soluong : 0;
   if (slEl) slEl.textContent = sl;
 
-  // Khi = 0 → ẩn sao + làm mờ nút giảm
+  // Khi = 0 → mờ sao và mờ dấu trừ
   if (sl === 0) {
-    if (noteBtn) noteBtn.classList.add("hidden");
-    if (giamBtn) giamBtn.classList.add("disabled");
+    if (noteBtn) noteBtn.classList.add("faded");
+    if (giamBtn) giamBtn.classList.add("faded");
   }
 
   capNhatHoaDon();
@@ -305,6 +300,7 @@ function updateOrderOffsets() {
 
 // Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
+
 
 
 
