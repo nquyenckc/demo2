@@ -249,7 +249,6 @@ header h1 {
   background-color: #3a5590;
 }
 
-/* ===== DANH SÁCH MÓN (PHẦN CUỘN GIỮA) ===== */
 
 /* --- Header --- */
 .order-header {
@@ -326,8 +325,8 @@ header h1 {
 /* ===== NÚT DANH MỤC ===== */
 .danh-muc-btn {
   flex: 0 0 auto;
-  padding: 7px 12px;              /* ✅ sát chiều cao gọn nhất */
-  border-radius: 8px;
+  padding: 4px 8px;              /* ✅ sát chiều cao gọn nhất */
+  border-radius: 6px;
   border: 1px solid #d6def3;
   background: #fff;
   font-weight: 600;
