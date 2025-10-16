@@ -630,7 +630,7 @@ header h1 {
 }
 
 /* ===============================
-   ⭐ Popup Ghi chú (Đường / Đá)
+   ⭐ Popup Ghi chú (Đường / Đá) - ĐÃ TINH CHỈNH
    =============================== */
 
 .popup-note {
@@ -643,14 +643,25 @@ header h1 {
   font-family: inherit;
   color: #333;
   z-index: 1000;
-  animation: fadeIn 0.15s ease-out;
+  animation: fadeInSmooth 0.12s ease-out;
+  transform-origin: top center;
+  will-change: transform, opacity;
+  border: 1px solid #e5e7eb;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
+/* 🟢 Mượt, không rung app */
+@keyframes fadeInSmooth {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
+/* Giữ nguyên phần nội dung */
 .popup-row {
   display: flex;
   align-items: center;
@@ -713,15 +724,6 @@ header h1 {
 .popup-actions .confirm:hover {
   opacity: 0.9;
 }
-
-/* ⭐ Nút sao trên menu */
-.note-btn {
-  border: 2px solid var(--mauchinh);
-  background: white;
-  color: var(--mauchinh);
-  border-radius: 50%;
-  width: 26px;
-  height: 26px;
 
    /* ===============================
    ⚙️ Làm mờ nút sao và nút trừ khi số lượng = 0
