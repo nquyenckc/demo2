@@ -376,19 +376,27 @@ header h1 {
 }
 
 /* Danh sách món - tự giãn phần trống giữa danh mục và hóa đơn */
-/.order-content {
+/* ===============================
+   🧾 Danh sách món - layout cũ ổn định
+   =============================== */
+.order-content {
   position: fixed;
   left: 20px;
   right: 20px;
+
+  /* Giữ vị trí cố định bằng JS tính */
   top: var(--order-top, 140px);
   bottom: calc(var(--order-bottom, 190px) + env(safe-area-inset-bottom, 0px));
+
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 5px; /* ✅ đảm bảo khoảng cách giữa các món */
+  row-gap: 5px;             /* khoảng cách giữa các món */
   background: var(--nenapp);
   box-sizing: border-box;
-  padding: 5px 0; /* ✅ thêm padding nhỏ để không bị dính mép trên/dưới */
+  margin-top: 0;            /* tránh cộng thêm margin gây lệch */
+  padding: 5px 0;           /* cách nhẹ đầu/cuối danh sách */
+  z-index: 5;
 }
 
 /* ===== MỖI MÓN ===== */
@@ -400,12 +408,7 @@ header h1 {
   border-radius: 10px;
   padding: 10px 14px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  margin: 0; /* ✅ tránh margin tự cộng dồn với gap */
-  transition: transform 0.08s ease;
-}
-
-.mon-item:active {
-  transform: scale(0.98);
+  flex-shrink: 0; /* không bị co */
 }
 
 /* ===== TÊN VÀ GIÁ ===== */
