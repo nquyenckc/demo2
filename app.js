@@ -184,7 +184,7 @@ function themKhachTaiQuan() {
 
   popup.querySelector(".btn-primary").addEventListener("click", () => {
     if (!banDuocChon) {
-      alert("Vui lòng chọn bàn!");
+      hienThongBao("Vui lòng chọn bàn");
       return;
     }
     overlay.remove();
@@ -193,3 +193,4 @@ function themKhachTaiQuan() {
     khoiTaoOrder(tenDon);
   });
 }
+
