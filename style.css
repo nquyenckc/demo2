@@ -348,13 +348,6 @@ header h1 {
   color: #fff;
   border-color: var(--mauchinh);
 }
-/* Phần nội dung chính (cuộn riêng) */
-.order-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;      /* ✅ chỉ phần này được cuộn */
-}
 
 /* Footer cố định */
 .order-footer {
@@ -375,21 +368,23 @@ header h1 {
 
 /* ===== DANH SÁCH MÓN (PHẦN CUỘN GIỮA) ===== */
 .order-content {
-  position: fixed;
-  top: calc(52px + 48px + 10px + 40px + 10px);  /* header + search + khoảng cách + danh mục + khoảng cách */
-  left: 10px;
-  right: 10px;
-  height: calc(100dvh - (52px + 48px + 10px + 40px + 10px + 10px + 120px + 70px + 10px));
-  /* 100vh trừ đi toàn bộ phần trên và dưới */
-  overflow-y: auto;
-  background: var(--nenapp);
-  padding: 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;      /* ✅ chỉ phần này được cuộn */
+  background: var(--nenapp);
+  margin: 10px 0;        /* ✅ cách trên 10px, dưới 10px */
   gap: 8px;
   scroll-behavior: smooth;
 }
-
+.order-container {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;      /* ✅ chiếm full màn hình thật */
+  overflow: hidden;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
 /* ===== MỖI MÓN ===== */
 .mon-item {
   display: flex;
