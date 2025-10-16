@@ -147,24 +147,37 @@ function getIceLabels() {
   return ['Không đá', 'Đá ít', 'Đá vừa', 'Bình thường'];
 }
 function positionPopupNearButton(popup, btn) {
+  // 📌 Lấy vị trí nút sao
   const rect = btn.getBoundingClientRect();
-  const popupRect = popup.getBoundingClientRect();
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+
+  // 📦 Ẩn popup tạm để đo đúng kích thước mà không gây reflow
+  popup.style.visibility = "hidden";
+  popup.style.display = "block";
+  const popupWidth = popup.offsetWidth;
+  const popupHeight = popup.offsetHeight;
+  popup.style.visibility = "";
+  popup.style.display = "";
+
+  // 🧭 Tính toán vị trí
+  let top = rect.bottom + scrollTop + 6;
   const screenHeight = window.innerHeight;
+  if (rect.bottom + popupHeight > screenHeight - 10)
+    top = rect.top + scrollTop - popupHeight - 6;
 
-  let top = rect.bottom + scrollTop + 5;
-  if (rect.bottom + popupRect.height > screenHeight - 10)
-    top = rect.top + scrollTop - popupRect.height - 5;
-
-  let left = rect.left + rect.width / 2;
+  // Căn giữa popup ngay dưới nút sao
+  let left = rect.left + scrollLeft + rect.width / 2 - popupWidth / 2;
   const screenWidth = window.innerWidth;
-  if (left - popupRect.width / 2 < 5) left = popupRect.width / 2 + 5;
-  if (left + popupRect.width / 2 > screenWidth - 5)
-    left = screenWidth - popupRect.width / 2 - 5;
+  if (left < 6) left = 6;
+  if (left + popupWidth > screenWidth - 6)
+    left = screenWidth - popupWidth - 6;
 
+  // 🧩 Áp dụng vị trí cuối cùng
   popup.style.position = "absolute";
   popup.style.top = `${top}px`;
   popup.style.left = `${left}px`;
-  popup.style.transform = "translateX(-50%)";
+  popup.style.transform = "none"; // bỏ translateX(-50%) gây rung
+  popup.style.transition = "opacity 0.12s ease, transform 0.12s ease";
   popup.style.zIndex = 1000;
 }
