@@ -750,47 +750,59 @@ header h1 {
 }
 
 /* ===============================
-   🪄 Thông báo ngắn & Xác nhận
+   🪄 Thông báo ngắn & Xác nhận - (BẢN TINH CHỈNH)
    =============================== */
 .thong-bao {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  background: rgba(0, 0, 0, 0.85);
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: 14px;
-  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: #fff;                           /* ✅ nền trắng */
+  color: var(--mauchuchinh);                  /* ✅ chữ màu chính */
+  padding: 14px 26px;
+  border-radius: 14px;                        /* ✅ bo tròn mềm */
+  border: 2px solid var(--mauchuchinh);       /* ✅ viền cùng màu chữ */
+  box-shadow: 0 8px 26px rgba(74, 105, 173, 0.5); /* ✅ đổ bóng xanh đậm */
   font-size: 15px;
+  font-weight: 600;
+  opacity: 0;
   transition: all 0.25s ease;
   z-index: 9999;
   pointer-events: none;
 }
+
 .thong-bao.hien {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }
+
+/* --- Các trạng thái phụ nếu cần giữ lại --- */
 .thong-bao.thanhcong {
-  background: var(--mauchinh);
-}
-.thong-bao.loi {
-  background: #e53935;
-}
-.thong-bao.thongtin {
-  background: #444;
+  box-shadow: 0 8px 28px rgba(74, 105, 173, 0.55);
 }
 
-/* Popup xác nhận */
+.thong-bao.loi {
+  border-color: #e53935;
+  color: #e53935;
+  box-shadow: 0 8px 28px rgba(229, 57, 53, 0.5);
+}
+
+.thong-bao.thongtin {
+  box-shadow: 0 8px 28px rgba(74, 105, 173, 0.45);
+}
+
+/* --- Popup xác nhận (đồng bộ màu & bo) --- */
 .xac-nhan {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  padding: 18px 20px;
+  color: var(--mauchuchinh);
+  border: 2px solid var(--mauchuchinh);
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(74, 105, 173, 0.5);
+  padding: 18px 22px;
   width: 280px;
   z-index: 10000;
   animation: fadeIn 0.2s ease-out;
@@ -798,7 +810,6 @@ header h1 {
 .xac-nhan h3 {
   font-size: 16px;
   margin: 0 0 14px 0;
-  color: #333;
   text-align: center;
 }
 .xac-nhan .nut {
@@ -819,4 +830,5 @@ header h1 {
 }
 .xac-nhan .huy {
   background: #eee;
+  color: var(--mauchuchinh);
 }
