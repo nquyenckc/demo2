@@ -125,15 +125,21 @@ function timSoLuong(id) {
 function themMon(id) {
   const mon = MENU.find((m) => m.id === id);
   const tonTai = hoaDonTam.find((m) => m.id === id);
+
   if (tonTai) tonTai.soluong++;
   else hoaDonTam.push({ ...mon, soluong: 1 });
 
   capNhatHoaDon();
 
-  // ⭐ Cập nhật sao hiển thị
-  const noteBtn = document.querySelector(`#qty-${id} .note-btn`);
+  const qtyBox = document.querySelector(`#qty-${id}`);
+  const noteBtn = qtyBox.querySelector(".note-btn");
+  const giamBtn = qtyBox.querySelector("button:nth-child(2)"); // nút giảm
+
+  // Khi có ít nhất 1 món → hiện sao và bật nút giảm
   if (noteBtn) noteBtn.classList.remove("hidden");
+  if (giamBtn) giamBtn.classList.remove("disabled");
 }
+
 
 function giamMon(id) {
   const idx = hoaDonTam.findIndex((m) => m.id === id);
@@ -144,18 +150,23 @@ function giamMon(id) {
     }
   }
 
-  // 🧮 Cập nhật hiển thị số lượng (trước khi render lại)
+  // Cập nhật hiển thị ngay lập tức
+  const qtyBox = document.querySelector(`#qty-${id}`);
   const slEl = document.getElementById(`sl-${id}`);
-  if (slEl) {
-    const mon = hoaDonTam.find((m) => m.id === id);
-    slEl.textContent = mon ? mon.soluong : 0;
+  const noteBtn = qtyBox.querySelector(".note-btn");
+  const giamBtn = qtyBox.querySelector("button:nth-child(2)"); // nút giảm
+
+  const mon = hoaDonTam.find((m) => m.id === id);
+  const sl = mon ? mon.soluong : 0;
+  if (slEl) slEl.textContent = sl;
+
+  // Khi = 0 → ẩn sao + làm mờ nút giảm
+  if (sl === 0) {
+    if (noteBtn) noteBtn.classList.add("hidden");
+    if (giamBtn) giamBtn.classList.add("disabled");
   }
 
   capNhatHoaDon();
-
-  // ⭐ Ẩn sao nếu số lượng = 0
-  const noteBtn = document.querySelector(`#qty-${id} .note-btn`);
-  if (noteBtn && timSoLuong(id) === 0) noteBtn.classList.add("hidden");
 }
 
 // -------------------------------
@@ -294,5 +305,6 @@ function updateOrderOffsets() {
 
 // Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
+
 
 
