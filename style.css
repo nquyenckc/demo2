@@ -743,3 +743,8 @@ header h1 {
   cursor: default;
   transition: opacity 0.2s ease;
 }
+
+/* ✅ Ép khoảng cách giữa các món trong danh sách order */
+.order-content .mon-item + .mon-item {
+  margin-top: 5px !important;
+}
