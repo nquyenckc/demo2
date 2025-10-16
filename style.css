@@ -335,7 +335,7 @@ header h1 {
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
-  line-height: 1;                 /* ✅ thu gọn chiều cao thực tế */
+  line-height: 1.1;                 /* ✅ thu gọn chiều cao thực tế */
   height: fit-content;            /* tránh dư khoảng trên/dưới */
 }
 
