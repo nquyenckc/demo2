@@ -870,13 +870,15 @@ header h1 {
   border-radius: 16px;
   border: 1.5px solid rgba(74,105,173,0.18);
   box-shadow: 0 3px 8px rgba(74,105,173,0.08);
-  padding: 12px 14px;
+  padding: 12px 16px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  gap: 4px;
   transition: all 0.15s ease;
   position: relative;
   z-index: 1;
+  cursor: pointer;
 }
 
 .order-card:hover {
@@ -884,26 +886,50 @@ header h1 {
   box-shadow: 0 4px 10px rgba(74,105,173,0.12);
 }
 
-/* ====== NỘI DUNG TRÁI ====== */
+/* ====== NỘI DUNG TRONG CARD ====== */
 .order-info {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-/* ====== CỤM NÚT PHẢI ====== */
-.order-actions {
+/* --- Tên bàn (hàng trên) --- */
+.order-info .table-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+
+/* --- Dòng món + giá + giờ (hàng dưới) --- */
+.order-info .details {
+  font-size: 0.9rem;
+  color: #555;
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 6px;
 }
 
-.order-actions .action-btn {
-  width: 38px;
-  height: 38px;
-  background: rgba(74,105,173,0.08); /* xanh nhạt */
-  border-radius: 12px;
+/* --- Thời gian nhỏ hơn một chút --- */
+.order-info .time {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+/* ====== CỤM NÚT PHẢI (tạm ẩn icon) ====== */
+.order-actions {
   display: flex;
+  gap: 6px;
+  margin-top: 4px; /* vẫn giữ layout ổn định khi bật lại */
+}
+
+.order-actions .action-btn {
+  width: 36px;
+  height: 36px;
+  background: rgba(74,105,173,0.08);
+  border-radius: 10px;
+  display: none; /* ✅ tạm ẩn icon */
   align-items: center;
   justify-content: center;
   border: none;
@@ -912,13 +938,7 @@ header h1 {
   transition: background 0.2s ease, transform 0.1s ease;
 }
 
-/* hiệu ứng hover nhẹ */
 .order-actions .action-btn:hover {
   background: rgba(74,105,173,0.15);
   transform: scale(1.05);
-}
-
-/* tạm thời ẩn icon */
-.order-actions .action-btn img {
-  display: none;
 }
