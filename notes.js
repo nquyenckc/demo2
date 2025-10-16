@@ -11,7 +11,7 @@ function toggleNotePopup(item, btn) {
   } else if (typeof hoaDonTam !== "undefined") {
     cartRef = hoaDonTam;
   } else {
-    alert("⚠️ Chưa có đơn hoặc bàn nào được chọn!");
+    hienThongBao("⚠️ Chưa có đơn hoặc bàn nào được chọn!");
     return;
   }
 
@@ -94,7 +94,7 @@ function toggleNotePopup(item, btn) {
       const noteCount = cartRef.filter(it => it.id === item.id && it.isNoteOnly).length;
 
       if (noteCount >= baseQty) {
-        alert(`Đã ghi chú đủ ${baseQty} ly cho món "${item.name}"`);
+        hienThongBao(`Đã ghi chú đủ ${baseQty} ly cho món "${item.name}"`);
         return;
       }
 
@@ -222,3 +222,4 @@ function hopXacNhan(noiDung, khiDongY, khiHuy) {
     if (khiHuy) khiHuy();
   });
 }
+
