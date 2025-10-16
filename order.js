@@ -65,6 +65,7 @@ main.innerHTML = `
 
   document.getElementById("btnDatLai").addEventListener("click", datLai);
   document.getElementById("btnLuuDon").addEventListener("click", luuDon);
+  setTimeout(updateOrderOffsets, 100); // đợi render xong rồi tính lại
 }
 
 // -------------------------------
@@ -284,3 +285,4 @@ function updateOrderOffsets() {
 
 // Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
+
