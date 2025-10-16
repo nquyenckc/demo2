@@ -718,3 +718,9 @@ header h1 {
   border-radius: 50%;
   width: 26px;
   height: 26px;
+
+
+/* ===== KHOẢNG CÁCH GIỮA CÁC MÓN ===== */
+.order-content .mon-item + .mon-item {
+  margin-top: 5px;   /* mỗi món cách món trên 5px */
+}
