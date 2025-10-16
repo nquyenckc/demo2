@@ -723,8 +723,14 @@ header h1 {
   width: 26px;
   height: 26px;
 
-   .faded {
-  opacity: 0.3;
-  pointer-events: none;
-  transition: opacity 0.2s;
+   /* ===============================
+   ⚙️ Làm mờ nút sao và nút trừ khi số lượng = 0
+   =============================== */
+.note-btn.faded,
+.btn-minus.faded {
+  opacity: 0.3 !important;   /* mờ đi rõ ràng */
+  filter: grayscale(80%);
+  pointer-events: none;      /* khóa click */
+  cursor: default;
+  transition: opacity 0.2s ease;
 }
