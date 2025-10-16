@@ -870,11 +870,10 @@ header h1 {
   border-radius: 16px;
   border: 1.5px solid rgba(74,105,173,0.18);
   box-shadow: 0 3px 8px rgba(74,105,173,0.08);
-  padding: 12px 16px;
+  padding: 12px 14px;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  gap: 4px;
+  align-items: stretch;
   transition: all 0.15s ease;
   position: relative;
   z-index: 1;
@@ -886,59 +885,59 @@ header h1 {
   box-shadow: 0 4px 10px rgba(74,105,173,0.12);
 }
 
-/* ====== NỘI DUNG TRONG CARD ====== */
+/* ====== NỘI DUNG TRÁI ====== */
 .order-info {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-/* --- Tên bàn (hàng trên) --- */
-.order-info .table-name {
-  font-weight: 700;
-  font-size: 1rem;
-  color: #1a1a1a;
+/* --- Hàng trên: tên bàn + giờ --- */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 4px;
 }
 
-/* --- Dòng món + giá + giờ (hàng dưới) --- */
-.order-info .details {
-  font-size: 0.9rem;
-  color: #555;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
+.order-header .table-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1a1a1a;
 }
 
-/* --- Thời gian nhỏ hơn một chút --- */
-.order-info .time {
+.order-header .time {
   font-size: 0.85rem;
   color: #777;
 }
 
-/* ====== CỤM NÚT PHẢI (tạm ẩn icon) ====== */
+/* --- Hàng dưới: món + giá --- */
+.order-details {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* ====== CỤM NÚT PHẢI (vẫn giữ, chỉ ẩn icon) ====== */
 .order-actions {
   display: flex;
-  gap: 6px;
-  margin-top: 4px; /* vẫn giữ layout ổn định khi bật lại */
-}
-
-.order-actions .action-btn {
-  width: 36px;
-  height: 36px;
-  background: rgba(74,105,173,0.08);
-  border-radius: 10px;
-  display: none; /* ✅ tạm ẩn icon */
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
+  align-items: center;
+  width: 54px;
+  background: rgba(74,105,173,0.05);
+  border-left: 1px solid rgba(74,105,173,0.12);
+  border-radius: 0 16px 16px 0;
+  padding: 6px 0;
 }
 
-.order-actions .action-btn:hover {
-  background: rgba(74,105,173,0.15);
-  transform: scale(1.05);
+/* tạm thời ẩn icon */
+.order-actions .action-btn {
+  display: none;
+}
+
+/* hiệu ứng hover nhẹ */
+.order-card:hover .order-actions {
+  background: rgba(74,105,173,0.08);
+  border-left-color: rgba(74,105,173,0.25);
 }
