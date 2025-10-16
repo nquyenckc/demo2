@@ -723,3 +723,8 @@ header h1 {
   width: 26px;
   height: 26px;
 
+   .faded {
+  opacity: 0.3;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
