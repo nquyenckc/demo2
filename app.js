@@ -102,7 +102,7 @@ function hienThiManHinhChinh() {
 function renderTables() {
   const div = document.querySelector(".table-list");
 
-  if (TABLES.length === 0) {
+  if (!TABLES || TABLES.length === 0) {
     div.innerHTML = `<p class="empty-state">Chưa có đơn hàng nào</p>`;
     return;
   }
@@ -117,10 +117,10 @@ function renderTables() {
     const tongTien = t.cart.reduce((a, m) => a + m.price * m.soluong, 0);
 
     return `
-      <div class="table-item">
-        <h3>${t.name}</h3>
-        <div class="summary">${t.cart.length} món • ${tongTien.toLocaleString()}₫</div>
-        <div class="time">${time}</div>
+      <div class="order-card" onclick="openTable('${t.id}')">
+        <div><b>${t.name}</b></div>
+        <div>${t.cart.length} món • ${tongTien.toLocaleString()}₫</div>
+        <div class="small">${time}</div>
       </div>
     `;
   }).join("");
@@ -206,5 +206,6 @@ function themKhachTaiQuan() {
     khoiTaoOrder(tenDon);
   });
 }
+
 
 
