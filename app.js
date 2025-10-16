@@ -102,12 +102,12 @@ function hienThiManHinhChinh() {
 function renderTables() {
   const div = document.querySelector(".table-list");
 
-  if (!TABLES || TABLES.length === 0) {
+  if (!hoaDonChinh || hoaDonChinh.length === 0) {
     div.innerHTML = `<p class="empty-state">Chưa có đơn hàng nào</p>`;
     return;
   }
 
-  div.innerHTML = TABLES.map(t => {
+  div.innerHTML = hoaDonChinh.map(t => {
     const date = new Date(t.createdAt);
     const time = date.toLocaleTimeString("vi-VN", {
       hour: "2-digit",
@@ -206,6 +206,7 @@ function themKhachTaiQuan() {
     khoiTaoOrder(tenDon);
   });
 }
+
 
 
 
