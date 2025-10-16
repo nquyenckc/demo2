@@ -1,4 +1,4 @@
-/* ================================
+q/* ================================
    🎨 BLACKTEA POS v2.0 - BASE STYLE
    ================================ */
 
@@ -391,6 +391,7 @@ header h1 {
   row-gap: 5px;             /* khoảng cách giữa các món */
   background: var(--nenapp);
   box-sizing: border-box;
+  margin-top: 5px;
 }
 /* ===== MỖI MÓN ===== */
 .mon-item {
