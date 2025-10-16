@@ -217,7 +217,7 @@ function datLai() {
 // Lưu đơn
 function luuDon() {
   if (hoaDonTam.length === 0) {
-    alert("Chưa có món nào để lưu!");
+    hienThongBao("Chưa có món nào để lưu");
     return;
   }
 
@@ -239,7 +239,7 @@ function luuDon() {
   hoaDonTam = [];
   capNhatHoaDon();
 
-  alert("✅ Đã lưu đơn!");
+  hienThongBao("Đã lưu đơn");
 
   const header = document.querySelector("header");
   header.innerHTML = `
@@ -311,6 +311,7 @@ function updateOrderOffsets() {
 
 // Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
+
 
 
 
