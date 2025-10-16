@@ -395,6 +395,7 @@ header h1 {
 /* ===== MỖI MÓN ===== */
 .mon-item {
   display: flex;
+  margin-top: 5px
   justify-content: space-between;
   align-items: center;
   background: #fff;
