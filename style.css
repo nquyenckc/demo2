@@ -455,8 +455,11 @@ header h1 {
   color: var(--mauchinh);
   font-size: 15px;
 }
-
-/* ===== HÓA ĐƠN TẠM (CHỈ MÓN + SỐ LƯỢNG, KHÔNG GIÁ) ===== */
+.mon-qty button.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+/*=== HÓA ĐƠN TẠM (CHỈ MÓN + SỐ LƯỢNG, KHÔNG GIÁ) ===== */
 .hoa-don-tam {
   position: fixed;
   left: 10px;
