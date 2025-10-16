@@ -105,8 +105,8 @@ function hienThiMonTheoDanhMuc(danhMuc) {
         <div class="mon-gia">${mon.price.toLocaleString()}₫</div>
       </div>
       <div class="mon-qty" id="qty-${mon.id}">
-        <button class="note-btn ${sl > 0 ? '' : 'faded'}" onclick="toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">☆</button>
-        <button class="btn-minus ${sl > 0 ? '' : 'faded'}" onclick="giamMon(${mon.id})">−</button>
+        <button class="note-btn ${sl > 0 ? '' : 'faded'}" onclick="if(${sl} > 0) toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">☆</button>
+        <button class="btn-minus ${sl > 0 ? '' : 'faded'}" onclick="if(${sl} > 0) giamMon(${mon.id})">−</button>
         <span id="sl-${mon.id}">${sl}</span>
         <button onclick="themMon(${mon.id})">+</button>
       </div>
@@ -134,11 +134,14 @@ function themMon(id) {
   const noteBtn = qtyBox.querySelector(".note-btn");
   const giamBtn = qtyBox.querySelector(".btn-minus");
 
-  // Khi có ít nhất 1 món → hiện rõ sao và nút trừ
+  // Khi có ít nhất 1 món → hiện rõ và bật nút
   if (noteBtn) noteBtn.classList.remove("faded");
   if (giamBtn) giamBtn.classList.remove("faded");
-}
 
+  // Gán lại onclick khi có món
+  noteBtn.setAttribute("onclick", `toggleNotePopup(MENU.find(m => m.id === ${id}), this)`);
+  giamBtn.setAttribute("onclick", `giamMon(${id})`);
+}
 function giamMon(id) {
   const idx = hoaDonTam.findIndex((m) => m.id === id);
   if (idx > -1) {
@@ -155,10 +158,16 @@ function giamMon(id) {
   const sl = mon ? mon.soluong : 0;
   if (slEl) slEl.textContent = sl;
 
-  // Khi = 0 → mờ sao và mờ dấu trừ
+  // Khi = 0 → mờ sao & trừ + khóa bấm
   if (sl === 0) {
-    if (noteBtn) noteBtn.classList.add("faded");
-    if (giamBtn) giamBtn.classList.add("faded");
+    if (noteBtn) {
+      noteBtn.classList.add("faded");
+      noteBtn.setAttribute("onclick", ""); // khóa click
+    }
+    if (giamBtn) {
+      giamBtn.classList.add("faded");
+      giamBtn.setAttribute("onclick", ""); // khóa click
+    }
   }
 
   capNhatHoaDon();
@@ -300,6 +309,7 @@ function updateOrderOffsets() {
 
 // Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
+
 
 
 
