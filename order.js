@@ -256,3 +256,40 @@ function timMon() {
 }
 
 
+// gọi sau khi DOM render popup (sau khoiTaoOrder)
+function updateOrderOffsets() {
+  const header = document.querySelector('header');
+  const search = document.querySelector('.order-search');
+  const categories = document.querySelector('.order-categories');
+  const hoaDon = document.querySelector('.hoa-don-tam');
+  const footer = document.querySelector('.order-footer');
+
+  const gap = 10; // px, khoản cách theo ý bạn
+
+  const headerH = header ? Math.round(header.getBoundingClientRect().height) : 0;
+  const searchH = search ? Math.round(search.getBoundingClientRect().height) : 0;
+  const categoriesH = categories ? Math.round(categories.getBoundingClientRect().height) : 0;
+  const hoaDonH = hoaDon ? Math.round(hoaDon.getBoundingClientRect().height) : 0;
+  const footerH = footer ? Math.round(footer.getBoundingClientRect().height) : 0;
+
+  // top = header + gap + search + gap + categories + gap
+  const topPx = headerH + gap + searchH + gap + categoriesH + gap;
+
+  // bottom = hoa-don + gap + footer + safe area (we'll add safe area via CSS env)
+  const bottomPx = hoaDonH + gap + footerH;
+
+  document.documentElement.style.setProperty('--order-top', topPx + 'px');
+  document.documentElement.style.setProperty('--order-bottom', bottomPx + 'px');
+}
+
+// gọi lần đầu sau render
+// ví dụ trong khoiTaoOrder() gọi updateOrderOffsets() sau khi taoDanhMuc() và render danh sách xong
+// và thêm listener:
+window.addEventListener('resize', updateOrderOffsets);
+const obs = new MutationObserver(() => updateOrderOffsets());
+// quan sát nếu danh mục thay đổi số hàng / nội dung
+const cat = document.querySelector('.order-categories');
+if (cat) obs.observe(cat, { childList: true, subtree: true, attributes: true });
+
+// gọi 1 lần ngay
+updateOrderOffsets();
