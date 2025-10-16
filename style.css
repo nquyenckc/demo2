@@ -844,16 +844,27 @@ header h1 {
 /* --- Danh sách tổng --- */
 .table-list {
   position: absolute;
-  top: calc(var(--header-height) + var(--btn-height) + 20px);
+  top: calc(var(--header-height, 52px) + var(--btn-height, 48px) + 20px);
   left: 0;
   right: 0;
-  height: calc(100dvh - (var(--header-height) + var(--btn-height) + 40px)); /* 20px trên + 20px dưới */
+
+  /* 🧮 Chiều cao vùng hiển thị giữa (toàn màn hình trừ trên và dưới 20px) */
+  height: calc(100dvh - (var(--header-height, 52px) + var(--btn-height, 48px) + 40px));
+
+  /* 🌀 Cuộn trong khung nếu danh sách dài */
   overflow-y: auto;
+  overflow-x: hidden;
+
+  /* 📦 Căn padding + layout */
   padding: 0 16px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  /* 🩶 Nền nhẹ tách biệt */
+  background: var(--nenapp);
+  border-radius: 12px;
 }
 
 /* --- Khi chưa có đơn --- */
