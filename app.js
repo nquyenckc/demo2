@@ -96,21 +96,34 @@ function hienThiManHinhChinh() {
 // ================================
 // 🧾 Hiển thị danh sách đơn ngoài màn hình chính
 // ================================
+// ================================
+// 🧾 Hiển thị danh sách đơn ngoài màn hình chính (có giờ:phút gọn)
+// ================================
 function renderTables() {
   const div = document.querySelector(".table-list");
 
-  if (hoaDonChinh.length === 0) { // ✅ đổi TABLES → hoaDonChinh
+  if (TABLES.length === 0) {
     div.innerHTML = `<p class="empty-state">Chưa có đơn hàng nào</p>`;
     return;
   }
 
-  div.innerHTML = hoaDonChinh.map(t => `  <!-- ✅ đổi TABLES → hoaDonChinh -->
-    <div class="order-card">
-      <div><b>${t.name}</b></div>
-      <div>${t.cart.length} món • ${t.cart.reduce((a,m)=>a+m.price*m.soluong,0).toLocaleString()}₫</div>
-      <div class="small">${new Date(t.createdAt).toLocaleString("vi-VN")}</div>
-    </div>
-  `).join("");
+  div.innerHTML = TABLES.map(t => {
+    const date = new Date(t.createdAt);
+    const time = date.toLocaleTimeString("vi-VN", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    const tongTien = t.cart.reduce((a, m) => a + m.price * m.soluong, 0);
+
+    return `
+      <div class="table-item">
+        <h3>${t.name}</h3>
+        <div class="summary">${t.cart.length} món • ${tongTien.toLocaleString()}₫</div>
+        <div class="time">${time}</div>
+      </div>
+    `;
+  }).join("");
 }
 
 // ================================
@@ -193,4 +206,5 @@ function themKhachTaiQuan() {
     khoiTaoOrder(tenDon);
   });
 }
+
 
