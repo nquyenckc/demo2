@@ -139,7 +139,16 @@ function giamMon(id) {
   const idx = hoaDonTam.findIndex((m) => m.id === id);
   if (idx > -1) {
     hoaDonTam[idx].soluong--;
-    if (hoaDonTam[idx].soluong <= 0) hoaDonTam.splice(idx, 1);
+    if (hoaDonTam[idx].soluong <= 0) {
+      hoaDonTam.splice(idx, 1);
+    }
+  }
+
+  // 🧮 Cập nhật hiển thị số lượng (trước khi render lại)
+  const slEl = document.getElementById(`sl-${id}`);
+  if (slEl) {
+    const mon = hoaDonTam.find((m) => m.id === id);
+    slEl.textContent = mon ? mon.soluong : 0;
   }
 
   capNhatHoaDon();
@@ -285,4 +294,5 @@ function updateOrderOffsets() {
 
 // Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
+
 
