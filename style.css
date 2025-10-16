@@ -367,31 +367,25 @@ header h1 {
 }
 
 /* ===== DANH SÁCH MÓN (PHẦN CUỘN GIỮA) ===== */
-/* Container chính của phần order */
+
 .order-container {
-  position: fixed;
-  top: calc(52px);          /* header cao ~52px */
-  left: 0;
-  right: 0;
-  bottom: 0;
   display: flex;
   flex-direction: column;
+  height: 100dvh; /* chiếm toàn màn hình thật */
   overflow: hidden;
-  background: var(--nenapp);
-  padding: 0 10px;
-  box-sizing: border-box;
 }
 
-/* Danh sách món (phần cuộn giữa) */
+/* Danh sách món - tự giãn phần trống giữa danh mục và hóa đơn */
 .order-content {
   flex: 1;
   overflow-y: auto;
+  margin-top: 10px;   /* cách danh mục 10px */
+  margin-bottom: 10px;/* cách hóa đơn 10px */
   background: var(--nenapp);
-  margin: 10px 0;           /* cách trên 10px, dưới 10px */
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  scroll-behavior: smooth;
 }
 /* ===== MỖI MÓN ===== */
 .mon-item {
