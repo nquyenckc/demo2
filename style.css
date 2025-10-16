@@ -882,7 +882,7 @@ header h1 {
   position: absolute;
   inset: 0;
   border-radius: 16px;
-  border: 2px solid var(--mauchuchinh);
+  border: 2px solid var(--mauchinh);
   opacity: 0.08;
   pointer-events: none;
 }
