@@ -832,49 +832,41 @@ header h1 {
   background: #eee;
   color: var(--mauchinh);
 }
-/* ======== CẬP NHẬT .table-list - CUỘN TRONG KHUNG (GIỮ NGUYÊN NÚT) ======== */
+/* ======== CẬP NHẬT .table-list - CUỘN TRONG KHUNG (FIX CHE CUỐI) ======== */
 .table-list {
   position: absolute;
   top: calc(var(--header-height, 52px) + var(--btn-height, 48px) + 20px);
   left: 0;
   right: 0;
-  bottom: 20px;                 /* vùng kết thúc cách mép dưới 20px */
-
-  /* cuộn trong vùng */
+  bottom: 20px;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-
-  /* padding: giữ 16px 2 bên, + đệm dưới để nội dung không bị che bởi scrollbar */
-  padding: 0 16px 28px;        /* 28px để dư hơn 20px, an toàn cho scrollbar */
-
+  padding: 0 16px 40px;         /* tăng padding-bottom từ 28px → 40px để tránh bị che */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 12px;
-
-  /* nền + bo để che phần dưới */
   background: var(--nenapp);
   border-radius: 12px;
-  /* giữ subtle inset để tách vùng (tuỳ chọn) */
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
   z-index: 0;
 }
 
-/* gradient mờ ở đáy để "kết màn" mượt (tùy chọn, nếu muốn bật hãy giữ) */
+/* gradient mờ nhẹ ở đáy, KHÔNG đè nội dung */
 .table-list::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 20px;               /* trùng với bottom của vùng (khoảng tiện) */
-  height: 28px;
+  bottom: 0;                   /* để trùng mép dưới container, không che thẻ cuối */
+  height: 20px;
   pointer-events: none;
   background: linear-gradient(to bottom, rgba(247,249,252,0), var(--nenapp));
-  z-index: 1;
+  z-index: 0;                  /* thấp hơn thẻ order-card để không đè chữ */
 }
 
-/* giữ các style order-card (không thay đổi kích thước) */
+/* ====== CARD ====== */
 .order-card {
   background: #fff;
   border-radius: 16px;
@@ -884,6 +876,8 @@ header h1 {
   padding: 12px 16px;
   transition: transform 0.1s ease, box-shadow 0.1s ease;
   cursor: pointer;
+  position: relative;          /* giúp chắc chắn z-index của card nằm trên gradient */
+  z-index: 1;
 }
 
 .order-card:hover {
