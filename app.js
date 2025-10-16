@@ -2,20 +2,19 @@
 // 📦 BlackTea POS v2.3 - app.js (có đếm mang đi + tên bàn chuẩn)
 // ================================
 
-
 // 🔢 Biến đếm đơn "Mang đi"
 let demMangDi = 0;
 
 // ✅ Tải dữ liệu khi mở trang
 window.addEventListener("load", () => {
   const saved = localStorage.getItem("BT_TABLES");
-  if (saved) TABLES = JSON.parse(saved);
+  if (saved) hoaDonChinh = JSON.parse(saved); // ✅ đổi TABLES → hoaDonChinh
   loadDemMangDi();
 });
 
 // ✅ Lưu dữ liệu ra localStorage
 function saveAll() {
-  localStorage.setItem("BT_TABLES", JSON.stringify(TABLES));
+  localStorage.setItem("BT_TABLES", JSON.stringify(hoaDonChinh)); // ✅ đổi TABLES → hoaDonChinh
 }
 
 // ✅ Lưu và tải bộ đếm mang đi (reset mỗi ngày)
@@ -56,7 +55,6 @@ function taoTenKhach(loai, maBan = "") {
   return loai;
 }
 
-
 // ================================
 // 🚀 Khởi động ứng dụng
 // ================================
@@ -84,10 +82,9 @@ function hienThiManHinhChinh() {
   `;
 
   // 👉 Gắn sự kiện
-document.getElementById("btnMangDi").addEventListener("click", () => {
-  khoiTaoOrder("Khách mang đi"); // chưa có số, chờ đến khi lưu đơn
-});
-
+  document.getElementById("btnMangDi").addEventListener("click", () => {
+    khoiTaoOrder("Khách mang đi"); // chưa có số, chờ đến khi lưu đơn
+  });
 
   document.getElementById("btnGheQuan").addEventListener("click", () => {
     themKhachTaiQuan();
@@ -102,12 +99,12 @@ document.getElementById("btnMangDi").addEventListener("click", () => {
 function renderTables() {
   const div = document.querySelector(".table-list");
 
-  if (TABLES.length === 0) {
+  if (hoaDonChinh.length === 0) { // ✅ đổi TABLES → hoaDonChinh
     div.innerHTML = `<p class="empty-state">Chưa có đơn hàng nào</p>`;
     return;
   }
 
-  div.innerHTML = TABLES.map(t => `
+  div.innerHTML = hoaDonChinh.map(t => `  <!-- ✅ đổi TABLES → hoaDonChinh -->
     <div class="order-card">
       <div><b>${t.name}</b></div>
       <div>${t.cart.length} món • ${t.cart.reduce((a,m)=>a+m.price*m.soluong,0).toLocaleString()}₫</div>
