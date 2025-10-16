@@ -379,17 +379,24 @@ header h1 {
 /* sử dụng biến do JS set */
 .order-content {
   position: fixed;
-  left: 10px;
-  right: 10px;
-  top: var(--order-top, 140px);     /* fallback */
+  /* thụt vào hai bên 5px */
+  left: 15px;   /* 10px cũ + 5px thêm */
+  right: 15px;
+
+  /* vẫn dùng giá trị top/bottom động đã set bằng JS */
+  top: var(--order-top, 140px);
   bottom: calc(var(--order-bottom, 190px) + env(safe-area-inset-bottom, 0px));
+
   overflow-y: auto;
+  background: var(--nenapp);
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  background: var(--nenapp);
-  box-sizing: border-box;
+
+  /* khoảng cách giữa các món */
+  gap: 5px;
+
   scroll-behavior: smooth;
+  box-sizing: border-box;
 }
 /* ===== MỖI MÓN ===== */
 .mon-item {
