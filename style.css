@@ -923,3 +923,9 @@ header h1 {
   color: #777;
   margin-top: 4px;
 }
+.main-container {
+  padding: 10px 14px;
+  position: relative; /* ✅ thêm dòng này để .table-list bám trong vùng main */
+  height: 100dvh;     /* ✅ đảm bảo cao bằng màn hình */
+  overflow: hidden;   /* ngăn main bị kéo dài */
+}
