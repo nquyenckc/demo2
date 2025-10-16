@@ -181,3 +181,44 @@ function positionPopupNearButton(popup, btn) {
   popup.style.transition = "opacity 0.12s ease, transform 0.12s ease";
   popup.style.zIndex = 1000;
 }
+
+
+// ===============================
+// 🔔 Thông báo ngắn (hiện rồi tự tắt)
+// ===============================
+function hienThongBao(noiDung, loai = "thanhcong", thoigian = 2000) {
+  const tb = document.createElement("div");
+  tb.className = `thong-bao ${loai}`;
+  tb.textContent = noiDung;
+  document.body.appendChild(tb);
+
+  setTimeout(() => tb.classList.add("hien"), 10);
+  setTimeout(() => tb.classList.remove("hien"), thoigian);
+  setTimeout(() => tb.remove(), thoigian + 300);
+}
+
+// ===============================
+// ⚙️ Hộp xác nhận (có nút Đồng ý / Hủy)
+// ===============================
+function hopXacNhan(noiDung, khiDongY, khiHuy) {
+  const hop = document.createElement("div");
+  hop.className = "xac-nhan";
+  hop.innerHTML = `
+    <h3>${noiDung}</h3>
+    <div class="nut">
+      <button class="dongy">Đồng ý</button>
+      <button class="huy">Hủy</button>
+    </div>
+  `;
+  document.body.appendChild(hop);
+
+  hop.querySelector(".dongy").addEventListener("click", () => {
+    hop.remove();
+    if (khiDongY) khiDongY();
+  });
+
+  hop.querySelector(".huy").addEventListener("click", () => {
+    hop.remove();
+    if (khiHuy) khiHuy();
+  });
+}
