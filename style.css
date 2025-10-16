@@ -832,79 +832,104 @@ header h1 {
   background: #eee;
   color: var(--mauchinh);
 }
-
 /* ===============================
-   📋 DANH SÁCH ĐƠN / BÀN NGOÀI MÀN HÌNH CHÍNH - FINAL CLEAN
+   🧭 VÙNG CHÍNH + DANH SÁCH ĐƠN
    =============================== */
-:root {
-  --header-height: 52px;
-  --btn-height: 48px;
+
+/* --- Toàn vùng main cố định 100dvh, không tràn --- */
+.main-container {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;              /* ✅ ngăn body bị dài thêm */
+  padding: 0;                    /* ✅ loại bỏ cộng padding ngoài */
+  margin: 0;
+  background: var(--nenapp);
+  display: flex;
+  flex-direction: column;
 }
 
-/* --- Danh sách tổng --- */
+/* --- Nhóm nút khách (Mang đi / Ghé quán) --- */
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  height: var(--btn-height, 48px);
+  flex-shrink: 0;
+}
+
+.btn {
+  flex: 1;
+  max-width: 200px;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--fontchinh);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 20px;
+  color: #fff;
+  background: var(--mauchinh);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+  background: #3a5b96;
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* --- Danh sách đơn / bàn --- */
 .table-list {
   position: absolute;
   top: calc(var(--header-height, 52px) + var(--btn-height, 48px) + 20px);
+  bottom: 20px;                 /* ✅ vùng hiển thị cố định */
   left: 0;
   right: 0;
 
-  /* 🧮 Chiều cao vùng hiển thị giữa (toàn màn hình trừ trên và dưới 20px) */
-  height: calc(100dvh - (var(--header-height, 52px) + var(--btn-height, 48px) + 40px));
-
-  /* 🌀 Cuộn trong khung nếu danh sách dài */
-  overflow-y: auto;
+  overflow-y: auto;             /* ✅ cuộn trong vùng */
   overflow-x: hidden;
-
-  /* 📦 Căn padding + layout */
   padding: 0 16px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 12px;
-
-  /* 🩶 Nền nhẹ tách biệt */
   background: var(--nenapp);
   border-radius: 12px;
 }
 
-/* --- Khi chưa có đơn --- */
-.empty-state {
-  text-align: center;
-  color: #777;
-  font-size: 15px;
-  margin-top: 40px;
-}
-
-/* --- Card đơn hàng / bàn --- */
+/* --- Mỗi thẻ đơn (bàn / đơn hàng) --- */
 .order-card {
-  position: relative;
   background: #fff;
   border-radius: 16px;
   border: 1px solid var(--mauchuchinh);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
   padding: 12px 16px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
   cursor: pointer;
+  position: relative;
 }
 
-/* viền mờ thương hiệu */
 .order-card::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: 16px;
-  border: 2px solid var(--mauchinh);
+  border: 2px solid var(--mauchuchinh);
   opacity: 0.08;
   pointer-events: none;
 }
 
-/* hiệu ứng hover nổi nhẹ */
 .order-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
-/* --- Nội dung trong card --- */
+/* --- Nội dung trong thẻ --- */
 .order-card b {
   font-size: 16px;
   color: var(--mauchuchinh);
@@ -923,9 +948,13 @@ header h1 {
   color: #777;
   margin-top: 4px;
 }
-.main-container {
-  padding: 10px 14px;
-  position: relative; /* ✅ thêm dòng này để .table-list bám trong vùng main */
-  height: 100dvh;     /* ✅ đảm bảo cao bằng màn hình */
-  overflow: hidden;   /* ngăn main bị kéo dài */
+
+/* --- Thanh cuộn tinh tế --- */
+.table-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.table-list::-webkit-scrollbar-thumb {
+  background-color: #d0d6e2;
+  border-radius: 4px;
 }
