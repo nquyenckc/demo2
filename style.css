@@ -241,7 +241,9 @@ header h1 {
 /* Khi chọn bàn */
 .icon-box.active i {
   color: var(--mauchinh);
-  transform: translateX(-50%) scale(1.06);
+  transform: translateX(-50%) scale(1.1);
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.35))
+          drop-shadow(0 -2px 3px rgba(255,255,255,0.4)); /* phản sáng nhẹ */
 }
 .icon-box.active span {
   color: #fff; /* 🔹 chữ trắng khi chọn */
