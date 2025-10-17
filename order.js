@@ -50,12 +50,15 @@ main.innerHTML = `
 
     <!-- 🔹 Thanh tổng / footer (cố định đáy) -->
     <div class="order-footer">
-      <div class="order-total">Tổng: <span id="tongTien">0đ</span></div>
-      <div class="order-buttons">
-        <button id="btnDatLai">Đặt lại</button>
-        <button id="btnLuuDon" class="btn-primary">Lưu đơn</button>
-      </div>
-    </div>
+  <div class="order-total">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span id="tongTien">0đ</span>
+  </div>
+  <div class="order-buttons">
+    <button id="btnDatLai">Đặt lại</button>
+    <button id="btnLuuDon" class="btn-primary">Lưu đơn</button>
+  </div>
+</div>
 
   </div>
 `;
@@ -311,6 +314,7 @@ function updateOrderOffsets() {
 
 // Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
+
 
 
 
