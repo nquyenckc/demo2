@@ -190,8 +190,8 @@ header h1 {
 /* --- Icon ghế từng bàn (chữ nằm giữa lưng ghế) --- */
 .icon-box {
   position: relative;
-  width: 65px;
-  height: 61px;
+  width: 70px;
+  height: 65px;
   background: none;              /* bỏ nền */
   border: none;                  /* bỏ khung */
   border-radius: 10px;
