@@ -832,7 +832,11 @@ header h1 {
   background: #eee;
   color: var(--mauchinh);
 }
-/* ======== DANH SÁCH ĐƠN HÀNG ======== */
+/* ===============================
+   📦 BỐ CỤC DANH SÁCH ĐƠN HÀNG
+   (Khoảng cách, khung chứa, bố trí)
+   =============================== */
+
 .table-list {
   position: absolute;
   top: calc(var(--header-height, 52px) + var(--btn-height, 48px) + 20px);
@@ -851,7 +855,7 @@ header h1 {
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
-/* gradient mờ nhẹ ở đáy */
+/* gradient mờ nhẹ ở đáy danh sách */
 .table-list::after {
   content: "";
   position: absolute;
@@ -864,7 +868,12 @@ header h1 {
   z-index: 0;
 }
 
-/* ====== CARD ====== */
+
+/* ===============================
+   🎨 KIỂU DÁNG THẺ ĐƠN HÀNG
+   (Màu nền, viền, hiệu ứng hover)
+   =============================== */
+
 .order-card {
   background: #fff;
   border-radius: 16px;
@@ -884,7 +893,23 @@ header h1 {
   box-shadow: 0 4px 10px rgba(74,105,173,0.12);
 }
 
-/* ====== NỘI DUNG TRÁI ====== */
+/* Thanh trạng thái bên trái (chờ & phục vụ) */
+.order-card.waiting {
+  background: linear-gradient(to left, rgba(180,183,190,0.3) 0%, #FFFFFF 100%);
+  border-left: 6px solid var(--mautam);
+}
+
+.order-card.serving {
+  background: linear-gradient(to left, rgba(180,183,190,0.3) 0%, #FFFFFF 100%);
+  border-left: 6px solid var(--mauchinh);
+}
+
+
+/* ===============================
+   🧾 NỘI DUNG TRÁI CỦA THẺ
+   (Tên đơn, số món, giờ)
+   =============================== */
+
 .order-info {
   flex: 1;
   padding: 12px 16px;
@@ -900,7 +925,7 @@ header h1 {
   margin-bottom: 4px;
 }
 
-/* Dòng dưới: món + giá + giờ (giờ bên phải) */
+/* Dòng dưới: món + giá + giờ */
 .order-info .sub {
   display: flex;
   justify-content: space-between;
@@ -914,7 +939,11 @@ header h1 {
   color: #777;
 }
 
-/* ====== THANH BÊN PHẢI ====== */
+
+/* ===============================
+   ⚙️ THANH BÊN PHẢI (ACTION / NOTE)
+   =============================== */
+
 .order-actions {
   width: 54px;
   background: rgba(74,105,173,0.05);
@@ -933,34 +962,31 @@ header h1 {
   border-left-color: rgba(74,105,173,0.25);
 }
 
-/* Hai icon — tạm ẩn, không phá bố cục */
-.order-actions .action-btn {
-  display: none;
-}
- .order-card.waiting {
-  background: linear-gradient(to left, rgba(180,183,190,0.3) 0%, #FFFFFF 100%);
-  border-left: 6px solid var(--mautam);
-}
-.order-card.serving {
-  background: linear-gradient(to left, rgba(180,183,190,0.3) 0%, #FFFFFF 100%);
-  border-left: 6px solid var(--mauchinh);
-}
+
+/* ===============================
+   ✨ HIỆU ỨNG TRẠNG THÁI & GHI CHÚ
+   =============================== */
+
 .status-box i.note {
   color: var(--maunote);
   animation: sang 2.2s ease-in-out infinite;
 }
+
 .status-box.waiting i.main {
   color: var(--mautam);
   animation: nhip 2.2s ease-in-out infinite;
 }
+
 .status-box.serving i.main {
   color: var(--mauchinh);
   animation: nhip 1.8s ease-in-out infinite;
 }
+
 @keyframes nhip {
   0%,100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.1); opacity: 0.85; }
 }
+
 @keyframes sang {
   0%,100% { filter: brightness(1); }
   50% { filter: brightness(1.4); }
