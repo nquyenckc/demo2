@@ -223,7 +223,7 @@ header h1 {
 .icon-box span {
   position: absolute;
   left: 50%;
-  top: 25px;        /* 🔹 canh chuẩn giữa lưng */
+  top: 23px;        /* 🔹 canh chuẩn giữa lưng */
   transform: translate(-50%, -50%);
   font-size: 15px;
   font-weight: 800;
