@@ -117,16 +117,27 @@ function renderTables() {
 
     return `
       <div class="order-card ${trangThai}">
-        <div class="order-left">
-          <div class="order-name">${t.name}</div>
-          <div class="order-info">${soMon} món • ${tongTien}đ</div>
-          <div class="order-time">${new Date(t.createdAt).toLocaleTimeString("vi-VN", {hour: "2-digit", minute: "2-digit"})}</div>
-        </div>
-        <div class="status-box ${trangThai}">
-          ${iconTrangThai}
-          ${iconNote}
-        </div>
-      </div>
+  <div class="order-left">
+    <div class="order-name">${t.name}</div>
+    
+    <div class="order-info">
+      <span class="soluong">${soMon} món</span>
+      <span class="price">${tongTien}đ</span>
+    </div>
+    
+    <div class="order-time">
+      ${new Date(t.createdAt).toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit"
+      })}
+    </div>
+  </div>
+
+  <div class="status-box ${trangThai}">
+    ${iconTrangThai}
+    ${iconNote}
+  </div>
+</div>
     `;
   }).join("");
 }
@@ -211,6 +222,7 @@ function themKhachTaiQuan() {
     khoiTaoOrder(tenDon);
   });
 }
+
 
 
 
