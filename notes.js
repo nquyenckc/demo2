@@ -81,12 +81,17 @@ function toggleNotePopup(item, btn) {
       const isNormalIce = Number(item.iceLevel) === 3;
 
       // Nếu bình thường -> bỏ sao, không ghi chú
-      if (isNormalSugar && isNormalIce) {
-        btn.innerText = '☆';
-        btn.classList.remove('active');
-        popup.remove();
-        return;
-      }
+if (isNormalSugar && isNormalIce) {
+  btn.classList.remove('active');
+  const icon = btn.querySelector('i');
+  if (icon) {
+    icon.classList.remove('fa-solid');
+    icon.classList.add('fa-regular');
+  }
+  popup.remove();
+  return;
+}
+
 
       // -----------------
       // Clone món ghi chú (Đơn ảo)
@@ -107,10 +112,13 @@ function toggleNotePopup(item, btn) {
 
       cartRef.push(newItem);
 
-      // ⭐ Cập nhật sao
-      btn.innerText = '★';
-      btn.classList.add('active');
-
+      // ⭐ Cập nhật sao (tô đặc)
+btn.classList.add('active');
+const icon = btn.querySelector('i');
+if (icon) {
+  icon.classList.remove('fa-regular');
+  icon.classList.add('fa-solid');
+}
       // -----------------
       // Cập nhật UI và dữ liệu
       try {
@@ -222,4 +230,5 @@ function hopXacNhan(noiDung, khiDongY, khiHuy) {
     if (khiHuy) khiHuy();
   });
 }
+
 
