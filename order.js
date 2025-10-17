@@ -247,10 +247,10 @@ function luuDon() {
   const header = document.querySelector("header");
   header.innerHTML = `
     <h1>BlackTea</h1>
-    <div class="header-icons">
-      <span class="icon-btn">🧾</span>
-      <span class="icon-btn">⚙️</span>
-    </div>
+     <div class="header-icons">
+      <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
+      <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
+     </div>
   `;
 
   hienThiManHinhChinh();
@@ -314,6 +314,7 @@ function updateOrderOffsets() {
 
 // Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
+
 
 
 
