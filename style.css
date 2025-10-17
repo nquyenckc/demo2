@@ -290,11 +290,13 @@ header h1 {
   background-color: #3a5590;
 }
 
-/* --- Tắt flash focus khi chạm --- */
+/* 🧩 Tắt hoàn toàn hiệu ứng nháy viền khi chạm trên di động */
+.icon-box,
 .icon-box:focus,
 .icon-box:active {
   outline: none !important;
   box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 /* --- Header --- */
 .order-header {
