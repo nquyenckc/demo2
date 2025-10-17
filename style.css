@@ -242,8 +242,8 @@ header h1 {
   color: #fff;                   /* chữ chuyển sang màu trắng */
 }
 /* Tắt hiệu ứng focus chớp tắt khi nhấn vào bàn */
-.icon-box:focus,
-.icon-box:active {
+button:focus,
+button:active {
   outline: none !important;
   box-shadow: none !important;
 }
