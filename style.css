@@ -115,6 +115,11 @@ header h1 {
    🪑 POPUP CHỌN BÀN - Final layout
    ================================ */
 
+
+/* ================================
+   🪑 POPUP CHỌN BÀN - Final layout (đã chuyển sang icon ghế)
+   ================================ */
+
 .popup-overlay {
   position: fixed;
   inset: 0;
@@ -150,14 +155,14 @@ header h1 {
   font-size: 14px;
   color: var(--mauchuchinh);
   font-weight: 600;
-  white-space: nowrap; /* tránh xuống dòng chữ "Bàn tường" */
+  white-space: nowrap;
 }
 
 /* --- Canh giữa các nhóm ngang --- */
 .popup-table .group {
   display: flex;
   justify-content: center;
-  flex-wrap: nowrap; /* không xuống dòng */
+  flex-wrap: nowrap;
   gap: 10px;
   margin-top: 8px;
 }
@@ -177,34 +182,60 @@ header h1 {
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 10px;
-  min-width: 0; /* tránh đẩy khung rộng quá */
+  min-width: 0;
 }
 
 .table-col legend {
   font-size: 13px;
   color: var(--mauchuchinh);
   font-weight: 600;
-  white-space: nowrap; /* giữ legend trên một dòng */
+  white-space: nowrap;
 }
 
-/* --- Nút bàn (to hơn, full chiều ngang nhóm) --- */
-.ban-btn {
-  background-color: var(--nutnennhat);
-  color: var(--mauchuchinh);
-  border: none;
+/* --- THAY NÚT BÀN BẰNG ICON GHẾ --- */
+.icon-box {
+  position: relative;
+  width: 75px;
+  height: 70px;
+  background: #dbe8ff;
   border-radius: 10px;
-  padding: 10px 0;
-  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 75px;       /* ✅ kích thước giống bàn trên lầu */
-  height: 38px;      /* ✅ đồng bộ chiều cao */
-  font-size: 15px;
-  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
-.ban-btn.active {
-  background-color: var(--mauchinh);
-  color: #fff;
+
+.icon-box i {
+  font-size: 50px;
+  color: #a0b8e6;
+  opacity: 0.4;
+  position: absolute;
+  top: 16px;
+  pointer-events: none;
+}
+
+.icon-box span {
+  position: relative;
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+}
+
+.icon-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Bàn được chọn */
+.icon-box.active {
+  background: #a9c8ff;
+  box-shadow: 0 0 0 2px #2a63b5 inset;
+}
+.icon-box.active span {
+  color: #2a63b5;
+  font-weight: 800;
 }
 
 /* --- Nhóm dọc (T1–T4, G1–G4, N1–N4) --- */
