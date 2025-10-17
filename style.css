@@ -425,45 +425,103 @@ header h1 {
   color: #666;
 }
 
-/* --- Nút +/- số lượng (gọn hơn, nhanh, sát hơn) --- */
+/* --- Nút +/- và sao ghi chú (FontAwesome + rung nhẹ khi bấm) --- */
 .mon-qty {
   display: flex;
   align-items: center;
-  gap: 0;                       /* 🔹 sát nút */
+  justify-content: center; /* ✅ căn giữa toàn khối */
+  gap: 0;
   background: transparent;
   border-radius: 8px;
   padding: 0;
 }
 
+/* ===== Nút chung (+/-/⭐) ===== */
 .mon-qty button {
   background-color: var(--nutnennhat);
   border: none;
   border-radius: 6px;
-  width: 26px;                  /* 🔹 nhỏ hơn 30px */
-  height: 26px;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--mauchuchinh);
+  width: 28px;                   /* tăng nhẹ để icon giữa hơn */
+  height: 28px;
+  display: flex;                 /* ✅ căn giữa icon */
+  align-items: center;
+  justify-content: center;
   line-height: 1;
   cursor: pointer;
+  color: var(--mauchuchinh);
   -webkit-tap-highlight-color: transparent;
   user-select: none;
-  transition: none;             /* ⚡ tắt transition để phản hồi tức thời */
+  transition: transform 0.1s ease, background-color 0.15s ease;
 }
 
+/* Icon bên trong nút */
+.mon-qty button i {
+  font-size: 14px;
+  color: var(--mauchuchinh);
+  pointer-events: none; /* tránh click trúng icon */
+}
+
+/* Nút cộng nổi bật hơn */
+.mon-qty .btn-plus i {
+  color: var(--mauchinh);
+}
+
+/* Khi bấm giữ → hiệu ứng rung + scale */
 .mon-qty button:active {
   background-color: var(--mauchinh);
   color: #fff;
   transform: scale(0.95);
+  animation: nutRung 0.15s ease;
+}
+.mon-qty button:active i {
+  color: #fff;
 }
 
+/* 🌀 Hiệu ứng rung nhẹ khi bấm */
+@keyframes nutRung {
+  0% { transform: scale(1); }
+  30% { transform: scale(0.9) rotate(-5deg); }
+  60% { transform: scale(1.05) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Ô hiển thị số lượng */
 .mon-qty span {
-  min-width: 22px;
+  min-width: 24px;
   text-align: center;
   font-weight: 700;
   color: var(--mauchinh);
   font-size: 15px;
 }
+
+/* === Nút sao ghi chú === */
+.note-btn {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: auto;
+  height: auto;
+  padding: 0 4px;
+}
+.note-btn i {
+  font-size: 18px;
+  color: var(--mauchinh);
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+.note-btn:hover i {
+  transform: scale(1.15);
+  color: #3a5590;
+}
+
+/* Mờ khi chưa chọn món */
+.note-btn.faded i,
+.btn-minus.faded i {
+  opacity: 0.3;
+  filter: grayscale(70%);
+  pointer-events: none;
+}
+
+/* Nút bị disable */
 .mon-qty button.disabled {
   opacity: 0.4;
   pointer-events: none;
