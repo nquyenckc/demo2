@@ -108,11 +108,22 @@ function hienThiMonTheoDanhMuc(danhMuc) {
         <div class="mon-gia">${mon.price.toLocaleString()}₫</div>
       </div>
       <div class="mon-qty" id="qty-${mon.id}">
-        <button class="note-btn ${sl > 0 ? '' : 'faded'}" onclick="if(${sl} > 0) toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">☆</button>
-        <button class="btn-minus ${sl > 0 ? '' : 'faded'}" onclick="if(${sl} > 0) giamMon(${mon.id})">−</button>
-        <span id="sl-${mon.id}">${sl}</span>
-        <button onclick="themMon(${mon.id})">+</button>
-      </div>
+  <button class="note-btn ${sl > 0 ? '' : 'faded'}"
+          onclick="if(${sl} > 0) toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">
+    <i class="fa-regular fa-star"></i>
+  </button>
+
+  <button class="btn-minus ${sl > 0 ? '' : 'faded'}"
+          onclick="if(${sl} > 0) giamMon(${mon.id})">
+    <i class="fa-solid fa-minus"></i>
+  </button>
+
+  <span id="sl-${mon.id}">${sl}</span>
+
+  <button class="btn-plus" onclick="themMon(${mon.id})">
+    <i class="fa-solid fa-plus"></i>
+  </button>
+</div>
     `;
     dsMon.appendChild(div);
   });
@@ -314,6 +325,7 @@ function updateOrderOffsets() {
 
 // Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
+
 
 
 
