@@ -112,7 +112,7 @@ header h1 {
 }
 
 /* ================================
-   🪑 POPUP CHỌN BÀN - Final layout (icon ghế, bỏ khung ngoài)
+   🪑 POPUP CHỌN BÀN - Final layout (icon ghế, giữ khung nhóm, bỏ khung trong từng bàn)
    ================================ */
 
 .popup-overlay {
@@ -138,15 +138,19 @@ header h1 {
   gap: 14px;
 }
 
-/* --- Bỏ khung ngoài và legend --- */
+/* --- Giữ khung cho tất cả nhóm bàn --- */
 .popup-table fieldset {
-  border: none;
-  padding: 0;
-  margin: 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-align: center;
 }
 
 .popup-table legend {
-  display: none;
+  font-size: 14px;
+  color: var(--mauchuchinh);
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 /* --- Canh giữa các nhóm ngang --- */
@@ -155,7 +159,7 @@ header h1 {
   justify-content: center;
   flex-wrap: nowrap;
   gap: 10px;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 /* --- Hàng 3 nhóm song song (Tường / Giữa / Nệm) --- */
@@ -170,22 +174,26 @@ header h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: none;
+  border: 1px solid #ddd;       /* ✅ Giữ khung nhóm */
   border-radius: 10px;
-  padding: 4px;
+  padding: 10px;
   min-width: 0;
 }
 
 .table-col legend {
-  display: none;
+  font-size: 13px;
+  color: var(--mauchuchinh);
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-/* --- Bàn kiểu icon ghế --- */
+/* --- Icon ghế từng bàn (không viền, chỉ nền xanh nhạt) --- */
 .icon-box {
   position: relative;
   width: 75px;
   height: 70px;
   background: #dbe8ff;
+  border: none;                /* ✅ Bỏ khung trong từng bàn */
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -216,7 +224,7 @@ header h1 {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Bàn được chọn */
+/* --- Bàn được chọn --- */
 .icon-box.active {
   background: #a9c8ff;
   box-shadow: 0 0 0 2px #2a63b5 inset;
