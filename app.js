@@ -99,31 +99,30 @@ function hienThiManHinhChinh() {
 function renderTables() {
   const div = document.querySelector(".table-list");
 
-  if (!hoaDonChinh || hoaDonChinh.length === 0) {
+  if (TABLES.length === 0) {
     div.innerHTML = `<p class="empty-state">Chưa có đơn hàng nào</p>`;
     return;
   }
 
-  div.innerHTML = hoaDonChinh.map(t => {
-    const date = new Date(t.createdAt);
-    const time = date.toLocaleTimeString("vi-VN", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    const tongTien = t.cart.reduce((a, m) => a + m.price * m.soluong, 0);
+  div.innerHTML = TABLES.map(t => {
+    const tongTien = t.cart.reduce((a,m)=>a+m.price*m.soluong,0).toLocaleString();
+    const soMon = t.cart.length;
+    const coGhiChu = t.cart.some(m => m.note && m.note.trim() !== "");
+    const trangThai = "waiting"; // 💡 mặc định tất cả là chờ phục vụ
+
+    const iconTrangThai = `<i class="fa-solid fa-clock main"></i>`;
+    const iconNote = coGhiChu ? `<i class="fa-solid fa-note-sticky note"></i>` : "";
 
     return `
-      <div class="order-card" onclick="openTable('${t.id}')">
-        <div class="order-info">
-          <b>${t.name}</b>
-          <div class="sub">
-            <span>${t.cart.length} món • ${tongTien.toLocaleString()}₫</span>
-            <span class="time">${time}</span>
-          </div>
+      <div class="order-card ${trangThai}">
+        <div class="order-left">
+          <div class="order-name">${t.name}</div>
+          <div class="order-info">${soMon} món • ${tongTien}đ</div>
+          <div class="order-time">${new Date(t.createdAt).toLocaleTimeString("vi-VN", {hour: "2-digit", minute: "2-digit"})}</div>
         </div>
-        <div class="order-actions">
-          <button class="action-btn"><i class="fa fa-coffee"></i></button>
-          <button class="action-btn"><i class="fa fa-edit"></i></button>
+        <div class="status-box ${trangThai}">
+          ${iconTrangThai}
+          ${iconNote}
         </div>
       </div>
     `;
@@ -210,6 +209,7 @@ function themKhachTaiQuan() {
     khoiTaoOrder(tenDon);
   });
 }
+
 
 
 
