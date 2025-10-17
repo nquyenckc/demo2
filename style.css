@@ -554,10 +554,10 @@ header h1 {
 }
 
 /* --- Tổng tiền --- */
-.order-total {
-  font-size: 16px;               /* ✅ to hơn nhẹ */
-  font-weight: 600;
-  color: var(--mauchuchinh);
+.order-total i {
+  color: var(--mauchinh);
+  font-size: 18px;
+  margin-right: 6px;
 }
 
 /* --- Giá tiền trong tổng --- */
