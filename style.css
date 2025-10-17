@@ -556,7 +556,7 @@ header h1 {
 /* --- Tổng tiền --- */
 .order-total i {
   color: var(--mauchinh);
-  font-size: 18px;
+  font-size: 22px;
   margin-right: 6px;
 }
 
@@ -564,7 +564,7 @@ header h1 {
 .order-total span:last-child {
   color: var(--mauchinh);
   font-weight: 700;
-  font-size: 16px;               /* ✅ đồng cỡ với chữ “Tổng” */
+  font-size: 20px;               /* ✅ đồng cỡ với chữ “Tổng” */
 }
 
 /* --- Nhóm nút bên phải --- */
