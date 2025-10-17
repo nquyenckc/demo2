@@ -945,3 +945,23 @@ header h1 {
   background: linear-gradient(to left, rgba(180,183,190,0.3) 0%, #FFFFFF 100%);
   border-left: 6px solid var(--mauchinh);
 }
+.status-box i.note {
+  color: var(--maunote);
+  animation: sang 2.2s ease-in-out infinite;
+}
+.status-box.waiting i.main {
+  color: var(--mautam);
+  animation: nhip 2.2s ease-in-out infinite;
+}
+.status-box.serving i.main {
+  color: var(--mauchinh);
+  animation: nhip 1.8s ease-in-out infinite;
+}
+@keyframes nhip {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.85; }
+}
+@keyframes sang {
+  0%,100% { filter: brightness(1); }
+  50% { filter: brightness(1.4); }
+}
