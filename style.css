@@ -937,4 +937,11 @@ header h1 {
 .order-actions .action-btn {
   display: none;
 }
-
+ .order-card.waiting {
+  background: linear-gradient(to left, rgba(180,183,190,0.3) 0%, #FFFFFF 100%);
+  border-left: 6px solid var(--mautam);
+}
+.order-card.serving {
+  background: linear-gradient(to left, rgba(180,183,190,0.3) 0%, #FFFFFF 100%);
+  border-left: 6px solid var(--mauchinh);
+}
