@@ -112,9 +112,10 @@ header h1 {
 }
 
 /* ================================
-   🪑 POPUP CHỌN BÀN - icon ghế + tên bàn, màu chủ đạo cố định
+   🪑 POPUP CHỌN BÀN - gọn + icon nhỏ + chữ giữa lưng ghế
    ================================ */
 
+/* --- Khung popup --- */
 .popup-overlay {
   position: fixed;
   inset: 0;
@@ -138,12 +139,14 @@ header h1 {
   gap: 14px;
 }
 
-/* --- Giữ khung cho toàn bộ nhóm bàn --- */
+/* --- Giữ khung cho toàn bộ nhóm bàn, nhưng ôm sát hơn --- */
 .popup-table fieldset {
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 6px 8px;
   text-align: center;
+  display: inline-block;
+  width: auto;
 }
 
 .popup-table legend {
@@ -151,22 +154,23 @@ header h1 {
   color: var(--mauchuchinh);
   font-weight: 600;
   white-space: nowrap;
+  padding: 0 6px;
 }
 
-/* --- Canh giữa các nhóm ngang --- */
+/* --- Nhóm ngang (Lầu, Ngoài trời) --- */
 .popup-table .group {
   display: flex;
   justify-content: center;
   flex-wrap: nowrap;
-  gap: 10px;
-  margin-top: 8px;
+  gap: 6px; /* sát hơn */
+  margin-top: 4px;
 }
 
 /* --- Hàng 3 nhóm song song (Tường / Giữa / Nệm) --- */
 .table-row {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
 }
 
 .table-col {
@@ -174,10 +178,11 @@ header h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  padding: 10px;
+  padding: 6px 8px;
   min-width: 0;
+  width: auto;
 }
 
 .table-col legend {
@@ -187,43 +192,42 @@ header h1 {
   white-space: nowrap;
 }
 
-/* --- Icon ghế từng bàn (chữ nằm giữa lưng ghế) --- */
+/* --- Icon ghế (nhỏ hơn, chữ giữa lưng ghế) --- */
 .icon-box {
   position: relative;
-  width: 75px;
-  height: 70px;
-  background: none;              /* bỏ nền */
-  border: none;                  /* bỏ khung */
-  border-radius: 10px;
+  width: 60px;      /* 🔹 nhỏ hơn (từ 75 xuống 60) */
+  height: 55px;     /* 🔹 thấp hơn */
+  background: none;
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.18s ease;
 }
 
-/* Icon ghế */
+/* Icon sofa */
 .icon-box i {
-  font-size: 50px;
+  font-size: 42px;  /* 🔹 nhỏ hơn */
   color: #a0b8e6;
   opacity: 0.9;
   position: absolute;
-  top: 8px;
+  top: 6px;         /* 🔹 vị trí cân đối */
   left: 50%;
   transform: translateX(-50%);
   pointer-events: none;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: color 0.18s ease, transform 0.18s ease;
 }
 
-/* Tên bàn – nằm giữa phần lưng ghế */
+/* Tên bàn giữa lưng */
 .icon-box span {
   position: absolute;
   left: 50%;
-  top: 30px;                     /* vị trí giữa lưng */
+  top: 27px;        /* 🔹 canh chuẩn giữa lưng */
   transform: translate(-50%, -50%);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 800;
-  color: var(--mauchuchinh);     /* mặc định chữ màu chủ đạo */
+  color: var(--mauchuchinh);
   pointer-events: none;
   z-index: 2;
 }
@@ -235,27 +239,22 @@ header h1 {
 
 /* Khi chọn bàn */
 .icon-box.active i {
-  color: var(--mauchinh);        /* icon đổi sang màu chính */
+  color: var(--mauchinh);
   transform: translateX(-50%) scale(1.06);
 }
 .icon-box.active span {
-  color: #fff;                   /* chữ chuyển sang màu trắng */
+  color: #fff; /* 🔹 chữ trắng khi chọn */
 }
-/* Tắt hiệu ứng focus chớp tắt khi nhấn vào bàn */
-button:focus,
-button:active {
-  outline: none !important;
-  box-shadow: none !important;
-}
+
 /* --- Nhóm dọc (T1–T4, G1–G4, N1–N4) --- */
 .table-col .group-vertical {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: center;
   height: 100%;
-  gap: 10px;
-  margin-top: 6px;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 /* --- Nút hành động --- */
@@ -289,6 +288,13 @@ button:active {
 
 .btn-primary:hover {
   background-color: #3a5590;
+}
+
+/* --- Tắt flash focus khi chạm --- */
+.icon-box:focus,
+.icon-box:active {
+  outline: none !important;
+  box-shadow: none !important;
 }
 /* --- Header --- */
 .order-header {
