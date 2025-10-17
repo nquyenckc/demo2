@@ -94,10 +94,7 @@ function hienThiManHinhChinh() {
 }
 
 // ================================
-// 🧾 Hiển thị danh sách đơn ngoài màn hình chính
-// ================================
-// ================================
-// 🧾 Hiển thị danh sách đơn ngoài màn hình chính (có giờ:phút gọn)
+// 🧾 Hiển thị danh sách đơn ngoài màn hình chính (giao diện mới)
 // ================================
 function renderTables() {
   const div = document.querySelector(".table-list");
@@ -113,14 +110,21 @@ function renderTables() {
       hour: "2-digit",
       minute: "2-digit",
     });
-
     const tongTien = t.cart.reduce((a, m) => a + m.price * m.soluong, 0);
 
     return `
       <div class="order-card" onclick="openTable('${t.id}')">
-        <div><b>${t.name}</b></div>
-        <div>${t.cart.length} món • ${tongTien.toLocaleString()}₫</div>
-        <div class="small">${time}</div>
+        <div class="order-info">
+          <b>${t.name}</b>
+          <div class="sub">
+            <span>${t.cart.length} món • ${tongTien.toLocaleString()}₫</span>
+            <span class="time">${time}</span>
+          </div>
+        </div>
+        <div class="order-actions">
+          <button class="action-btn"><i class="fa fa-coffee"></i></button>
+          <button class="action-btn"><i class="fa fa-edit"></i></button>
+        </div>
       </div>
     `;
   }).join("");
@@ -206,6 +210,7 @@ function themKhachTaiQuan() {
     khoiTaoOrder(tenDon);
   });
 }
+
 
 
 
