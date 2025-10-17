@@ -1,5 +1,5 @@
 // ================================
-// 📦 BlackTea POS v2.3 - app.js (có đếm mang đi + tên bàn chuẩn)
+// 📦 BlackTea POS v2.3 - app.js (đã chỉnh chọn bàn kiểu icon ghế)
 // ================================
 
 // 🔢 Biến đếm đơn "Mang đi"
@@ -38,7 +38,6 @@ function saveDemMangDi() {
 // ✅ Sinh tên khách theo loại
 function taoTenKhach(loai, maBan = "") {
   if (loai === "Khách mang đi") {
-    // Tăng khi lưu đơn thành công
     demMangDi++;
     saveDemMangDi();
     return `Mang đi ${demMangDi}`;
@@ -83,7 +82,7 @@ function hienThiManHinhChinh() {
 
   // 👉 Gắn sự kiện
   document.getElementById("btnMangDi").addEventListener("click", () => {
-    khoiTaoOrder("Khách mang đi"); // chưa có số, chờ đến khi lưu đơn
+    khoiTaoOrder("Khách mang đi"); 
   });
 
   document.getElementById("btnGheQuan").addEventListener("click", () => {
@@ -94,11 +93,11 @@ function hienThiManHinhChinh() {
 }
 
 // ================================
-// 🧾 Hiển thị danh sách đơn ngoài màn hình chính (giao diện mới)
+// 🧾 Hiển thị danh sách đơn ngoài màn hình chính
 // ================================
 function renderTables() {
   const div = document.querySelector(".table-list");
-  const dsDon = hoaDonChinh || []; // ✅ dùng đúng mảng dữ liệu đang lưu
+  const dsDon = hoaDonChinh || [];
 
   if (dsDon.length === 0) {
     div.innerHTML = `<p class="empty-state">Chưa có đơn hàng nào</p>`;
@@ -106,18 +105,13 @@ function renderTables() {
   }
 
   div.innerHTML = dsDon.map((t) => {
-    const tongTien = t.cart
-      .reduce((a, m) => a + m.price * m.soluong, 0)
-      .toLocaleString();
+    const tongTien = t.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString();
     const soMon = t.cart.length;
     const coGhiChu = t.cart.some((m) => m.note && m.note.trim() !== "");
-    const trangThai = "waiting"; // 💡 mặc định là chờ phục vụ
+    const trangThai = "waiting";
 
-    // 🎨 Icon hiển thị — giống demo (chỉ đổi màu theo trạng thái)
     const iconTrangThai = `<i class="fa-solid fa-mug-hot main"></i>`;
-    const iconNote = coGhiChu
-      ? `<i class="fa-solid fa-note-sticky note"></i>`
-      : "";
+    const iconNote = coGhiChu ? `<i class="fa-solid fa-note-sticky note"></i>` : "";
 
     return `
       <div class="order-card ${trangThai}">
@@ -139,8 +133,9 @@ function renderTables() {
     `;
   }).join("");
 }
+
 // ================================
-// 🪑 Popup chọn bàn cho khách tại quán
+// 🪑 Popup chọn bàn kiểu icon ghế
 // ================================
 function themKhachTaiQuan() {
   const overlay = document.createElement("div");
@@ -153,14 +148,24 @@ function themKhachTaiQuan() {
     <fieldset>
       <legend>Bàn trên lầu</legend>
       <div class="group">
-        ${["L1","L2","L3","L4"].map(b => `<button class="ban-btn">${b}</button>`).join("")}
+        ${["L1","L2","L3","L4"].map(b => `
+          <div class="icon-box" onclick="chonBanIcon(this,'${b}')">
+            <i class="fas fa-couch"></i>
+            <span>${b}</span>
+          </div>
+        `).join("")}
       </div>
     </fieldset>
 
     <fieldset>
       <legend>Bàn ngoài trời</legend>
       <div class="group">
-        ${["NT1","NT2"].map(b => `<button class="ban-btn">${b}</button>`).join("")}
+        ${["NT1","NT2"].map(b => `
+          <div class="icon-box" onclick="chonBanIcon(this,'${b}')">
+            <i class="fas fa-couch"></i>
+            <span>${b}</span>
+          </div>
+        `).join("")}
       </div>
     </fieldset>
 
@@ -168,21 +173,36 @@ function themKhachTaiQuan() {
       <fieldset class="table-col">
         <legend>Bàn tường</legend>
         <div class="group-vertical">
-          ${["T1","T2","T3","T4"].map(b => `<button class="ban-btn">${b}</button>`).join("")}
+          ${["T1","T2","T3","T4"].map(b => `
+            <div class="icon-box" onclick="chonBanIcon(this,'${b}')">
+              <i class="fas fa-couch"></i>
+              <span>${b}</span>
+            </div>
+          `).join("")}
         </div>
       </fieldset>
 
       <fieldset class="table-col">
         <legend>Bàn giữa</legend>
         <div class="group-vertical">
-          ${["G1","G2","G3","G4"].map(b => `<button class="ban-btn">${b}</button>`).join("")}
+          ${["G1","G2","G3","G4"].map(b => `
+            <div class="icon-box" onclick="chonBanIcon(this,'${b}')">
+              <i class="fas fa-couch"></i>
+              <span>${b}</span>
+            </div>
+          `).join("")}
         </div>
       </fieldset>
 
       <fieldset class="table-col">
         <legend>Bàn nệm</legend>
         <div class="group-vertical">
-          ${["N1","N2","N3","N4"].map(b => `<button class="ban-btn">${b}</button>`).join("")}
+          ${["N1","N2","N3","N4"].map(b => `
+            <div class="icon-box" onclick="chonBanIcon(this,'${b}')">
+              <i class="fas fa-couch"></i>
+              <span>${b}</span>
+            </div>
+          `).join("")}
         </div>
       </fieldset>
     </div>
@@ -198,14 +218,7 @@ function themKhachTaiQuan() {
 
   let banDuocChon = null;
 
-  popup.querySelectorAll(".ban-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      popup.querySelectorAll(".ban-btn").forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      banDuocChon = btn.textContent;
-    });
-  });
-
+  // Sự kiện cho các nút
   popup.querySelector(".btn-cancel").addEventListener("click", () => overlay.remove());
 
   popup.querySelector(".btn-primary").addEventListener("click", () => {
@@ -218,14 +231,11 @@ function themKhachTaiQuan() {
     const tenDon = taoTenKhach("Khách tại bàn", banDuocChon);
     khoiTaoOrder(tenDon);
   });
+
+  // Hàm chọn bàn icon
+  window.chonBanIcon = function (el, maBan) {
+    popup.querySelectorAll(".icon-box").forEach(e => e.classList.remove("active"));
+    el.classList.add("active");
+    banDuocChon = maBan;
+  };
 }
-
-
-
-
-
-
-
-
-
-
