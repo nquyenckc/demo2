@@ -209,7 +209,7 @@ header h1 {
 /* Icon sofa */
 .icon-box i {
   font-size: 42px;  /* 🔹 nhỏ hơn */
-  color: #a0b8e6;
+  color: var(--nutnennhat);
   opacity: 0.9;
   position: absolute;
   top: 6px;         /* 🔹 vị trí cân đối */
