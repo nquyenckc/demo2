@@ -187,48 +187,59 @@ header h1 {
   white-space: nowrap;
 }
 
-/* --- Icon ghế từng bàn --- */
+/* --- Icon ghế từng bàn (bỏ nền, chỉ icon + tên giữa lưng) --- */
 .icon-box {
   position: relative;
   width: 75px;
   height: 70px;
-  background: none;
-  border: none;
+  background: none;              /* ❌ bỏ nền xanh */
+  border: none;                  /* ❌ bỏ khung */
   border-radius: 10px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
+/* Icon ghế — nhạt, chiếm toàn khung */
 .icon-box i {
-  font-size: 50px;
-  color: #a0b8e6; /* icon mặc định */
+  font-size: 54px;
+  color: #a0b8e6;
   opacity: 0.9;
+  position: absolute;
+  top: 8px;                      /* đẩy ghế hơi lên để lưng có chỗ cho chữ */
+  left: 50%;
+  transform: translateX(-50%);
   pointer-events: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
+/* Tên bàn nằm giữa lưng ghế */
 .icon-box span {
-  margin-top: 4px;
+  position: absolute;
+  left: 50%;
+  top: 35px;                     /* vị trí giữa lưng */
+  transform: translate(-50%, -50%);
   font-size: 17px;
-  font-weight: 700;
-  color: var(--mauchuchinh); /* chữ luôn là màu chủ đạo */
+  font-weight: 800;
+  color: var(--mauchuchinh);     /* chữ luôn màu chủ đạo */
+  pointer-events: none;
 }
 
+/* Hover */
 .icon-box:hover {
-  transform: scale(1.1);
+  transform: scale(1.06);
 }
 
-/* --- Khi chọn bàn --- */
+/* Khi chọn bàn */
 .icon-box.active i {
-  color: var(--mauchinh); /* icon đổi sang màu chính */
-  opacity: 1;
-  transform: scale(1.1);
+  color: var(--mauchinh);        /* đổi màu icon sang màu chính */
+  transform: translateX(-50%) scale(1.06);
 }
-
+.icon-box.active span {
+  color: var(--mauchuchinh);     /* chữ vẫn giữ màu chủ đạo */
+}
 /* --- Nhóm dọc (T1–T4, G1–G4, N1–N4) --- */
 .table-col .group-vertical {
   display: flex;
