@@ -217,6 +217,10 @@ header h1 {
   transform: translateX(-50%);
   pointer-events: none;
   transition: color 0.18s ease, transform 0.18s ease;
+   background: linear-gradient(145deg, #f9fbff, #dfe9ff); /* phản chiếu nhẹ */
+border: 1px solid rgba(255, 255, 255, 0.6);             /* viền sáng mảnh */
+backdrop-filter: blur(2px);                             /* hiệu ứng mờ nền */
+transform: translateZ(0);                               /* giúp nổi mượt hơn */
 }
 
 /* Tên bàn giữa lưng */
