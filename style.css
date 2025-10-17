@@ -874,42 +874,31 @@ header h1 {
    (Màu nền, viền, hiệu ứng hover)
    =============================== */
 
+/* ====== CARD tiêu chuẩn (Kiểu 1 nâng cấp) ====== */
 .order-card {
-  background: #fff;
-  border-radius: 16px;
-  border: 1.5px solid rgba(74,105,173,0.18);
-  box-shadow: 0 3px 8px rgba(74,105,173,0.08);
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  transition: all 0.15s ease;
-  position: relative;
-  z-index: 1;
+  width: 100%;          /* chịu độ rộng container */
+  max-width: 820px;     /* giới hạn nếu cần */
+  border-radius: 14px;
   overflow: hidden;
+  border: 1.2px solid rgba(74,105,173,0.12);
+  box-shadow: 0 3px 8px rgba(74,105,173,0.06);
+  background: linear-gradient(to left, rgba(180,183,190,0.3) 0%, #FFFFFF 100%);
+  transition: all 0.18s ease;
+  margin: 0 auto; /* căn giữa nếu muốn */
 }
-
 .order-card:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(74,105,173,0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(74,105,173,0.10);
 }
 
-/* Thanh trạng thái bên trái (chờ & phục vụ) */
-.order-card.waiting {
-  background: linear-gradient(to left, rgba(180,183,190,0.3) 0%, #FFFFFF 100%);
-  border-left: 6px solid var(--mautam);
-}
+/* Thanh trái (chỉ báo trạng thái) */
+.order-card.waiting { border-left: 6px solid var(--mautam, #9AA2B5); }
+.order-card.serving { border-left: 6px solid var(--mauchinh, #4A69AD); }
 
-.order-card.serving {
-  background: linear-gradient(to left, rgba(180,183,190,0.3) 0%, #FFFFFF 100%);
-  border-left: 6px solid var(--mauchinh);
-}
-
-
-/* ===============================
-   🧾 NỘI DUNG TRÁI CỦA THẺ
-   (Tên đơn, số món, giờ)
-   =============================== */
-
+/* Nội dung trái: 3 dòng tách rõ */
 .order-info {
   flex: 1;
   padding: 12px 16px;
@@ -917,77 +906,60 @@ header h1 {
   flex-direction: column;
   justify-content: center;
 }
-
-.order-info b {
-  font-size: 1rem;
-  color: #1a1a1a;
+.order-info .title {
   font-weight: 700;
-  margin-bottom: 4px;
+  font-size: 16px;
+  color: #24344F;
+  margin-bottom: 6px;
 }
-
-/* Dòng dưới: món + giá + giờ */
 .order-info .sub {
+  font-size: 14px;
+  color: var(--mauchinh, #4A69AD);
   display: flex;
-  justify-content: space-between;
+  gap: 8px;
   align-items: center;
-  font-size: 0.9rem;
-  color: #555;
+  margin-bottom: 6px;
 }
-
 .order-info .time {
-  font-size: 0.85rem;
-  color: #777;
+  font-size: 13px;
+  color: #9AA2B5;
 }
 
-
-/* ===============================
-   ⚙️ THANH BÊN PHẢI (ACTION / NOTE)
-   =============================== */
-
-.order-actions {
-  width: 54px;
-  background: rgba(74,105,173,0.05);
-  border-left: 1px solid rgba(74,105,173,0.12);
-  border-radius: 0 16px 16px 0;
+/* Cột phải: status box */
+.status-box {
+  width: 68px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: background 0.2s ease;
+  padding: 10px 8px;
+  background: linear-gradient(to left, rgba(0,0,0,0.04), transparent);
 }
-
-.order-card:hover .order-actions {
-  background: rgba(74,105,173,0.08);
-  border-left-color: rgba(74,105,173,0.25);
+.status-box i {
+  font-size: 20px;
+  transition: transform .18s ease, color .18s ease;
 }
+.status-box i.note { color: var(--maunote, #F7C948); animation: notePulse 2.2s infinite; }
 
+/* màu icon theo trạng thái */
+.status-box.waiting i.main { color: var(--mautam, #9AA2B5); animation: iconPulse 2.2s infinite; }
+.status-box.serving i.main { color: var(--mauchinh, #4A69AD); animation: iconPulse 1.8s infinite; }
 
-/* ===============================
-   ✨ HIỆU ỨNG TRẠNG THÁI & GHI CHÚ
-   =============================== */
-
-.status-box i.note {
-  color: var(--maunote);
-  animation: sang 2.2s ease-in-out infinite;
-}
-
-.status-box.waiting i.main {
-  color: var(--mautam);
-  animation: nhip 2.2s ease-in-out infinite;
-}
-
-.status-box.serving i.main {
-  color: var(--mauchinh);
-  animation: nhip 1.8s ease-in-out infinite;
-}
-
-@keyframes nhip {
+@keyframes iconPulse {
   0%,100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.85; }
+  50% { transform: scale(1.08); opacity: 0.85; }
+}
+@keyframes notePulse {
+  0%,100% { filter: brightness(1); }
+  50% { filter: brightness(1.35); }
 }
 
-@keyframes sang {
-  0%,100% { filter: brightness(1); }
-  50% { filter: brightness(1.4); }
+/* responsive: thu nhỏ icon/box trên màn nhỏ */
+@media (max-width: 420px) {
+  .status-box { width: 56px; }
+  .status-box i { font-size: 18px; }
+  .order-info .title { font-size: 15px; }
+  .order-info .sub { font-size: 13px; }
+  .order-info .time { font-size: 12px; }
 }
