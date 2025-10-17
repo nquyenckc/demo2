@@ -457,7 +457,7 @@ header h1 {
 /* Icon bên trong nút */
 .mon-qty button i {
   font-size: 14px;
-  color: var(--mauchuchinh);
+  color: var(--mauchinh);
   pointer-events: none; /* tránh click trúng icon */
 }
 
