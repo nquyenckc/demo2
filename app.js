@@ -99,16 +99,18 @@ function hienThiManHinhChinh() {
 function renderTables() {
   const div = document.querySelector(".table-list");
 
-  if (TABLES.length === 0) {
+  const dsDon = hoaDonChinh || []; // ✅ dùng đúng mảng dữ liệu đang lưu
+
+  if (dsDon.length === 0) {
     div.innerHTML = `<p class="empty-state">Chưa có đơn hàng nào</p>`;
     return;
   }
 
-  div.innerHTML = TABLES.map(t => {
-    const tongTien = t.cart.reduce((a,m)=>a+m.price*m.soluong,0).toLocaleString();
+  div.innerHTML = dsDon.map(t => {
+    const tongTien = t.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString();
     const soMon = t.cart.length;
     const coGhiChu = t.cart.some(m => m.note && m.note.trim() !== "");
-    const trangThai = "waiting"; // 💡 mặc định tất cả là chờ phục vụ
+    const trangThai = "waiting"; // 💡 mặc định là chờ phục vụ
 
     const iconTrangThai = `<i class="fa-solid fa-clock main"></i>`;
     const iconNote = coGhiChu ? `<i class="fa-solid fa-note-sticky note"></i>` : "";
@@ -209,6 +211,7 @@ function themKhachTaiQuan() {
     khoiTaoOrder(tenDon);
   });
 }
+
 
 
 
