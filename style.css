@@ -677,23 +677,41 @@ header h1 {
   background: none !important;
   border: none !important;
   box-shadow: none !important;
-  color: var(--mauchinh); /* 💙 Màu chủ đạo mặc định */
-  font-size: 20px;
-  cursor: pointer;
-  line-height: 1;
+  width: auto;
+  height: auto;
   padding: 0 4px;
-  transition: color 0.2s, transform 0.1s;
 }
 
-.note-btn:hover {
-  color: #3a5590; /* xanh đậm hơn khi hover */
-  transform: scale(1.1);
-}
-
-/* Khi món có ghi chú (active) → dùng màu chủ đạo luôn */
-.note-btn.active {
+.note-btn i {
+  font-size: 18px;
   color: var(--mauchinh);
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+/* Hover: hơi lớn hơn 1 chút, xanh đậm hơn */
+.note-btn:hover i {
   transform: scale(1.1);
+  color: #3a5590;
+}
+
+/* Khi món có ghi chú → sao đặc, giữ màu chủ đạo */
+.note-btn.active i {
+  color: var(--mauchinh) !important;
+  transform: scale(1.05);
+}
+
+/* Khi chưa có món → mờ đi */
+.note-btn.faded i,
+.btn-minus.faded i {
+  opacity: 0.3;
+  filter: grayscale(70%);
+  pointer-events: none;
+}
+
+/* Khi bị disable hoàn toàn */
+.mon-qty button.disabled {
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 /* ===============================
