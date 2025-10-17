@@ -241,6 +241,12 @@ header h1 {
 .icon-box.active span {
   color: #fff;                   /* chữ chuyển sang màu trắng */
 }
+/* Tắt hiệu ứng focus chớp tắt khi nhấn vào bàn */
+.icon-box:focus,
+.icon-box:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
 /* --- Nhóm dọc (T1–T4, G1–G4, N1–N4) --- */
 .table-col .group-vertical {
   display: flex;
