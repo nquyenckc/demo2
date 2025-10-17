@@ -942,11 +942,12 @@ header h1 {
   animation: sang 2.2s ease-in-out infinite;
 }
 .status-box.waiting i.main {
-  color: var(--mautam);
+  color: var(--mautam); /* xám */
   animation: nhip 2.2s ease-in-out infinite;
 }
+
 .status-box.serving i.main {
-  color: var(--mauchinh);
+  color: var(--mauchinh); /* xanh */
   animation: nhip 1.8s ease-in-out infinite;
 }
 @keyframes nhip {
