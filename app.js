@@ -98,7 +98,6 @@ function hienThiManHinhChinh() {
 // ================================
 function renderTables() {
   const div = document.querySelector(".table-list");
-
   const dsDon = hoaDonChinh || []; // ✅ dùng đúng mảng dữ liệu đang lưu
 
   if (dsDon.length === 0) {
@@ -106,34 +105,40 @@ function renderTables() {
     return;
   }
 
-  div.innerHTML = dsDon.map(t => {
-    const tongTien = t.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString();
+  div.innerHTML = dsDon.map((t) => {
+    const tongTien = t.cart
+      .reduce((a, m) => a + m.price * m.soluong, 0)
+      .toLocaleString();
     const soMon = t.cart.length;
-    const coGhiChu = t.cart.some(m => m.note && m.note.trim() !== "");
+    const coGhiChu = t.cart.some((m) => m.note && m.note.trim() !== "");
     const trangThai = "waiting"; // 💡 mặc định là chờ phục vụ
 
-    const iconTrangThai = `<i class="fa-solid fa-clock main"></i>`;
-    const iconNote = coGhiChu ? `<i class="fa-solid fa-note-sticky note"></i>` : "";
+    // 🎨 Icon hiển thị — giống demo (chỉ đổi màu theo trạng thái)
+    const iconTrangThai = `<i class="fa-solid fa-mug-hot main"></i>`;
+    const iconNote = coGhiChu
+      ? `<i class="fa-solid fa-note-sticky note"></i>`
+      : "";
 
     return `
       <div class="order-card ${trangThai}">
-  <div class="order-left">
-    <div class="order-name">${t.name}</div>
-    <div class="order-info">${soMon} món • ${tongTien}đ</div>
-    <div class="order-time">${new Date(t.createdAt).toLocaleTimeString("vi-VN", {
-      hour: "2-digit",
-      minute: "2-digit"
-    })}</div>
-  </div>
-  <div class="status-box ${trangThai}">
-    ${iconTrangThai}
-    ${iconNote}
-  </div>
-</div>
+        <div class="order-left">
+          <div class="order-name">${t.name}</div>
+          <div class="order-info">${soMon} món • ${tongTien}đ</div>
+          <div class="order-time">
+            ${new Date(t.createdAt).toLocaleTimeString("vi-VN", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </div>
+        </div>
+        <div class="status-box ${trangThai}">
+          ${iconTrangThai}
+          ${iconNote}
+        </div>
+      </div>
     `;
   }).join("");
 }
-
 // ================================
 // 🪑 Popup chọn bàn cho khách tại quán
 // ================================
@@ -214,6 +219,7 @@ function themKhachTaiQuan() {
     khoiTaoOrder(tenDon);
   });
 }
+
 
 
 
