@@ -156,7 +156,7 @@ function renderTables() {
       const don = dsDon[index];
       if (!don) return;
       // 👉 Sau này bạn có thể thay dòng này bằng moChiTietDon(don)
-      console.log("🧾 Đã chọn đơn:", don.name);
+      moChiTietDon(don);
     });
   });
 }
@@ -323,4 +323,5 @@ function moChiTietDon(don) {
     hienThiManHinhChinh();
   });
 }
+
 
