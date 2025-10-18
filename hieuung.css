@@ -93,3 +93,35 @@ html, body, * {
 ::-webkit-scrollbar {
   display: none !important;
 }
+
+
+/* ==========================
+   🎨 Icon chuẩn app (dùng cho tất cả icon SVG hoặc PNG)
+   ========================== */
+.icon-app {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  vertical-align: middle;
+  transition: all 0.25s ease;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* 🎨 Mặc định: màu chủ đạo */
+.icon-app svg,
+.icon-app path {
+  fill: #4A69AD !important;
+}
+
+/* 🩶 Nếu là file ảnh SVG (dạng <img>), dùng filter để tô màu tương tự */
+.icon-app img,
+.icon-app {
+  filter: invert(40%) sepia(25%) saturate(700%) hue-rotate(190deg)
+          brightness(95%) contrast(90%);
+}
+
+/* 🌟 Hiệu ứng hover nhẹ */
+.icon-app:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
