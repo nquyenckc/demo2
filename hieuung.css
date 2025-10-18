@@ -78,3 +78,18 @@ button:focus-visible,
   -webkit-tap-highlight-color: transparent !important; /* 🔥 đặc biệt quan trọng trên Android */
 }
 
+
+/* ================================
+   🌟 ẨN TOÀN BỘ THANH CUỘN (vẫn cuộn được)
+   ================================ */
+
+/* Ẩn trên toàn trang */
+html, body, * {
+  scrollbar-width: none !important;      /* Firefox */
+  -ms-overflow-style: none !important;   /* IE, Edge cũ */
+}
+
+/* Ẩn cho WebKit (Chrome, Safari, Opera) */
+::-webkit-scrollbar {
+  display: none !important;
+}
