@@ -271,65 +271,55 @@ function themKhachTaiQuan() {
 // 🧾 Mở chi tiết đơn full màn hình
 // ================================
 function moChiTietDon(don) {
-  if (!don) return;
-
   const main = document.querySelector(".main-container");
-  if (!main) return;
+  const tongTien = don.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString();
 
-  // 💡 Tính tổng tiền
-  const tongTien = don.cart
-    .reduce((a, m) => a + m.price * m.soluong, 0)
-    .toLocaleString();
+  // Xác định nút và tiêu đề dựa theo trạng thái
+  let nutHanhDong = "";
+  if (don.status === "waiting") {
+    nutHanhDong = `<button class="btn-xacnhan hieuung-noi" onclick="xacNhanPhucVu('${don.id}')">Xác nhận phục vụ đơn</button>`;
+  } else if (don.status === "serving") {
+    nutHanhDong = `<button class="btn-thanhToan hieuung-noi" onclick="ketThucDon('${don.id}')">Kết thúc đơn</button>`;
+  } else {
+    nutHanhDong = `<button class="btn-xacnhan hieuung-noi">Đơn đã hoàn tất</button>`;
+  }
 
-  // 💡 Hiển thị giao diện chi tiết đơn
-main.innerHTML = `
-  <div class="order-detail-screen">
-    <header class="order-detail-header">
-      <div class="header-left">${don.name}</div>
-      <button class="btn-close-detail">✕</button>
-    </header>
+  main.innerHTML = `
+    <div class="order-detail-screen">
+      <header class="order-detail-header">
+        <div class="header-left">BlackTea | ${don.name}</div>
+        <button class="btn-close-detail" onclick="hienThiManHinhChinh()">✕</button>
+      </header>
 
-    <div class="order-detail-body">
-      <h2 class="hoa-don-title">Hóa đơn</h2>
-      <div class="order-time">
-        Thời gian tạo: ${new Date(don.createdAt).toLocaleTimeString("vi-VN")}
+      <div class="order-detail-body">
+        <h2 class="hoa-don-title">Hóa đơn</h2>
+        <div class="order-time">
+          Thời gian tạo: ${new Date(don.createdAt).toLocaleTimeString("vi-VN")}
+        </div>
+
+        <div class="order-items">
+          ${don.cart.map(m => `
+            <div class="order-item">
+              <div class="item-left">
+                <span class="item-name">${m.name}</span>
+                ${m.note ? `<small class="item-note">(${m.note})</small>` : ""}
+              </div>
+              <div class="item-right">
+                <span class="item-price">${(m.price * m.soluong).toLocaleString()}đ</span>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+
+        <div class="order-total">
+          <strong>Tổng:</strong> ${tongTien}đ
+        </div>
       </div>
 
-      <div class="order-items">
-        ${don.cart.map(m => `
-          <div class="order-item">
-            <div class="item-left">
-              <span class="item-name">${m.name}</span>
-              ${m.note ? `<small class="item-note">(${m.note})</small>` : ""}
-            </div>
-            <div class="item-right">
-              <span class="item-price">${(m.price * m.soluong).toLocaleString()}đ</span>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-
-      <div class="order-total">
-        <strong>Tổng:</strong> ${tongTien}đ
+      <div class="order-detail-footer">
+        ${nutHanhDong}
       </div>
     </div>
-
-    <div class="order-detail-footer">
-      <button class="btn-xacnhan hieuung-noi">Xác nhận phục vụ đơn</button>
-    </div>
-  </div>
-`;
-
-  // ❌ Nút đóng
-  main.querySelector(".btn-close-detail").addEventListener("click", () => {
-    hienThiManHinhChinh(); // quay lại danh sách
-  });
-
-  // ✅ Nút xác nhận
-  main.querySelector(".btn-xacnhan").addEventListener("click", () => {
-    hienThiManHinhChinh();
-  });
+  `;
 }
-
-
 
