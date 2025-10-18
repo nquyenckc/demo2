@@ -1,59 +1,62 @@
 /* ================================
-   🌟 HIỆU ỨNG NỔI ƯU TIÊN CAO
+   ✨ HIỆU ỨNG NỔI KHÔNG BÓNG NGOÀI
    ================================ */
 
-/* 💙 Nút màu chính */
+/* 💙 Nút màu chính (nổi nhẹ, không đổ bóng ngoài) */
 button.hieuung-noi,
 .btn.hieuung-noi {
   background: linear-gradient(145deg, #5479c1, #3e5e9c) !important;
   box-shadow:
-    inset 2px 2px 3px rgba(255,255,255,0.25),
-    4px 4px 8px rgba(0,0,0,0.25) !important;
-  transition: all 0.25s ease !important;
+    inset 2px 2px 4px rgba(255, 255, 255, 0.25),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.3) !important;
   color: #fff !important;
   border-radius: 12px !important;
+  transition: all 0.25s ease !important;
 }
 
-/* Hover nổi rõ hơn */
 button.hieuung-noi:hover,
 .btn.hieuung-noi:hover {
   background: linear-gradient(145deg, #5d81c8, #3a5895) !important;
   box-shadow:
-    inset 1px 1px 2px rgba(255,255,255,0.3),
-    6px 6px 12px rgba(0,0,0,0.25) !important;
+    inset 2px 2px 3px rgba(255, 255, 255, 0.3),
+    inset -3px -3px 5px rgba(0, 0, 0, 0.35) !important;
 }
 
-/* Khi bấm thì giữ nguyên */
 button.hieuung-noi:active,
 .btn.hieuung-noi:active {
+  background: linear-gradient(145deg, #4e70b5, #354f89) !important;
+  box-shadow:
+    inset -2px -2px 4px rgba(255, 255, 255, 0.25),
+    inset 2px 2px 4px rgba(0, 0, 0, 0.35) !important;
   transform: none !important;
 }
 
 
-
-/* 🌤 Nút nền nhạt (biến thể đồng bộ với màu chính) */
+/* 🌤 Nút nền nhạt (nổi nhẹ, không đổ bóng ngoài) */
 button.hieuung-nhat,
 .btn.hieuung-nhat {
-  background: linear-gradient(145deg, #f1f5ff, #d9e4fa) !important; /* tông xanh nhạt */
+  background: linear-gradient(145deg, #f1f5ff, #d9e4fa) !important;
   box-shadow:
-    inset 1px 1px 2px rgba(255,255,255,0.6),
-    4px 4px 8px rgba(0,0,0,0.15) !important;
+    inset 2px 2px 3px rgba(255, 255, 255, 0.7),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.15) !important;
   color: #4A69AD !important;
-  transition: all 0.25s ease !important;
   border-radius: 12px !important;
+  transition: all 0.25s ease !important;
 }
 
-/* Hover nổi rõ hơn */
 button.hieuung-nhat:hover,
 .btn.hieuung-nhat:hover {
   background: linear-gradient(145deg, #e8efff, #cfdcf6) !important;
   box-shadow:
-    inset 1px 1px 2px rgba(255,255,255,0.7),
-    6px 6px 12px rgba(0,0,0,0.18) !important;
+    inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+    inset -3px -3px 5px rgba(0, 0, 0, 0.18) !important;
 }
 
-/* Khi bấm thì giữ nguyên */
 button.hieuung-nhat:active,
 .btn.hieuung-nhat:active {
+  background: linear-gradient(145deg, #dbe6fb, #bfcdef) !important;
+  box-shadow:
+    inset -2px -2px 4px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 4px rgba(0, 0, 0, 0.2) !important;
   transform: none !important;
 }
