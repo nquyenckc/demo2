@@ -79,27 +79,22 @@ header h1 {
   padding: 14px 20px;
   cursor: pointer;
   color: #fff;
-  background: #4a69ad;
-  box-shadow:
-    4px 4px 10px rgba(0, 0, 0, 0.25),
-    -3px -3px 8px rgba(255, 255, 255, 0.3);
+  background: linear-gradient(145deg, #5479c1, #3e5e9c); /* tạo khối sáng-tối */
+  box-shadow: inset 2px 2px 3px rgba(255,255,255,0.25),
+              4px 4px 8px rgba(0,0,0,0.25);
   transition: all 0.25s ease;
 }
 
-/* Hover nổi nhẹ */
+/* Hover: hơi nâng sáng nhẹ, mềm mại */
 .btn:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    6px 6px 14px rgba(0, 0, 0, 0.25),
-    -4px -4px 10px rgba(255, 255, 255, 0.35);
+  background: linear-gradient(145deg, #5d81c8, #3a5895);
+  box-shadow: inset 1px 1px 2px rgba(255,255,255,0.3),
+              6px 6px 12px rgba(0,0,0,0.25);
 }
 
-/* Không hiệu ứng khi click */
+/* Khi bấm thì giữ yên, không giật */
 .btn:active {
   transform: none;
-  box-shadow:
-    4px 4px 10px rgba(0, 0, 0, 0.25),
-    -3px -3px 8px rgba(255, 255, 255, 0.3);
 }
 
 
