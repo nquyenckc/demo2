@@ -1,25 +1,28 @@
 /* ================================
-   🌟 HIỆU ỨNG NỔI DÙNG CHUNG
+   🌟 HIỆU ỨNG NỔI DÙNG CHUNG (GIỮ NGUYÊN MÀU GỐC)
    ================================ */
 
-/* Hiệu ứng nổi cơ bản */
 .hieuung-noi {
-  background: linear-gradient(145deg, #5479c1, #3e5e9c) !important;
-  box-shadow:
-    inset 2px 2px 3px rgba(255,255,255,0.25),
-    4px 4px 8px rgba(0,0,0,0.25) !important;
+  position: relative;
+  border-radius: 10px;
   transition: all 0.25s ease;
-  color: #fff !important;
-  border-radius: 12px;
-}
-
-.hieuung-noi:hover {
-  background: linear-gradient(145deg, #5d81c8, #3a5895) !important;
   box-shadow:
-    inset 1px 1px 2px rgba(255,255,255,0.3),
-    6px 6px 12px rgba(0,0,0,0.25) !important;
+    inset 1px 1px 1px rgba(255, 255, 255, 0.3),
+    3px 3px 6px rgba(0, 0, 0, 0.25);
 }
 
+/* Khi hover: nổi mạnh hơn một chút */
+.hieuung-noi:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 1px 1px 2px rgba(255, 255, 255, 0.35),
+    6px 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Khi nhấn: nén xuống một chút */
 .hieuung-noi:active {
-  transform: none;
+  transform: translateY(0);
+  box-shadow:
+    inset 1px 1px 1px rgba(255, 255, 255, 0.3),
+    2px 2px 4px rgba(0, 0, 0, 0.2);
 }
