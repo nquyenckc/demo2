@@ -419,6 +419,7 @@ header h1 {
 
 /* ===== DANH SÁCH MÓN (PHẦN CUỘN GIỮA) ===== */
 
+/* Danh sách món - tự giãn phần trống giữa danh mục và hóa đơn */
 .order-container {
   display: flex;
   flex-direction: column;
@@ -426,8 +427,7 @@ header h1 {
   overflow: hidden;
 }
 
-/* Danh sách món - tự giãn phần trống giữa danh mục và hóa đơn */
-/* Giữ vùng order cố định, phần giữa cuộn được */
+/* vùng cố định top/bottom — dùng flex column bên trong, không cho overflow ở đây */
 .order-content {
   position: fixed;
   left: 20px;
@@ -437,17 +437,24 @@ header h1 {
 
   display: flex;
   flex-direction: column;
-  overflow: hidden;           /* ẩn tràn, chỉ phần con cuộn */
+  row-gap: 5px;
   background: var(--nenapp);
+  box-sizing: border-box;
+  margin-top: 0;
   padding: 5px 0;
   z-index: 5;
+
+  /* fallback nếu JS chưa set vars đúng */
+  max-height: calc(100dvh - 200px);
+  overflow: hidden; /* chuyển cuộn cho .order-list */
 }
 
-/* Danh sách món cuộn trong vùng giữa */
-.order-list {
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* cuộn mượt trên điện thoại */
+/* Phần con thực sự cuộn được */
+.order-content > .order-list {
+  flex: 1 1 auto;                 /* chiếm không gian còn lại */
+  overflow-y: auto;               /* cuộn ở đây */
+  -webkit-overflow-scrolling: touch; /* cuộn mượt trên mobile */
+  padding-right: 6px;             /* tránh dính vào scrollbar */
 }
 
 /* ===== MỖI MÓN ===== */
