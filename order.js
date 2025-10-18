@@ -55,8 +55,8 @@ main.innerHTML = `
     <span id="tongTien">0đ</span>
   </div>
   <div class="order-buttons">
-    <button id="btnDatLai">Đặt lại</button>
-    <button id="btnLuuDon" class="btn-primary">Lưu đơn</button>
+    <button id="btnDatLai" class="hieuung-noi">Đặt lại</button>
+    <button id="btnLuuDon" class="btn-primary hieuung-noi">Lưu đơn</button>
   </div>
 </div>
 
@@ -325,6 +325,7 @@ function updateOrderOffsets() {
 
 // Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
+
 
 
 
