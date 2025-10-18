@@ -99,6 +99,8 @@ function hienThiManHinhChinh() {
   renderTables();
 }
 
+
+
 // ================================
 // 🧾 Hiển thị danh sách đơn ngoài màn hình chính
 // ================================
@@ -147,17 +149,14 @@ function renderTables() {
     })
     .join("");
 
-  // 🧩 Gắn sự kiện click để mở chi tiết
+  // 🧩 Gắn sự kiện click để mở chi tiết (sau này có thể thêm moChiTietDon)
   div.querySelectorAll(".order-card").forEach((card) => {
     card.addEventListener("click", () => {
       const index = parseInt(card.dataset.index);
       const don = dsDon[index];
       if (!don) return;
-      if (typeof openMangDiDetail === "function") {
-        openMangDiDetail(don.id); // 👉 Hàm này trong tables.js
-      } else {
-        console.warn("⚠️ Chưa định nghĩa openMangDiDetail()");
-      }
+      // 👉 Sau này bạn có thể thay dòng này bằng moChiTietDon(don)
+      console.log("🧾 Đã chọn đơn:", don.name);
     });
   });
 }
@@ -267,3 +266,4 @@ function themKhachTaiQuan() {
     banDuocChon = maBan;
   };
 }
+
