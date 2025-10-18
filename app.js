@@ -272,52 +272,51 @@ function themKhachTaiQuan() {
 // ================================
 function moChiTietDon(don) {
   const main = document.querySelector(".main-container");
-  const tongTien = don.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString();
 
-  // Xác định nút và tiêu đề dựa theo trạng thái
-  let nutHanhDong = "";
-  if (don.status === "waiting") {
-    nutHanhDong = `<button class="btn-xacnhan hieuung-noi" onclick="xacNhanPhucVu('${don.id}')">Xác nhận phục vụ đơn</button>`;
-  } else if (don.status === "serving") {
-    nutHanhDong = `<button class="btn-thanhToan hieuung-noi" onclick="ketThucDon('${don.id}')">Kết thúc đơn</button>`;
-  } else {
-    nutHanhDong = `<button class="btn-xacnhan hieuung-noi">Đơn đã hoàn tất</button>`;
+  // 🧭 Cập nhật header chính
+  const headerTitle = document.querySelector(".header-title");
+  const headerRight = document.querySelector(".header-right");
+
+  if (headerTitle) headerTitle.textContent = `BlackTea | ${don.name}`;
+  if (headerRight) {
+    headerRight.innerHTML = `
+      <button class="btn-close" onclick="dongChiTietDon()" 
+        style="background:none;border:none;color:white;font-size:22px;font-weight:bold;cursor:pointer;">
+        ✕
+      </button>
+    `;
   }
 
+  // 🧾 Hiển thị nội dung hóa đơn
+  const tongTien = don.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString();
+
   main.innerHTML = `
-    <div class="order-detail-screen">
-      <header class="order-detail-header">
-        <div class="header-left">BlackTea | ${don.name}</div>
-        <button class="btn-close-detail" onclick="hienThiManHinhChinh()">✕</button>
-      </header>
-
-      <div class="order-detail-body">
-        <h2 class="hoa-don-title">Hóa đơn</h2>
-        <div class="order-time">
-          Thời gian tạo: ${new Date(don.createdAt).toLocaleTimeString("vi-VN")}
-        </div>
-
-        <div class="order-items">
-          ${don.cart.map(m => `
-            <div class="order-item">
-              <div class="item-left">
-                <span class="item-name">${m.name}</span>
-                ${m.note ? `<small class="item-note">(${m.note})</small>` : ""}
-              </div>
-              <div class="item-right">
-                <span class="item-price">${(m.price * m.soluong).toLocaleString()}đ</span>
-              </div>
-            </div>
-          `).join("")}
-        </div>
-
-        <div class="order-total">
-          <strong>Tổng:</strong> ${tongTien}đ
-        </div>
+    <div class="order-detail">
+      <h2 style="text-align:center;margin:12px 0 6px;">Hóa đơn</h2>
+      <div style="text-align:center;color:#777;font-size:14px;margin-bottom:10px;">
+        Thời gian tạo: ${new Date(don.createdAt).toLocaleTimeString("vi-VN")}
       </div>
 
-      <div class="order-detail-footer">
-        ${nutHanhDong}
+      <div class="order-items" style="padding:0 14px;">
+        ${don.cart.map(m => `
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #ddd;">
+            <div>
+              <strong>${m.name}</strong>
+              ${m.note ? `<div style="font-size:13px;color:#666;">(${m.note})</div>` : ""}
+            </div>
+            <div>${(m.price * m.soluong).toLocaleString()}đ</div>
+          </div>
+        `).join("")}
+      </div>
+
+      <div style="text-align:right;margin:15px 14px 20px;font-weight:700;color:#4A69AD;">
+        Tổng: ${tongTien}đ
+      </div>
+
+      <div class="slide-confirm" style="text-align:center;padding:0 14px 20px;">
+        <button class="btn hieuung-noi" style="width:100%;" onclick="xacNhanPhucVu('${don.id}')">
+          Xác nhận phục vụ đơn
+        </button>
       </div>
     </div>
   `;
@@ -341,4 +340,5 @@ function ketThucDon(id) {
   hienThongBao("✅ Đơn đã hoàn tất!");
   hienThiManHinhChinh();
 }
+
 
