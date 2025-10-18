@@ -1,56 +1,27 @@
-/* ===============================
-   💫 HIỆU ỨNG NỔI BLACKTEA POS (v2)
-   =============================== */
+/* ================================
+   🌟 HIỆU ỨNG NỔI DÙNG CHUNG
+   ================================ */
 
-/* 💙 1️⃣ Hiệu ứng nổi cho màu chính */
+/* Hiệu ứng nổi cơ bản */
 .hieuung-noi {
-  position: relative !important;
-  border-radius: 10px !important;
-  transition: all 0.25s ease !important;
-  background: linear-gradient(145deg, #5576c2, #3a5b96) !important; /* dựa trên #4A69AD */
-  color: #fff !important;
+  background: linear-gradient(145deg, #5479c1, #3e5e9c);
   box-shadow:
-    4px 4px 8px rgba(0, 0, 0, 0.25) !important,
-    -3px -3px 8px rgba(255, 255, 255, 0.15) !important;
+    inset 2px 2px 3px rgba(255,255,255,0.25),
+    4px 4px 8px rgba(0,0,0,0.25);
+  transition: all 0.25s ease;
+  color: #fff;
+  border-radius: 12px;
 }
 
+/* Khi di chuột qua: nổi rõ hơn, sáng hơn */
 .hieuung-noi:hover {
-  transform: translateY(-2px) !important;
+  background: linear-gradient(145deg, #5d81c8, #3a5895);
   box-shadow:
-    5px 5px 10px rgba(0, 0, 0, 0.3) !important,
-    -4px -4px 8px rgba(255, 255, 255, 0.25) !important;
+    inset 1px 1px 2px rgba(255,255,255,0.3),
+    6px 6px 12px rgba(0,0,0,0.25);
 }
 
+/* Khi nhấn giữ thì giữ nguyên (không giật) */
 .hieuung-noi:active {
-  transform: translateY(0) !important;
-  box-shadow:
-    inset 2px 2px 3px rgba(0, 0, 0, 0.35) !important,
-    inset -2px -2px 3px rgba(255, 255, 255, 0.25) !important;
-}
-
-
-/* 🌤 2️⃣ Hiệu ứng nổi cho nền nhạt */
-.hieuung-nhat {
-  position: relative !important;
-  border-radius: 10px !important;
-  transition: all 0.25s ease !important;
-  background: var(--nutnennhat, #E8EFFA) !important;
-  color: var(--mauchinh, #4A69AD) !important;
-  box-shadow:
-    4px 4px 8px rgba(0, 0, 0, 0.15) !important,
-    -4px -4px 8px rgba(255, 255, 255, 0.9) !important;
-}
-
-.hieuung-nhat:hover {
-  transform: translateY(-2px) !important;
-  box-shadow:
-    6px 6px 10px rgba(0, 0, 0, 0.18) !important,
-    -6px -6px 10px rgba(255, 255, 255, 0.95) !important;
-}
-
-.hieuung-nhat:active {
-  transform: translateY(0) !important;
-  box-shadow:
-    inset 2px 2px 4px rgba(0, 0, 0, 0.25) !important,
-    inset -2px -2px 4px rgba(255, 255, 255, 0.45) !important;
+  transform: none;
 }
