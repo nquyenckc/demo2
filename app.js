@@ -323,3 +323,22 @@ function moChiTietDon(don) {
   `;
 }
 
+
+function xacNhanPhucVu(id) {
+  const don = hoaDonChinh.find(d => d.id === id);
+  if (!don) return;
+  don.status = "serving";
+  saveAll();
+  hienThongBao("✅ Đã xác nhận phục vụ đơn!");
+  hienThiManHinhChinh();
+}
+
+function ketThucDon(id) {
+  const don = hoaDonChinh.find(d => d.id === id);
+  if (!don) return;
+  don.status = "done";
+  saveAll();
+  hienThongBao("✅ Đơn đã hoàn tất!");
+  hienThiManHinhChinh();
+}
+
