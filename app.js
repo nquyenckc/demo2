@@ -7,9 +7,16 @@ let demMangDi = 0;
 
 // ✅ Tải dữ liệu khi mở trang
 window.addEventListener("load", () => {
-  const saved = localStorage.getItem("BT_TABLES");
-  if (saved) hoaDonChinh = JSON.parse(saved); // ✅ đổi TABLES → hoaDonChinh
-  loadDemMangDi();
+  try {
+    const saved = localStorage.getItem("BT_TABLES");
+    if (saved) hoaDonChinh = JSON.parse(saved); // ✅ đổi TABLES → hoaDonChinh
+    loadDemMangDi();
+
+    // Gọi render khi khởi động
+    if (typeof renderTables === "function") renderTables();
+  } catch (err) {
+    console.error("Lỗi khi load dữ liệu:", err);
+  }
 });
 
 // ✅ Lưu dữ liệu ra localStorage
@@ -82,7 +89,7 @@ function hienThiManHinhChinh() {
 
   // 👉 Gắn sự kiện
   document.getElementById("btnMangDi").addEventListener("click", () => {
-    khoiTaoOrder("Khách mang đi"); 
+    khoiTaoOrder("Khách mang đi");
   });
 
   document.getElementById("btnGheQuan").addEventListener("click", () => {
@@ -104,34 +111,55 @@ function renderTables() {
     return;
   }
 
-  div.innerHTML = dsDon.map((t) => {
-    const tongTien = t.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString();
-    const soMon = t.cart.length;
-    const coGhiChu = t.cart.some((m) => m.note && m.note.trim() !== "");
-    const trangThai = "waiting";
+  div.innerHTML = dsDon
+    .map((t, i) => {
+      const tongTien = t.cart
+        .reduce((a, m) => a + m.price * m.soluong, 0)
+        .toLocaleString();
+      const soMon = t.cart.length;
+      const coGhiChu = t.cart.some((m) => m.note && m.note.trim() !== "");
 
-    const iconTrangThai = `<i class="fa-solid fa-mug-hot main"></i>`;
-    const iconNote = coGhiChu ? `<i class="fa-solid fa-note-sticky note"></i>` : "";
+      // lấy trạng thái từ đơn (nếu có)
+      const trangThai = t.status || "waiting";
+      const iconTrangThai = `<i class="fa-solid fa-mug-hot main"></i>`;
+      const iconNote = coGhiChu
+        ? `<i class="fa-solid fa-note-sticky note"></i>`
+        : "";
 
-    return `
-      <div class="order-card ${trangThai}">
-        <div class="order-left">
-          <div class="order-name">${t.name}</div>
-          <div class="order-info">${soMon} món • ${tongTien}đ</div>
-          <div class="order-time">
-            ${new Date(t.createdAt).toLocaleTimeString("vi-VN", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+      return `
+        <div class="order-card ${trangThai}" data-index="${i}">
+          <div class="order-left">
+            <div class="order-name">${t.name}</div>
+            <div class="order-info">${soMon} món • ${tongTien}đ</div>
+            <div class="order-time">
+              ${new Date(t.createdAt).toLocaleTimeString("vi-VN", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </div>
+          </div>
+          <div class="status-box ${trangThai}">
+            ${iconTrangThai}
+            ${iconNote}
           </div>
         </div>
-        <div class="status-box ${trangThai}">
-          ${iconTrangThai}
-          ${iconNote}
-        </div>
-      </div>
-    `;
-  }).join("");
+      `;
+    })
+    .join("");
+
+  // 🧩 Gắn sự kiện click để mở chi tiết
+  div.querySelectorAll(".order-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      const index = parseInt(card.dataset.index);
+      const don = dsDon[index];
+      if (!don) return;
+      if (typeof openMangDiDetail === "function") {
+        openMangDiDetail(don.id); // 👉 Hàm này trong tables.js
+      } else {
+        console.warn("⚠️ Chưa định nghĩa openMangDiDetail()");
+      }
+    });
+  });
 }
 
 // ================================
@@ -239,6 +267,3 @@ function themKhachTaiQuan() {
     banDuocChon = maBan;
   };
 }
-
-
-
