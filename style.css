@@ -1152,21 +1152,24 @@ header h1 {
   margin-top: 4px;
 }
 
-/* === ICON CÀ PHÊ TRẠNG THÁI === */
-.status-box .icon-app {
-  width: 44px;
+/* =====================================
+   🎨 ICON ỨNG DỤNG (SVG qua <img>)
+   ===================================== */
+.icon-app {
+  width: 35px; /* to gấp đôi */
   height: 44px;
-  color: var(--mautam); /* xám nhạt khi chưa phục vụ */
-  transition: all 0.35s ease;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%);
 }
 
+/* Màu xám nhạt khi CHỜ */
+.status-box.waiting .icon-app {
+  filter: brightness(0) saturate(100%) invert(85%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%);
+}
+
+/* Màu chính khi PHỤC VỤ */
 .status-box.serving .icon-app {
-  color: var(--mauchinh); /* xanh khi đang phục vụ */
-  transform: scale(1.05);
-  animation: nhip 1.8s ease-in-out infinite;
-}
-
-@keyframes nhip {
-  0%, 100% { transform: scale(1.05); opacity: 1; }
-  50% { transform: scale(1.15); opacity: 0.9; }
+  filter: brightness(0) saturate(100%) invert(41%) sepia(17%) saturate(1600%) hue-rotate(195deg) brightness(95%) contrast(90%);
+  transform: scale(1.1);
 }
