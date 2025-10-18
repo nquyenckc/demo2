@@ -298,24 +298,7 @@ header h1 {
   box-shadow: none !important;
   -webkit-tap-highlight-color: transparent !important;
 }
-/* --- Header --- */
-.order-header {
-  background: var(--mauchinh);
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  font-weight: 600;
-  font-size: 18px;
-  border-radius: 0 0 10px 10px;
-  flex-shrink: 0;
-}
 
-.order-header span {
-  margin-left: 6px;
-  font-weight: 500;
-}
 
 .btn-close {
   background: transparent;
