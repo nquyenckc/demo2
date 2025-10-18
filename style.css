@@ -63,37 +63,44 @@ header h1 {
 /* === Nhóm nút khách === */
 .btn-group {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   justify-content: center;
-  margin: 10px 0 16px;
+  margin: 10px 0 20px;
 }
 
 .btn {
-  border: none;
-  border-radius: 10px;
-  font-family: var(--fontchinh);
-  font-size: 16px;
-  font-weight: 600;
-  padding: 12px 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
   flex: 1;
   max-width: 200px;
+  border: none;
+  border-radius: 14px;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 20px;
+  cursor: pointer;
   color: #fff;
-  background: var(--mauchinh); /* ✅ luôn theo màu chủ đạo */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: #4a69ad;
+  box-shadow:
+    4px 4px 10px rgba(0, 0, 0, 0.25),
+    -3px -3px 8px rgba(255, 255, 255, 0.3);
+  transition: all 0.25s ease;
 }
 
+/* Hover nổi nhẹ */
 .btn:hover {
-  background: #3a5b96; /* hơi đậm hơn 1 chút khi hover */
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow:
+    6px 6px 14px rgba(0, 0, 0, 0.25),
+    -4px -4px 10px rgba(255, 255, 255, 0.35);
 }
 
+/* Không hiệu ứng khi click */
 .btn:active {
-  transform: scale(0.97);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transform: none;
+  box-shadow:
+    4px 4px 10px rgba(0, 0, 0, 0.25),
+    -3px -3px 8px rgba(255, 255, 255, 0.3);
 }
-
 
 
 /* === Danh sách bàn === */
