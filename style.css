@@ -968,23 +968,37 @@ header h1 {
    (Khoảng cách, khung chứa, bố trí)
    =============================== */
 
+/* === DANH SÁCH ĐƠN (CUỘN BÊN TRONG, CÁCH TRÊN/DƯỚI 40PX) === */
 .table-list {
   position: absolute;
-  top: calc(var(--header-height, 52px) + var(--btn-height, 48px) + 20px);
   left: 0;
   right: 0;
-  bottom: 20px;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 0 16px 40px;
-  box-sizing: border-box;
+  top: calc(52px + 48px + 40px);  /* header + nút + 40px */
+  bottom: 40px;                   /* cách đáy 40px */
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 12px;
-  background: var(--nenapp);
+  padding: 0 16px 40px;
+  box-sizing: border-box;
+
+  /* ✅ phần quan trọng để cuộn và không chồng */
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  /* nền và viền */
+  background: var(--nenapp, #f7f9fc);
   border-radius: 12px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  z-index: 0;
 }
+
+.table-list > * {
+  position: relative !important; /* ✅ ép các card không absolute */
+  flex-shrink: 0;                /* ✅ không cho ép lại */
+}
+
 
 /* gradient mờ nhẹ ở đáy danh sách */
 .table-list::after {
@@ -993,10 +1007,9 @@ header h1 {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 20px;
+  height: 30px;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgba(247,249,252,0), var(--nenapp));
-  z-index: 0;
+  background: linear-gradient(to bottom, rgba(247,249,252,0), var(--nenapp, #f7f9fc));
 }
 
 
