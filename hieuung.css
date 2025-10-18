@@ -2,6 +2,7 @@
    🌟 HIỆU ỨNG NỔI ƯU TIÊN CAO
    ================================ */
 
+/* 💙 Nút màu chính */
 button.hieuung-noi,
 .btn.hieuung-noi {
   background: linear-gradient(145deg, #5479c1, #3e5e9c) !important;
@@ -25,5 +26,34 @@ button.hieuung-noi:hover,
 /* Khi bấm thì giữ nguyên */
 button.hieuung-noi:active,
 .btn.hieuung-noi:active {
+  transform: none !important;
+}
+
+
+
+/* 🌤 Nút nền nhạt (biến thể đồng bộ với màu chính) */
+button.hieuung-nhat,
+.btn.hieuung-nhat {
+  background: linear-gradient(145deg, #f1f5ff, #d9e4fa) !important; /* tông xanh nhạt */
+  box-shadow:
+    inset 1px 1px 2px rgba(255,255,255,0.6),
+    4px 4px 8px rgba(0,0,0,0.15) !important;
+  color: #4A69AD !important;
+  transition: all 0.25s ease !important;
+  border-radius: 12px !important;
+}
+
+/* Hover nổi rõ hơn */
+button.hieuung-nhat:hover,
+.btn.hieuung-nhat:hover {
+  background: linear-gradient(145deg, #e8efff, #cfdcf6) !important;
+  box-shadow:
+    inset 1px 1px 2px rgba(255,255,255,0.7),
+    6px 6px 12px rgba(0,0,0,0.18) !important;
+}
+
+/* Khi bấm thì giữ nguyên */
+button.hieuung-nhat:active,
+.btn.hieuung-nhat:active {
   transform: none !important;
 }
