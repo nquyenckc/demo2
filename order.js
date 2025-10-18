@@ -246,10 +246,13 @@ function capNhatHoaDon() {
       const dong = document.createElement("div");
       dong.className = "hoa-don-item";
       const ten = m.note ? `${m.name} (${m.note})` : m.name;
-      dong.innerHTML = `
-        <span>${ten} x${m.soluong}</span>
-        <span>${(m.price * m.soluong).toLocaleString()}₫</span>
-      `;
+dong.innerHTML = `
+  <span>
+    ${m.name}${m.note ? ` <span class="note-text">(${m.note})</span>` : ""} x${m.soluong}
+  </span>
+  <span>${(m.price * m.soluong).toLocaleString()}₫</span>
+`;
+
       hdDiv.appendChild(dong);
     });
   }

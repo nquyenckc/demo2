@@ -768,7 +768,7 @@ header h1 {
 }
 
 /* ===============================
-   ⭐ Popup Ghi chú (Đường / Đá) - ĐÃ TINH CHỈNH
+   ⭐ Popup Ghi chú (Độ ngọt / Mức đá) - Bố cục dọc
    =============================== */
 
 .popup-note {
@@ -781,13 +781,13 @@ header h1 {
   font-family: inherit;
   color: #333;
   z-index: 1000;
-  animation: fadeInSmooth 0.12s ease-out;
+  animation: fadeInSmooth 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
   transform-origin: top center;
   will-change: transform, opacity;
   border: 1px solid #e5e7eb;
 }
 
-/* 🟢 Mượt, không rung app */
+/* 🟢 Hiệu ứng mượt khi mở popup */
 @keyframes fadeInSmooth {
   from {
     opacity: 0;
@@ -799,49 +799,157 @@ header h1 {
   }
 }
 
-/* Giữ nguyên phần nội dung */
+/* ===============================
+   ⭐ Popup Ghi chú (Độ ngọt / Mức đá)
+   =============================== */
+
+.popup-note {
+  position: absolute;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  padding: 16px 18px;
+  width: 240px;
+  font-family: inherit;
+  color: #333;
+  z-index: 1000;
+  animation: fadeInSmooth 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transform-origin: top center;
+  border: 1px solid #e5e7eb;
+}
+
+/* 🟢 Hiệu ứng mở mượt */
+@keyframes fadeInSmooth {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===============================
+   ⭐ Popup Ghi chú (Độ ngọt / Mức đá)
+   =============================== */
+
+.popup-note {
+  position: absolute;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  padding: 16px 18px;
+  width: 240px;
+  font-family: inherit;
+  color: #333;
+  z-index: 1000;
+  animation: fadeInSmooth 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transform-origin: top center;
+  border: 1px solid #e5e7eb;
+}
+
+/* 🟢 Hiệu ứng mở mượt */
+@keyframes fadeInSmooth {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===============================
+   ⭐ Popup Ghi chú (Độ ngọt / Mức đá)
+   =============================== */
+.popup-note {
+  position: absolute;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  padding: 14px 16px;
+  width: 220px;
+  font-family: inherit;
+  color: #333;
+  z-index: 1000;
+  animation: fadeInSmooth 0.15s ease-out;
+  transform-origin: top center;
+  border: 1px solid #e5e7eb;
+}
+
+@keyframes fadeInSmooth {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===============================
+   🎚 Bố cục: tiêu đề + thanh trượt
+   =============================== */
 .popup-row {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+/* Hàng tiêu đề: "Độ ngọt" - "Bình thường" */
+.popup-row .row-top {
+  display: flex;
   justify-content: space-between;
-  margin-bottom: 12px;
-  gap: 10px;
+  align-items: center;
+  margin-bottom: 6px;
 }
 
 .popup-row label {
-  flex: 1;
   font-size: 14px;
+  font-weight: 600;
   color: #333;
 }
 
-.popup-row .slider {
-  flex: 2;
-  accent-color: var(--mauchinh);
-  cursor: pointer;
-}
-
 .popup-row .slider-label {
-  flex: 1.2;
   font-size: 13px;
-  color: var(--mauchinh);
-  text-align: right;
-  font-weight: 600;
+  color: var(--mauchinh, #007bff);
+  font-style: italic;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
+/* Thanh trượt */
+.popup-row .slider {
+  accent-color: var(--mauchinh, #007bff);
+  cursor: pointer;
+  width: 100%;
+  height: 4px;
+}
+
+/* ===============================
+   🔘 Nút hành động
+   =============================== */
 .popup-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 8px;
+  margin-top: 6px;
 }
 
 .popup-actions button {
   border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .popup-actions .cancel {
@@ -854,7 +962,7 @@ header h1 {
 }
 
 .popup-actions .confirm {
-  background: var(--mauchinh);
+  background: var(--mauchinh, #007bff);
   color: white;
   font-weight: 500;
 }
