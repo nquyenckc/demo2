@@ -970,6 +970,15 @@ header h1 {
 .popup-actions .confirm:hover {
   opacity: 0.9;
 }
+/* ===============================
+   💬 Ghi chú món trong hóa đơn tạm
+   =============================== */
+.note-text {
+  color: var(--mauchinh);
+  font-size: 0.88em;   /* nhỏ hơn một chút */
+  font-style: italic;  /* in nghiêng */
+  font-weight: 500;
+}
 
    /* ===============================
    ⚙️ Làm mờ nút sao và nút trừ khi số lượng = 0
