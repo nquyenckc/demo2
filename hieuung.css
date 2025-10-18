@@ -1,22 +1,56 @@
+/* ===============================
+   💫 HIỆU ỨNG NỔI BLACKTEA POS
+   =============================== */
+
+/* 💙 1️⃣ Hiệu ứng nổi cho màu chính */
 .hieuung-noi {
   position: relative;
   border-radius: 10px;
   transition: all 0.25s ease;
+  background: linear-gradient(145deg, #5576c2, #3a5b96); /* dựa trên #4A69AD */
+  color: #fff;
   box-shadow:
-    inset 1px 1px 1px rgba(255, 255, 255, 0.3),
-    3px 3px 6px rgba(0, 0, 0, 0.25) !important;  /* 💪 không bị đè */
+    4px 4px 8px rgba(0, 0, 0, 0.25),
+    -3px -3px 8px rgba(255, 255, 255, 0.15);
 }
 
 .hieuung-noi:hover {
   transform: translateY(-2px);
   box-shadow:
-    inset 1px 1px 2px rgba(255, 255, 255, 0.35),
-    6px 6px 12px rgba(0, 0, 0, 0.25) !important;
+    5px 5px 10px rgba(0, 0, 0, 0.3),
+    -4px -4px 8px rgba(255, 255, 255, 0.25);
 }
 
 .hieuung-noi:active {
   transform: translateY(0);
   box-shadow:
-    inset 1px 1px 1px rgba(255, 255, 255, 0.3),
-    2px 2px 4px rgba(0, 0, 0, 0.2) !important;
+    inset 2px 2px 3px rgba(0, 0, 0, 0.35),
+    inset -2px -2px 3px rgba(255, 255, 255, 0.25);
+}
+
+
+/* 🌤 2️⃣ Hiệu ứng nổi cho nền nhạt */
+.hieuung-nhat {
+  position: relative;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  background: var(--nutnennhat, #E8EFFA);
+  color: var(--mauchinh, #4A69AD);
+  box-shadow:
+    4px 4px 8px rgba(0, 0, 0, 0.15),
+    -4px -4px 8px rgba(255, 255, 255, 0.9);
+}
+
+.hieuung-nhat:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    6px 6px 10px rgba(0, 0, 0, 0.18),
+    -6px -6px 10px rgba(255, 255, 255, 0.95);
+}
+
+.hieuung-nhat:active {
+  transform: translateY(0);
+  box-shadow:
+    inset 2px 2px 4px rgba(0, 0, 0, 0.25),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.45);
 }
