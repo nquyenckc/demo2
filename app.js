@@ -267,3 +267,60 @@ function themKhachTaiQuan() {
   };
 }
 
+// ================================
+// 🧾 Mở chi tiết đơn full màn hình
+// ================================
+function moChiTietDon(don) {
+  if (!don) return;
+
+  const main = document.querySelector(".main-container");
+  if (!main) return;
+
+  // 💡 Tính tổng tiền
+  const tongTien = don.cart
+    .reduce((a, m) => a + m.price * m.soluong, 0)
+    .toLocaleString();
+
+  // 💡 Hiển thị giao diện chi tiết đơn
+  main.innerHTML = `
+    <div class="order-detail-screen">
+      <header class="order-detail-header">
+        <h1>${don.name}</h1>
+        <button class="btn-close-detail">×</button>
+      </header>
+
+      <div class="order-detail-body">
+        <div class="order-items">
+          ${don.cart
+            .map(
+              (m) => `
+            <div class="order-item">
+              <span class="item-name">${m.name}</span>
+              <span class="item-price">${(m.price * m.soluong).toLocaleString()}đ</span>
+            </div>
+          `
+            )
+            .join("")}
+        </div>
+        <div class="order-total">
+          <strong>Tổng cộng:</strong> ${tongTien}đ
+        </div>
+      </div>
+
+      <div class="order-detail-footer">
+        <button class="btn-xacnhan hieuung-noi">Xác nhận phục vụ đơn</button>
+      </div>
+    </div>
+  `;
+
+  // ❌ Nút đóng
+  main.querySelector(".btn-close-detail").addEventListener("click", () => {
+    hienThiManHinhChinh(); // quay lại danh sách
+  });
+
+  // ✅ Nút xác nhận
+  main.querySelector(".btn-xacnhan").addEventListener("click", () => {
+    hienThiManHinhChinh();
+  });
+}
+
