@@ -245,23 +245,30 @@ function capNhatHoaDon() {
     hoaDonTam.forEach((m) => {
       const dong = document.createElement("div");
       dong.className = "hoa-don-item";
-      const ten = m.note ? `${m.name} (${m.note})` : m.name;
-dong.innerHTML = `
-  <span>
-    ${m.name}${m.note ? ` <span class="note-text">(${m.note})</span>` : ""} x${m.soluong}
-  </span>
-  <span>${(m.price * m.soluong).toLocaleString()}₫</span>
-`;
+
+      // ✅ Nếu tên đã có ngoặc thì không chèn note nữa
+      const hienTen = m.name.includes("(")
+        ? m.name
+        : m.note
+        ? `${m.name} (${m.note})`
+        : m.name;
+
+      dong.innerHTML = `
+        <span>
+          ${hienTen} x${m.soluong}
+        </span>
+        <span>${(m.price * m.soluong).toLocaleString()}₫</span>
+      `;
 
       hdDiv.appendChild(dong);
     });
   }
 
-  // Tổng tiền
+  // ✅ Tổng tiền
   const tong = hoaDonTam.reduce((t, m) => t + m.price * m.soluong, 0);
   document.getElementById("tongTien").textContent = `${tong.toLocaleString()}₫`;
 
-  // Cập nhật lại số lượng gộp cho tất cả món trong menu
+  // ✅ Cập nhật lại số lượng tổng trong menu
   MENU.forEach((mon) => {
     const slTong = hoaDonTam
       .filter((m) => m.id === mon.id)
