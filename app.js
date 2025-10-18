@@ -73,6 +73,15 @@ function khoiTaoUngDung() {
   hienThiManHinhChinh();
 }
 
+function loadIcon(name, selector) {
+  fetch(`icons/${name}.svg`)
+    .then(res => res.text())
+    .then(svg => {
+      const el = document.querySelector(selector);
+      if (el) el.innerHTML = svg;
+    })
+    .catch(err => console.error("Không tải được icon:", name));
+}
 // ================================
 // 🏠 Màn hình chính
 // ================================
@@ -398,5 +407,6 @@ function khoiTaoSliderConfirm(don) {
     }
   }
 }
+
 
 
