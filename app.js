@@ -282,36 +282,43 @@ function moChiTietDon(don) {
     .toLocaleString();
 
   // 💡 Hiển thị giao diện chi tiết đơn
-  main.innerHTML = `
-    <div class="order-detail-screen">
-      <header class="order-detail-header">
-        <h1>${don.name}</h1>
-        <button class="btn-close-detail">×</button>
-      </header>
+main.innerHTML = `
+  <div class="order-detail-screen">
+    <header class="order-detail-header">
+      <div class="header-left">${don.name}</div>
+      <button class="btn-close-detail">✕</button>
+    </header>
 
-      <div class="order-detail-body">
-        <div class="order-items">
-          ${don.cart
-            .map(
-              (m) => `
-            <div class="order-item">
+    <div class="order-detail-body">
+      <h2 class="hoa-don-title">Hóa đơn</h2>
+      <div class="order-time">
+        Thời gian tạo: ${new Date(don.createdAt).toLocaleTimeString("vi-VN")}
+      </div>
+
+      <div class="order-items">
+        ${don.cart.map(m => `
+          <div class="order-item">
+            <div class="item-left">
               <span class="item-name">${m.name}</span>
+              ${m.note ? `<small class="item-note">(${m.note})</small>` : ""}
+            </div>
+            <div class="item-right">
               <span class="item-price">${(m.price * m.soluong).toLocaleString()}đ</span>
             </div>
-          `
-            )
-            .join("")}
-        </div>
-        <div class="order-total">
-          <strong>Tổng cộng:</strong> ${tongTien}đ
-        </div>
+          </div>
+        `).join("")}
       </div>
 
-      <div class="order-detail-footer">
-        <button class="btn-xacnhan hieuung-noi">Xác nhận phục vụ đơn</button>
+      <div class="order-total">
+        <strong>Tổng:</strong> ${tongTien}đ
       </div>
     </div>
-  `;
+
+    <div class="order-detail-footer">
+      <button class="btn-xacnhan hieuung-noi">Xác nhận phục vụ đơn</button>
+    </div>
+  </div>
+`;
 
   // ❌ Nút đóng
   main.querySelector(".btn-close-detail").addEventListener("click", () => {
@@ -323,5 +330,6 @@ function moChiTietDon(don) {
     hienThiManHinhChinh();
   });
 }
+
 
 
