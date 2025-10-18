@@ -1204,3 +1204,13 @@ header h1 {
   50% { filter: brightness(1.4); }
 }
 
+/* Ẩn thanh cuộn nhưng vẫn cuộn được */
+.scroll-an {
+  overflow-y: scroll;        /* vẫn cho phép cuộn */
+  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;  /* IE, Edge cũ */
+}
+
+.scroll-an::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Opera */
+}
