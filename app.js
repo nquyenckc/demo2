@@ -270,75 +270,131 @@ function themKhachTaiQuan() {
 // ================================
 // 🧾 Mở chi tiết đơn full màn hình
 // ================================
-function moChiTietDon(don) {
-  const main = document.querySelector(".main-container");
-
-  // 🧭 Cập nhật header chính
-  const headerTitle = document.querySelector(".header-title");
-  const headerRight = document.querySelector(".header-right");
-
-  if (headerTitle) headerTitle.textContent = `BlackTea | ${don.name}`;
-  if (headerRight) {
-    headerRight.innerHTML = `
-      <button class="btn-close" onclick="dongChiTietDon()" 
-        style="background:none;border:none;color:white;font-size:22px;font-weight:bold;cursor:pointer;">
-        ✕
-      </button>
-    `;
+// ================================
+// 🧾 MỞ CHI TIẾT ĐƠN
+// ================================
+function moChiTietDon(id) {
+  const don = hoaDonChinh.find(d => d.id === id);
+  if (!don) {
+    console.warn("Không tìm thấy đơn:", id);
+    return;
   }
 
-  // 🧾 Hiển thị nội dung hóa đơn
-  const tongTien = don.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString();
+  const main = document.querySelector(".main-container");
+  const header = document.querySelector("header");
 
+  // 💡 Thay thanh head cũ = thanh gọn: tên bàn + nút X
+  header.innerHTML = `
+    <div class="header-left">
+      <h1>${don.name}</h1>
+    </div>
+    <div class="header-right">
+      <button id="btnCloseChiTiet" class="btn-close">×</button>
+    </div>
+  `;
+
+  // 💡 Nội dung chính của đơn
   main.innerHTML = `
     <div class="order-detail">
-      <h2 style="text-align:center;margin:12px 0 6px;">Hóa đơn</h2>
-      <div style="text-align:center;color:#777;font-size:14px;margin-bottom:10px;">
-        Thời gian tạo: ${new Date(don.createdAt).toLocaleTimeString("vi-VN")}
-      </div>
-
-      <div class="order-items" style="padding:0 14px;">
+      <div class="order-content">
         ${don.cart.map(m => `
-          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #ddd;">
-            <div>
-              <strong>${m.name}</strong>
-              ${m.note ? `<div style="font-size:13px;color:#666;">(${m.note})</div>` : ""}
+          <div class="mon-item">
+            <div class="mon-left">
+              <div class="mon-name">${m.name}</div>
+              ${m.note ? `<div class="mon-note">${m.note}</div>` : ""}
             </div>
-            <div>${(m.price * m.soluong).toLocaleString()}đ</div>
+            <div class="mon-right">
+              <span class="mon-qty">x${m.soluong}</span>
+              <span class="mon-price">${(m.price * m.soluong).toLocaleString()}đ</span>
+            </div>
           </div>
         `).join("")}
       </div>
 
-      <div style="text-align:right;margin:15px 14px 20px;font-weight:700;color:#4A69AD;">
-        Tổng: ${tongTien}đ
+      <div class="order-total">
+        Tổng cộng: <strong>${don.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString()}đ</strong>
       </div>
 
-      <div class="slide-confirm" style="text-align:center;padding:0 14px 20px;">
-        <button class="btn hieuung-noi" style="width:100%;" onclick="xacNhanPhucVu('${don.id}')">
-          Xác nhận phục vụ đơn
-        </button>
+      <div class="order-confirm">
+        <div class="slider-container" id="sliderConfirm">
+          <div class="slider-bg">Kéo để xác nhận đơn</div>
+          <div class="slider-thumb"><i class="fas fa-mug-hot"></i></div>
+        </div>
       </div>
     </div>
   `;
+
+  // 🔙 Nút thoát
+  document.getElementById("btnCloseChiTiet").addEventListener("click", () => {
+    header.innerHTML = `
+      <h1>BlackTea</h1>
+      <div class="header-icons">
+        <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
+        <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
+      </div>
+    `;
+    hienThiManHinhChinh();
+    renderTables();
+  });
+
+  // 🎚️ Gọi hiệu ứng kéo xác nhận
+  khoiTaoSliderConfirm(don);
 }
 
 
-function xacNhanPhucVu(id) {
-  const don = hoaDonChinh.find(d => d.id === id);
-  if (!don) return;
-  don.status = "serving";
-  saveAll();
-  hienThongBao("✅ Đã xác nhận phục vụ đơn!");
-  hienThiManHinhChinh();
+function khoiTaoSliderConfirm(don) {
+  const container = document.getElementById("sliderConfirm");
+  const thumb = container.querySelector(".slider-thumb");
+  const bg = container.querySelector(".slider-bg");
+
+  let isDragging = false;
+  let startX = 0;
+
+  thumb.addEventListener("mousedown", start);
+  thumb.addEventListener("touchstart", start);
+
+  document.addEventListener("mousemove", move);
+  document.addEventListener("touchmove", move);
+
+  document.addEventListener("mouseup", end);
+  document.addEventListener("touchend", end);
+
+  function start(e) {
+    isDragging = true;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    container.classList.add("active");
+  }
+
+  function move(e) {
+    if (!isDragging) return;
+    const currentX = e.touches ? e.touches[0].clientX : e.clientX;
+    let offset = currentX - startX;
+    if (offset < 0) offset = 0;
+    if (offset > container.offsetWidth - thumb.offsetWidth) offset = container.offsetWidth - thumb.offsetWidth;
+    thumb.style.transform = `translateX(${offset}px)`;
+  }
+
+  function end() {
+    if (!isDragging) return;
+    isDragging = false;
+
+    const successThreshold = container.offsetWidth - thumb.offsetWidth - 10;
+    const currentOffset = parseFloat(thumb.style.transform.replace("translateX(", "").replace("px)", "")) || 0;
+
+    if (currentOffset >= successThreshold) {
+      bg.innerText = "✅ Đã xác nhận!";
+      container.classList.add("confirmed");
+      thumb.style.transform = `translateX(${successThreshold}px)`;
+
+      // ✅ Đổi trạng thái đơn → đang phục vụ
+      don.status = "serving";
+      saveAll();
+      setTimeout(() => {
+        hienThongBao("Đơn đã chuyển sang 'Đang phục vụ'");
+      }, 300);
+    } else {
+      thumb.style.transform = "translateX(0)";
+      container.classList.remove("active");
+    }
+  }
 }
-
-function ketThucDon(id) {
-  const don = hoaDonChinh.find(d => d.id === id);
-  if (!don) return;
-  don.status = "done";
-  saveAll();
-  hienThongBao("✅ Đơn đã hoàn tất!");
-  hienThiManHinhChinh();
-}
-
-
