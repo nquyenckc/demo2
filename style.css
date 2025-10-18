@@ -427,27 +427,27 @@ header h1 {
 }
 
 /* Danh sách món - tự giãn phần trống giữa danh mục và hóa đơn */
-/* ===============================
-   🧾 Danh sách món - layout cũ ổn định
-   =============================== */
+/* Giữ vùng order cố định, phần giữa cuộn được */
 .order-content {
   position: fixed;
   left: 20px;
   right: 20px;
-
-  /* Giữ vị trí cố định bằng JS tính */
   top: var(--order-top, 140px);
   bottom: calc(var(--order-bottom, 190px) + env(safe-area-inset-bottom, 0px));
 
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  row-gap: 5px;             /* khoảng cách giữa các món */
+  overflow: hidden;           /* ẩn tràn, chỉ phần con cuộn */
   background: var(--nenapp);
-  box-sizing: border-box;
-  margin-top: 0;            /* tránh cộng thêm margin gây lệch */
-  padding: 5px 0;           /* cách nhẹ đầu/cuối danh sách */
+  padding: 5px 0;
   z-index: 5;
+}
+
+/* Danh sách món cuộn trong vùng giữa */
+.order-list {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* cuộn mượt trên điện thoại */
 }
 
 /* ===== MỖI MÓN ===== */
