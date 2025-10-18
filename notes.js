@@ -75,42 +75,51 @@ function toggleNotePopup(item, btn) {
       return;
     }
 
-    // ✅ Xác nhận
-    if (ev.target.classList.contains('confirm')) {
-      const isNormalSugar = Number(item.sugarLevel) === 2;
-      const isNormalIce = Number(item.iceLevel) === 3;
+// ✅ Xác nhận
+if (ev.target.classList.contains('confirm')) {
+  const isNormalSugar = Number(item.sugarLevel) === 2;
+  const isNormalIce = Number(item.iceLevel) === 3;
 
-      // Nếu bình thường -> bỏ sao, không ghi chú
-if (isNormalSugar && isNormalIce) {
-  btn.classList.remove('active');
-  const icon = btn.querySelector('i');
-  if (icon) {
-    icon.classList.remove('fa-solid');
-    icon.classList.add('fa-regular');
+  // Nếu bình thường -> bỏ sao, không ghi chú
+  if (isNormalSugar && isNormalIce) {
+    btn.classList.remove('active');
+    const icon = btn.querySelector('i');
+    if (icon) {
+      icon.classList.remove('fa-solid');
+      icon.classList.add('fa-regular');
+    }
+    popup.remove();
+    return;
   }
-  popup.remove();
-  return;
-}
 
+  // -----------------
+  // Clone món ghi chú (Đơn ảo)
+  const baseQty = cartRef.find(it => it.id === item.id)?.soluong || 0;
+  const noteCount = cartRef.filter(it => it.id === item.id && it.isNoteOnly).length;
 
-      // -----------------
-      // Clone món ghi chú (Đơn ảo)
-      const baseQty = cartRef.find(it => it.id === item.id)?.soluong || 0;
-      const noteCount = cartRef.filter(it => it.id === item.id && it.isNoteOnly).length;
+  if (noteCount >= baseQty) {
+    hienThongBao(`Đã ghi chú đủ ${baseQty} ly cho món "${item.name}"`);
+    return;
+  }
 
-      if (noteCount >= baseQty) {
-        hienThongBao(`Đã ghi chú đủ ${baseQty} ly cho món "${item.name}"`);
-        return;
-      }
+  // 🧩 Giảm 1 ly từ món gốc nếu còn (để không cộng dồn sai)
+  const goc = cartRef.find(it => it.id === item.id && !it.isNoteOnly);
+  if (goc && goc.soluong > 0) {
+    goc.soluong--;
+    if (goc.soluong === 0) {
+      const idx = cartRef.indexOf(goc);
+      if (idx > -1) cartRef.splice(idx, 1);
+    }
+  }
 
-      const newItem = JSON.parse(JSON.stringify(item));
-      newItem.isNoteOnly = true;
-      newItem.note = `Đường: ${getSugarLabels()[item.sugarLevel]}, Đá: ${getIceLabels()[item.iceLevel]}`;
-      newItem.name = `${item.name} (${getSugarLabels()[item.sugarLevel]}, ${getIceLabels()[item.iceLevel]})`;
-      newItem.soluong = 1;
-      newItem.price = item.price; // giữ giá gốc
+  const newItem = JSON.parse(JSON.stringify(item));
+  newItem.isNoteOnly = true;
+  newItem.note = `Đường: ${getSugarLabels()[item.sugarLevel]}, Đá: ${getIceLabels()[item.iceLevel]}`;
+  newItem.name = `${item.name} (${getSugarLabels()[item.sugarLevel]}, ${getIceLabels()[item.iceLevel]})`;
+  newItem.soluong = 1;
+  newItem.price = item.price; // giữ giá gốc
 
-      cartRef.push(newItem);
+  cartRef.push(newItem);
 
       // ⭐ Cập nhật sao (tô đặc)
 btn.classList.add('active');
