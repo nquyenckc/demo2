@@ -68,9 +68,12 @@ button.hieuung-nhat:active,
   transform: none !important;
 }
 
-/* 🚫 Tắt nháy focus */
+/* 🚫 Tắt toàn bộ hiệu ứng nháy focus trên mọi trình duyệt */
 button:focus,
-.btn:focus {
+button:focus-visible,
+.btn:focus,
+.btn:focus-visible {
   outline: none !important;
   box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important; /* 🔥 đặc biệt quan trọng trên Android */
 }
