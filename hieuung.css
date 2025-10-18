@@ -1,56 +1,56 @@
 /* ===============================
-   💫 HIỆU ỨNG NỔI BLACKTEA POS
+   💫 HIỆU ỨNG NỔI BLACKTEA POS (v2)
    =============================== */
 
 /* 💙 1️⃣ Hiệu ứng nổi cho màu chính */
 .hieuung-noi {
-  position: relative;
-  border-radius: 10px;
-  transition: all 0.25s ease;
-  background: linear-gradient(145deg, #5576c2, #3a5b96); /* dựa trên #4A69AD */
-  color: #fff;
+  position: relative !important;
+  border-radius: 10px !important;
+  transition: all 0.25s ease !important;
+  background: linear-gradient(145deg, #5576c2, #3a5b96) !important; /* dựa trên #4A69AD */
+  color: #fff !important;
   box-shadow:
-    4px 4px 8px rgba(0, 0, 0, 0.25),
-    -3px -3px 8px rgba(255, 255, 255, 0.15);
+    4px 4px 8px rgba(0, 0, 0, 0.25) !important,
+    -3px -3px 8px rgba(255, 255, 255, 0.15) !important;
 }
 
 .hieuung-noi:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) !important;
   box-shadow:
-    5px 5px 10px rgba(0, 0, 0, 0.3),
-    -4px -4px 8px rgba(255, 255, 255, 0.25);
+    5px 5px 10px rgba(0, 0, 0, 0.3) !important,
+    -4px -4px 8px rgba(255, 255, 255, 0.25) !important;
 }
 
 .hieuung-noi:active {
-  transform: translateY(0);
+  transform: translateY(0) !important;
   box-shadow:
-    inset 2px 2px 3px rgba(0, 0, 0, 0.35),
-    inset -2px -2px 3px rgba(255, 255, 255, 0.25);
+    inset 2px 2px 3px rgba(0, 0, 0, 0.35) !important,
+    inset -2px -2px 3px rgba(255, 255, 255, 0.25) !important;
 }
 
 
 /* 🌤 2️⃣ Hiệu ứng nổi cho nền nhạt */
 .hieuung-nhat {
-  position: relative;
-  border-radius: 10px;
-  transition: all 0.25s ease;
-  background: var(--nutnennhat, #E8EFFA);
-  color: var(--mauchinh, #4A69AD);
+  position: relative !important;
+  border-radius: 10px !important;
+  transition: all 0.25s ease !important;
+  background: var(--nutnennhat, #E8EFFA) !important;
+  color: var(--mauchinh, #4A69AD) !important;
   box-shadow:
-    4px 4px 8px rgba(0, 0, 0, 0.15),
-    -4px -4px 8px rgba(255, 255, 255, 0.9);
+    4px 4px 8px rgba(0, 0, 0, 0.15) !important,
+    -4px -4px 8px rgba(255, 255, 255, 0.9) !important;
 }
 
 .hieuung-nhat:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) !important;
   box-shadow:
-    6px 6px 10px rgba(0, 0, 0, 0.18),
-    -6px -6px 10px rgba(255, 255, 255, 0.95);
+    6px 6px 10px rgba(0, 0, 0, 0.18) !important,
+    -6px -6px 10px rgba(255, 255, 255, 0.95) !important;
 }
 
 .hieuung-nhat:active {
-  transform: translateY(0);
+  transform: translateY(0) !important;
   box-shadow:
-    inset 2px 2px 4px rgba(0, 0, 0, 0.25),
-    inset -2px -2px 4px rgba(255, 255, 255, 0.45);
+    inset 2px 2px 4px rgba(0, 0, 0, 0.25) !important,
+    inset -2px -2px 4px rgba(255, 255, 255, 0.45) !important;
 }
