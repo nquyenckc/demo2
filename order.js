@@ -51,9 +51,9 @@ main.innerHTML = `
     <!-- 🔹 Thanh tổng / footer (cố định đáy) -->
     <div class="order-footer">
   <div class="order-total">
-    <i class="fa-solid fa-cart-shopping"></i>
+    <img src="icons/muahang.svg" class="icon-app" alt="Mua hàng">
     <span id="tongTien">0đ</span>
-  </div>
+</div>
   <div class="order-buttons">
     <button id="btnDatLai" class="hieuung-nhat">Đặt lại</button>
     <button id="btnLuuDon" class="btn-primary hieuung-noi">Lưu đơn</button>
@@ -431,6 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
