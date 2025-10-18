@@ -1152,32 +1152,21 @@ header h1 {
   margin-top: 4px;
 }
 
-/* ===============================
-   ☕ ICON CÀ PHÊ TRONG STATUS BOX
-   =============================== */
+/* === ICON CÀ PHÊ TRẠNG THÁI === */
 .status-box .icon-app {
-  width: 52px;  /* to gấp đôi mặc định */
-  height: 52px;
-  fill: var(--mautam); /* xám nhạt khi chờ */
+  width: 44px;
+  height: 44px;
+  color: var(--mautam); /* xám nhạt khi chưa phục vụ */
   transition: all 0.35s ease;
-  animation: nhip 2.5s ease-in-out infinite;
 }
 
-/* Khi đơn chuyển sang "Đang phục vụ" */
 .status-box.serving .icon-app {
-  fill: var(--mauchinh); /* đổi sang màu chính */
+  color: var(--mauchinh); /* xanh khi đang phục vụ */
   transform: scale(1.05);
   animation: nhip 1.8s ease-in-out infinite;
 }
 
-/* Nếu có note vẫn sáng */
-.status-box i.note {
-  color: var(--maunote);
-  animation: sang 2.2s ease-in-out infinite;
-}
-
-/* Hiệu ứng nhịp nhẹ */
 @keyframes nhip {
-  0%,100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.85; }
+  0%, 100% { transform: scale(1.05); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.9; }
 }
