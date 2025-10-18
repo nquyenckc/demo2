@@ -271,28 +271,41 @@ function luuDon() {
 // -------------------------------
 // Tìm món theo từ khóa
 function timMon() {
-  const tuKhoa = document.getElementById("timMonInput").value.toLowerCase();
-  const ketQua = MENU.filter((m) => m.name.toLowerCase().includes(tuKhoa));
-  const dsMon = document.getElementById("dsMon");
-  dsMon.innerHTML = "";
+  const input = document.getElementById("timMonInput");
+  if (!input) return;
 
-  ketQua.forEach((mon) => {
-    const sl = timSoLuong(mon.id);
-    const div = document.createElement("div");
-    div.className = "mon-item";
-    div.innerHTML = `
-      <div>
-        <div class="mon-ten">${mon.name}</div>
-        <div class="mon-gia">${mon.price.toLocaleString()}₫</div>
-      </div>
-      <div class="mon-qty" id="qty-${mon.id}">
-        <button class="note-btn ${sl > 0 ? '' : 'hidden'}" onclick="toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">☆</button>
-        <button onclick="giamMon(${mon.id})">−</button>
-        <span id="sl-${mon.id}">${sl}</span>
-        <button onclick="themMon(${mon.id})">+</button>
-      </div>
-    `;
-    dsMon.appendChild(div);
+  const keyword = input.value.toLowerCase().trim();
+  const items = document.querySelectorAll("#dsMon .mon-item");
+
+  // 👉 Hàm bỏ dấu + chuẩn hóa
+  const normalize = (str) => str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/[^a-z0-9\s]/g, "")
+    .trim();
+
+  const kw = normalize(keyword);
+
+  // 🧩 Nếu chưa gõ gì → hiện tất cả
+  if (kw === "") {
+    items.forEach(item => item.style.display = "");
+    return;
+  }
+
+  items.forEach(item => {
+    const tenMon = item.querySelector(".mon-ten")?.textContent || "";
+    const text = normalize(tenMon);
+    const initials = text.split(" ").map(w => w[0]).join("");
+    const compactText = text.replace(/\s+/g, "");
+
+    const match =
+      compactText.includes(kw) ||
+      text.includes(kw) ||
+      initials.includes(kw);
+
+    item.style.display = match ? "" : "none";
   });
 }
 
@@ -328,9 +341,36 @@ window.addEventListener('resize', updateOrderOffsets);
 
 
 
+// === Tự động bỏ lọc danh mục khi click vào ô tìm món ===
+function kichHoatTimMon() {
+  const input = document.getElementById("timMonInput");
+  if (!input) return;
 
+  // Xóa listener cũ nếu có (tránh gắn trùng khi gọi lại)
+  input.removeEventListener("focus", onFocusSearch);
 
+  function onFocusSearch() {
+    // Bỏ trạng thái nút danh mục đang chọn
+    document.querySelectorAll(".danh-muc-btn.active").forEach(btn => {
+      btn.classList.remove("active");
+    });
 
+    // Gọi lại toàn bộ danh sách món (bỏ lọc danh mục)
+    if (typeof hienThiMonTheoDanhMuc === "function") {
+      hienThiMonTheoDanhMuc(""); // truyền "" để hiển tất cả
+    }
+  }
+
+  input.addEventListener("focus", onFocusSearch);
+}
+
+// Gọi lặp lại để đảm bảo input tồn tại (vì đôi khi DOM tạo sau load)
+document.addEventListener("DOMContentLoaded", () => {
+  kichHoatTimMon();
+  // kiểm tra lại sau một chút
+  setTimeout(kichHoatTimMon, 500);
+  setTimeout(kichHoatTimMon, 1500);
+});
 
 
 
