@@ -95,33 +95,28 @@ html, body, * {
 }
 
 
-/* ==========================
-   🎨 Icon chuẩn app (dùng cho tất cả icon SVG hoặc PNG)
-   ========================== */
+/* =====================================
+   🎨 ICON ỨNG DỤNG (SVG tuỳ chỉnh)
+   ===================================== */
 .icon-app {
-  width: 28px;
-  height: 28px;
-  display: inline-block;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
   vertical-align: middle;
+  /* Dùng màu chính tự động */
+  filter: brightness(0) saturate(100%) invert(41%) sepia(17%) saturate(1600%)
+          hue-rotate(195deg) brightness(95%) contrast(90%);
   transition: all 0.25s ease;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
 }
 
-/* 🎨 Mặc định: màu chủ đạo */
-.icon-app svg,
-.icon-app path {
-  fill: #4A69AD !important;
-}
-
-/* 🩶 Nếu là file ảnh SVG (dạng <img>), dùng filter để tô màu tương tự */
-.icon-app img,
-.icon-app {
-  filter: invert(40%) sepia(25%) saturate(700%) hue-rotate(190deg)
-          brightness(95%) contrast(90%);
-}
-
-/* 🌟 Hiệu ứng hover nhẹ */
+/* Khi hover hoặc active */
 .icon-app:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  filter: brightness(0) saturate(100%) invert(30%) sepia(70%) saturate(2000%)
+          hue-rotate(190deg) brightness(100%) contrast(105%);
+}
+
+/* Nếu icon nằm trong vùng có màu chính (ví dụ đang phục vụ) → cho icon trắng */
+.serving .icon-app,
+button:active .icon-app {
+  filter: brightness(0) invert(1);
 }
