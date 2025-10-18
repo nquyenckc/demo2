@@ -208,7 +208,7 @@ function themKhachTaiQuan() {
     </div>
 
     <div class="popup-actions">
-      <button class="btn-cancel hieuung-noi">Huỷ</button>
+      <button class="btn-cancel hieuung-nhat">Huỷ</button>
       <button class="btn-primary hieuung-noi">Chọn bàn</button>
     </div>
   `;
@@ -239,5 +239,6 @@ function themKhachTaiQuan() {
     banDuocChon = maBan;
   };
 }
+
 
 
