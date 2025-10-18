@@ -123,7 +123,7 @@ function renderTables() {
 
       // lấy trạng thái từ đơn (nếu có)
       const trangThai = t.status || "waiting";
-      const iconTrangThai = `<i class="fa-solid fa-mug-hot main"></i>`;
+      const iconTrangThai = `<img src="icons/caphe.svg" class="icon-app" alt="Cà phê">`;
       const iconNote = coGhiChu
         ? `<i class="fa-solid fa-note-sticky note"></i>`
         : "";
@@ -398,4 +398,5 @@ function khoiTaoSliderConfirm(don) {
     }
   }
 }
+
 
