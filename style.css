@@ -1156,7 +1156,7 @@ header h1 {
    🎨 ICON ỨNG DỤNG (SVG qua <img>)
    ===================================== */
 .icon-app {
-  width: 35px; /* to gấp đôi */
+  width: 45px; /* to gấp đôi */
   height: 44px;
   object-fit: contain;
   transition: all 0.3s ease;
