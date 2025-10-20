@@ -400,30 +400,18 @@ function khoiTaoSliderConfirm(don) {
   }
 }
 
-function loadIcon(name, selector) {
-  fetch(`icons/${name}.svg`)
-    .then(r => r.text())
-    .then(svg => {
-      const el = document.querySelector(selector);
-      if (!el) return;
-      const mau = getComputedStyle(document.documentElement)
-        .getPropertyValue("--mauchinh").trim() || "#00AEEF";
-      el.style.color = mau;
-      svg = svg.replace(/fill="[^"]*"/g, 'fill="currentColor"');
-      el.innerHTML = svg;
-    });
-}
-
 function autoLoadIcons() {
+  const mauChinh = getComputedStyle(document.documentElement)
+    .getPropertyValue("--mauchinh").trim() || "#00AEEF";
+
   document.querySelectorAll(".icon-app[data-icon]").forEach(el => {
     const name = el.dataset.icon;
     if (!name) return;
+
     fetch(`icons/${name}.svg`)
       .then(r => r.text())
       .then(svg => {
-        const mau = getComputedStyle(document.documentElement)
-          .getPropertyValue("--mauchinh").trim() || "#00AEEF";
-        if (!el.style.color) el.style.color = mau;
+        el.style.color = el.style.color || mauChinh;
         svg = svg.replace(/fill="[^"]*"/g, 'fill="currentColor"');
         el.innerHTML = svg;
       });
