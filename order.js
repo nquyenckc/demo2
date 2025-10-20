@@ -321,9 +321,11 @@ function datLai() {
 // -------------------------------
 // -------------------------------
 // Lưu đơn
+// -------------------------------
+// Lưu đơn
 function luuDon() {
   if (hoaDonTam.length === 0) {
-    hienThongBao("Chưa có món nào để lưu");
+    alert("Chưa có món nào để lưu!");
     return;
   }
 
@@ -331,41 +333,34 @@ function luuDon() {
     loaiKhachHienTai = taoTenKhach("Khách mang đi");
   }
 
-  // 🔹 Nếu đang chỉnh đơn cũ thì cập nhật thay vì tạo mới
-  if (typeof donDangChon !== "undefined" && donDangChon && hoaDonChinh.some(d => d.id === donDangChon.id)) {
-    const index = hoaDonChinh.findIndex(d => d.id === donDangChon.id);
-    if (index !== -1) {
-      hoaDonChinh[index].cart = [...hoaDonTam];
-      hoaDonChinh[index].updatedAt = Date.now();
-    }
-  } else {
-    // 🔹 Tạo đơn mới (như cũ)
-    const donMoi = {
-      id: Date.now(),
-      name: loaiKhachHienTai,
-      cart: [...hoaDonTam],
-      createdAt: Date.now(),
-      status: "waiting"
-    };
-    hoaDonChinh.push(donMoi);
-  }
+  const donMoi = {
+    id: Date.now(),
+    name: loaiKhachHienTai,
+    cart: [...hoaDonTam],
+    createdAt: Date.now(),
+    status: "waiting" // ✅ mặc định: chờ phục vụ
+  };
 
+  TABLES.push(donMoi);
   saveAll();
 
   hoaDonTam = [];
   capNhatHoaDon();
 
-  hienThongBao("Đã lưu đơn");
+  alert("✅ Đã lưu đơn!");
 
-  // 🔙 Trở về màn chính
   const header = document.querySelector("header");
   header.innerHTML = `
     <h1>BlackTea</h1>
-     <div class="header-icons">
-      <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
-      <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
-     </div>
+    <div class="header-icons">
+      <span class="icon-btn">🧾</span>
+      <span class="icon-btn">⚙️</span>
+    </div>
   `;
+
+  hienThiManHinhChinh();
+  renderTables();
+}
 
   hienThiManHinhChinh();
   renderTables();
@@ -475,6 +470,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
