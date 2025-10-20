@@ -363,14 +363,8 @@ function capNhatHoaDon() {
 
 // -------------------------------
 function datLai() {
-  if (donDangChon) {
-    // Nếu đang chỉnh đơn cũ → phục hồi cart ban đầu
-    hoaDonTam = [...donDangChon.cart];
-  } else {
-    // Đơn mới → reset trống
-    hoaDonTam = [];
-  }
-
+  // ✅ reset hoaDonTam về snapshot lúc mở popup
+  hoaDonTam = [...(window.hoaDonTamGoc || [])];
   capNhatHoaDon();
   hienThiMonTheoDanhMuc("");
 }
@@ -532,6 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
