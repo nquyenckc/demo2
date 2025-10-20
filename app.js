@@ -80,19 +80,13 @@ function loadIcon(name, selector) {
       const el = document.querySelector(selector);
       if (!el) return;
 
-      // Chèn SVG vào phần tử
+      // ✅ Xóa hết fill cứng, đổi thành currentColor
+      svg = svg.replace(/fill="[^"]*"/g, 'fill="currentColor"');
+
+      // ✅ Chèn lại SVG
       el.innerHTML = svg;
 
-      // Lấy SVG vừa thêm
-      const svgEl = el.querySelector("svg");
-      if (svgEl) {
-        // Ép màu SVG theo CSS
-        svgEl.setAttribute("fill", "currentColor");
-        svgEl.style.width = "100%";
-        svgEl.style.height = "100%";
-      }
-
-      // Đảm bảo màu ăn theo CSS cha
+      // ✅ Đặt màu cho icon theo theme
       el.style.color = "var(--mauchinh)";
     })
     .catch(err => console.error("Không tải được icon:", name, err));
@@ -422,6 +416,7 @@ function khoiTaoSliderConfirm(don) {
     }
   }
 }
+
 
 
 
