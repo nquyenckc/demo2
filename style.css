@@ -659,7 +659,8 @@ header h1 {
 .order-total .icon-app {
   width: 54px;
   height: 53px;
-  color: var(--mauchinh);
+  color: var(--mauchinh); /* tô đúng màu chủ đạo */
+  flex-shrink: 0;
 }
 
 .order-total #tongTien {
@@ -670,7 +671,6 @@ header h1 {
   display: flex;
   align-items: center;
 }
-
 /* --- Nhóm nút bên phải --- */
 .order-buttons {
   display: flex;
