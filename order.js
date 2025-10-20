@@ -321,7 +321,7 @@ function datLai() {
 // Lưu đơn
 function luuDon() {
   if (hoaDonTam.length === 0) {
-    hienThongBao("⚠️ Chưa có món nào để lưu");
+    hienThongBao("Chưa có món nào để lưu");
     return;
   }
 
@@ -329,36 +329,45 @@ function luuDon() {
     loaiKhachHienTai = taoTenKhach("Khách mang đi");
   }
 
-  const donMoi = {
-    id: Date.now(),
-    name: loaiKhachHienTai,
-    cart: [...hoaDonTam],
-    createdAt: Date.now(),
-    status: "waiting" // ✅ mặc định: chờ phục vụ
-  };
+  // 🔹 Nếu đang chỉnh đơn cũ thì cập nhật thay vì tạo mới
+  if (typeof donDangChon !== "undefined" && donDangChon && hoaDonChinh.some(d => d.id === donDangChon.id)) {
+    const index = hoaDonChinh.findIndex(d => d.id === donDangChon.id);
+    if (index !== -1) {
+      hoaDonChinh[index].cart = [...hoaDonTam];
+      hoaDonChinh[index].updatedAt = Date.now();
+    }
+  } else {
+    // 🔹 Tạo đơn mới (mặc định trạng thái chờ phục vụ)
+    const donMoi = {
+      id: Date.now(),
+      name: loaiKhachHienTai,
+      cart: [...hoaDonTam],
+      createdAt: Date.now(),
+      status: "waiting" // ✅ thêm dòng này thôi
+    };
+    hoaDonChinh.push(donMoi);
+  }
 
-  TABLES.push(donMoi);
   saveAll();
 
   hoaDonTam = [];
   capNhatHoaDon();
 
-  // ✅ Gọi thông báo đẹp của thầy
-  hienThongBao("Đã lưu đơn thành công", "success");
+  hienThongBao("✅ Đã lưu đơn thành công");
 
+  // 🔙 Trở về màn chính
   const header = document.querySelector("header");
   header.innerHTML = `
     <h1>BlackTea</h1>
     <div class="header-icons">
-      <span class="icon-btn">🧾</span>
-      <span class="icon-btn">⚙️</span>
+      <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
+      <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
     </div>
   `;
 
   hienThiManHinhChinh();
   renderTables();
 }
-
 
 // -------------------------------
 // Tìm món theo từ khóa
@@ -463,6 +472,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
