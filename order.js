@@ -134,94 +134,92 @@ function timSoLuong(id) {
 
 // ================================
 // THÊM MÓN
-function themMon(id, note = "") {
+function themMon(id) {
   const mon = MENU.find((m) => m.id === id);
-  if (!mon) return;
+  const tonTai = hoaDonTam.find((m) => m.id === id);
 
-  // Kiểm tra món có cùng id + note
-  const tonTai = hoaDonTam.find(
-    (m) => m.id === id && (m.note || "") === (note || "")
-  );
-
-  if (tonTai) tonTai.soluong++;
-  else hoaDonTam.push({ ...mon, soluong: 1, note });
+  if (tonTai) {
+    tonTai.soluong++;
+  } else {
+    // thêm mới (không phải món gốc)
+    hoaDonTam.push({ ...mon, soluong: 1 });
+  }
 
   capNhatHoaDon();
 
-  // Cập nhật phần hiển thị số lượng gộp (theo id)
-  const slTong = hoaDonTam
-    .filter((m) => m.id === id)
-    .reduce((sum, m) => sum + m.soluong, 0);
-
+  // cập nhật giao diện nút trong danh sách món
   const qtyBox = document.querySelector(`#qty-${id}`);
-  if (qtyBox) {
-    const noteBtn = qtyBox.querySelector(".note-btn");
-    const giamBtn = qtyBox.querySelector(".btn-minus");
-    const slEl = document.getElementById(`sl-${id}`);
+  const noteBtn = qtyBox?.querySelector(".note-btn");
+  const giamBtn = qtyBox?.querySelector(".btn-minus");
 
-    if (slEl) slEl.textContent = slTong;
+  // lấy giá trị hiện tại và baseQty (nếu có)
+  const cur = hoaDonTam.find(m => m.id === id);
+  const baseQty = cur?.baseQty || 0;
+  const sl = cur ? cur.soluong : 0;
+
+  // nếu số hiện lớn hơn baseQty → hiển thị nút trừ và note
+  if (sl > baseQty) {
     if (noteBtn) noteBtn.classList.remove("faded");
-    if (giamBtn) giamBtn.classList.remove("faded");
-
-    noteBtn.setAttribute(
-      "onclick",
-      `toggleNotePopup(MENU.find(m => m.id === ${id}), this)`
-    );
-    giamBtn.setAttribute("onclick", `giamMon(${id})`);
+    if (giamBtn) {
+      giamBtn.classList.remove("faded");
+      giamBtn.setAttribute("onclick", `giamMon(${id})`);
+    }
+  } else {
+    // nếu bằng baseQty (hoặc <) → ẩn nút trừ (trừ khi là món mới có sl>0)
+    if (noteBtn && sl === 0) noteBtn.classList.add("faded");
+    if (giamBtn) {
+      giamBtn.classList.add("faded");
+      giamBtn.setAttribute("onclick", "");
+    }
   }
 }
 
 // ================================
 // GIẢM MÓN
-function giamMon(id, note = "") {
-  const noteNorm = (note || "").trim();
-  let idx = -1;
-
-  // 1️⃣ Nếu có note: trừ đúng món ghi chú đó
-  if (noteNorm) {
-    idx = hoaDonTam.findIndex(
-      (m) => m.id === id && (m.note || "").trim() === noteNorm && m.isNoteOnly
-    );
-  }
-
-  // 2️⃣ Nếu không có note: trừ món thường (không ghi chú)
-  if (idx === -1 && !noteNorm) {
-    idx = hoaDonTam.findIndex((m) => m.id === id && !m.isNoteOnly);
-  }
-
-  // 3️⃣ Nếu món thường không còn, thử trừ món ghi chú đầu tiên (đảm bảo tổng luôn giảm)
-  if (idx === -1) {
-    idx = hoaDonTam.findIndex((m) => m.id === id && m.isNoteOnly);
-  }
-
+function giamMon(id) {
+  const idx = hoaDonTam.findIndex((m) => m.id === id);
   if (idx > -1) {
     hoaDonTam[idx].soluong--;
-    if (hoaDonTam[idx].soluong <= 0) hoaDonTam.splice(idx, 1);
-  }
-
-  // 🔄 Cập nhật lại tổng số lượng gộp cho ô menu
-  const slTong = hoaDonTam
-    .filter((m) => m.id === id)
-    .reduce((sum, m) => sum + m.soluong, 0);
-
-  const qtyBox = document.querySelector(`#qty-${id}`);
-  if (qtyBox) {
-    const slEl = document.getElementById(`sl-${id}`);
-    const noteBtn = qtyBox.querySelector(".note-btn");
-    const giamBtn = qtyBox.querySelector(".btn-minus");
-
-    if (slEl) slEl.textContent = slTong;
-
-    if (slTong === 0) {
-      if (noteBtn) {
-        noteBtn.classList.add("faded");
-        noteBtn.removeAttribute("onclick");
-      }
-      if (giamBtn) {
-        giamBtn.classList.add("faded");
-        giamBtn.removeAttribute("onclick");
+    // Nếu <=0 xử lý: với món mới thì xóa, với món gốc thì giữ = 0
+    if (hoaDonTam[idx].soluong <= 0) {
+      if (!hoaDonTam[idx].isBase) {
+        hoaDonTam.splice(idx, 1);
+      } else {
+        // giữ lại món gốc, về 0 (hoặc về baseQty nếu muốn đảm bảo)
+        hoaDonTam[idx].soluong = 0;
       }
     }
+  }
+
+  // cập nhật DOM nút, số lượng hiển thị
+  const qtyBox = document.querySelector(`#qty-${id}`);
+  const slEl = document.getElementById(`sl-${id}`);
+  const noteBtn = qtyBox?.querySelector(".note-btn");
+  const giamBtn = qtyBox?.querySelector(".btn-minus");
+
+  const mon = hoaDonTam.find((m) => m.id === id);
+  const sl = mon ? mon.soluong : 0;
+  const baseQty = mon?.baseQty || 0;
+
+  if (slEl) slEl.textContent = sl;
+
+  // Nếu hiện số lượng <= baseQty → ẩn nút trừ (không cho giảm nữa)
+  if (sl <= baseQty) {
+    if (giamBtn) {
+      giamBtn.classList.add("faded");
+      giamBtn.setAttribute("onclick", "");
+    }
+    // nếu số lượng = 0 thì mờ nút note
+    if (noteBtn && sl === 0) {
+      noteBtn.classList.add("faded");
+      noteBtn.setAttribute("onclick", "");
+    }
+  } else {
+    if (giamBtn) {
+      giamBtn.classList.remove("faded");
+      giamBtn.setAttribute("onclick", `giamMon(${id})`);
+    }
+    if (noteBtn) noteBtn.classList.remove("faded");
   }
 
   capNhatHoaDon();
@@ -446,6 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
