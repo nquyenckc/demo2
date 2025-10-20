@@ -271,6 +271,9 @@ function themKhachTaiQuan() {
 }
 
 
+// ================================
+// 🧾 MỞ CHI TIẾT ĐƠN
+// ================================
 function moChiTietDon(id) {
   const don = hoaDonChinh.find(d => d.id === id);
   if (!don) return;
@@ -366,7 +369,7 @@ function moChiTietDon(id) {
     });
   }
 
-  // ✅ Slider xác nhận
+  // ✅ Gọi slider xác nhận mới (định nghĩa trong notes.js)
   if (typeof khoiTaoSliderXacNhan === 'function' && don.status !== "serving") {
     khoiTaoSliderXacNhan(don, function (donDaXacNhan) {
       donDaXacNhan.status = "serving";
@@ -384,11 +387,11 @@ function moChiTietDon(id) {
         `;
       }
 
-      // 🔹 Fix: mở lại màn hình order trước rồi mới cập nhật hóa đơn tạm
+      // 🔹 Bấm "Thêm món" giữ nguyên đơn cũ + mở màn hình order
       document.querySelector(".btn-themmon")?.addEventListener("click", () => {
-        khoiTaoOrder(don.name, don); // mở màn hình order + giữ đơn cũ
-        hoaDonTam = [...don.cart];    // copy cart cũ
-        capNhatHoaDon();              // cập nhật hóa đơn tạm + tổng tiền
+        khoiTaoOrder(don.name, don);
+        hoaDonTam = [...don.cart, ...hoaDonTam]; // giữ món cũ + món từ đơn
+        capNhatHoaDon();                         // cập nhật hóa đơn tạm + tổng tiền
       });
 
       document.querySelector(".btn-thanhtoan")?.addEventListener("click", () => {
@@ -397,8 +400,19 @@ function moChiTietDon(id) {
 
       renderTables();
     });
+  } else if (don.status === "serving") {
+    // Nếu trạng thái serving cũng cần gắn nút thêm món
+    document.querySelector(".btn-themmon")?.addEventListener("click", () => {
+      khoiTaoOrder(don.name, don);
+      hoaDonTam = [...don.cart, ...hoaDonTam];
+      capNhatHoaDon();
+    });
+    document.querySelector(".btn-thanhtoan")?.addEventListener("click", () => {
+      hienThongBao("💰 Chức năng Thanh toán sắp có!");
+    });
   }
 }
+
 
 
 function khoiTaoSliderConfirm(don) {
