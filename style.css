@@ -1365,3 +1365,26 @@ header h1 {
 .slider.success { background: #4a69ad; }
 .slider.success .text { color: #fff; }
 .slider.success .handle { transform: scale(1.04); }
+
+/* Icon trong nút kéo xác nhận */
+.slider .slider-icon {
+  width: 26px;              /* vừa vặn với nút tròn */
+  height: 26px;
+  object-fit: contain;      /* không méo hình */
+  pointer-events: none;     /* tránh ảnh hưởng khi kéo */
+  user-select: none;
+  transition: transform 0.25s ease;
+}
+
+/* Hiệu ứng nhẹ khi nhấn kéo */
+.slider .handle:active .slider-icon {
+  transform: scale(0.9);
+}
+
+/* Hiệu ứng rung icon khi xác nhận */
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-3px); }
+  60% { transform: translateY(2px); }
+  80% { transform: translateY(-1px); }
+}

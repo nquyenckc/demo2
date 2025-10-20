@@ -291,9 +291,29 @@ function moChiTietDon(id) {
     day: '2-digit', month: '2-digit', year: 'numeric'
   });
 
+  // ✅ Kiểm tra trạng thái đơn để render footer phù hợp
+  const footerHTML = don.status === "serving"
+    ? `
+      <div class="order-footer-ct" id="footerChiTietDon">
+        <div class="order-buttons">
+          <button class="btn-themmon">Thêm món</button>
+          <button class="btn-primary btn-thanhtoan">Thanh toán</button>
+        </div>
+      </div>
+    `
+    : `
+      <div class="order-footer-ct" id="footerChiTietDon">
+        <div class="slider" id="sliderConfirm">
+          <div class="handle">
+            <img src="icon/caphe.svg" alt="icon" class="slider-icon">
+          </div>
+          <div class="text">Kéo để xác nhận</div>
+        </div>
+      </div>
+    `;
+
   main.innerHTML = `
     <div class="order-detail-ct">
-      
       <div class="invoice-header-ct">
         <div class="invoice-title-ct">Hóa đơn</div>
         <div class="invoice-time-ct">Thời gian tạo: ${timeStr}</div>
@@ -301,7 +321,6 @@ function moChiTietDon(id) {
 
       <div class="order-content-ct">
         ${don.cart.map(m => {
-          // ✅ TÁCH TÊN GỐC (nếu name đã kèm ghi chú)
           let tenGoc = m.name.includes("(")
             ? m.name.split("(")[0].trim()
             : m.name;
@@ -317,7 +336,6 @@ function moChiTietDon(id) {
       ${(m.price).toLocaleString()}đ x ${m.soluong}
     </div>
   </div>
-
   <div class="mon-right">
     ${(m.price * m.soluong).toLocaleString()}đ
   </div>
@@ -331,16 +349,7 @@ function moChiTietDon(id) {
       </div>
     </div>
 
-<!-- MỚI DÙNG ICON RIÊNG -->
-<div class="order-footer-ct" id="footerChiTietDon">
-  <div class="slider" id="sliderConfirm">
-    <div class="handle">
-      <img src="icon/caphe.svg" alt="icon" class="slider-icon">
-    </div>
-    <div class="text">Kéo để xác nhận</div>
-  </div>
-</div>
-
+    ${footerHTML}
   `;
 
   // 🔙 Nút đóng chi tiết đơn
@@ -360,13 +369,10 @@ function moChiTietDon(id) {
   }
 
   // ✅ Gọi slider xác nhận mới (định nghĩa trong notes.js)
-  if (typeof khoiTaoSliderXacNhan === 'function') {
+  if (typeof khoiTaoSliderXacNhan === 'function' && don.status !== "serving") {
     khoiTaoSliderXacNhan(don, function (donDaXacNhan) {
-      // 🧭 Logic cũ: đổi sang trạng thái “đang phục vụ”
       donDaXacNhan.status = "serving";
-      saveAll();
-
-      // 🔄 Quay về màn chính & cập nhật danh sách bàn
+      // Sau khi xác nhận thì sẽ quay về màn chính & render lại danh sách
       setTimeout(() => {
         hienThiManHinhChinh();
         renderTables();
@@ -374,6 +380,7 @@ function moChiTietDon(id) {
     });
   }
 }
+
 
 
 function khoiTaoSliderConfirm(don) {
@@ -450,4 +457,3 @@ function autoLoadIcons() {
       });
   });
 }
-

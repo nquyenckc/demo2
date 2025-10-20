@@ -283,7 +283,7 @@ function khoiTaoSliderXacNhan(don, onXacNhan) {
   const text = slider.querySelector(".text");
 
   // 🔧 Đảm bảo icon đúng
-  handle.innerHTML = `<img src="icon/caphe.svg" alt="icon" class="slider-icon">`;
+  handle.innerHTML = `<img src="icons/caphe.svg" alt="icon" class="slider-icon">`;
 
   let isDragging = false;
   let startX = 0;
@@ -331,12 +331,13 @@ function khoiTaoSliderXacNhan(don, onXacNhan) {
         setTimeout(() => (img.style.animation = ""), 500);
       }
 
-      // 🧩 Gọi callback
+      // 🧩 Gọi callback sau khi xác nhận
       if (typeof onXacNhan === "function") onXacNhan(don);
+
     } else {
-      // ❌ Trượt chưa đủ
+      // ❌ Trượt chưa đủ xa, trả lại vị trí ban đầu
       handle.style.left = "5px";
-      handle.innerHTML = `<img src="icon/caphe.svg" alt="icon" class="slider-icon">`;
+      handle.innerHTML = `<img src="icons/caphe.svg" alt="icon" class="slider-icon">`;
     }
 
     document.removeEventListener("mousemove", onDrag);
