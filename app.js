@@ -364,12 +364,7 @@ function moChiTietDon(id) {
     khoiTaoSliderXacNhan(don, function (donDaXacNhan) {
       // 🧭 Logic cũ: đổi sang trạng thái “đang phục vụ”
       donDaXacNhan.status = "serving";
-
-      // 🕒 Ghi thời điểm xác nhận (nếu muốn)
-      donDaXacNhan.startServeAt = new Date().toISOString();
-
       saveAll();
-      hienThongBao("🍹 Đơn đã chuyển sang trạng thái ĐANG PHỤC VỤ");
 
       // 🔄 Quay về màn chính & cập nhật danh sách bàn
       setTimeout(() => {
@@ -455,3 +450,4 @@ function autoLoadIcons() {
       });
   });
 }
+
