@@ -11,12 +11,14 @@ function khoiTaoOrder(loaiKhach) {
   loaiKhachHienTai = loaiKhach;
 
   const header = document.querySelector("header");
-  header.innerHTML = `
+header.innerHTML = `
+  <div class="header-left">
     <h1>${loaiKhach}</h1>
-    <div class="header-icons">
-      <button class="btn-close-order" id="btnCloseHeader">×</button>
-    </div>
-  `;
+  </div>
+  <div class="header-right">
+    <button id="btnCloseHeader" class="btn-close">×</button>
+  </div>
+`;
 
   document.getElementById("btnCloseHeader").addEventListener("click", () => {
     header.innerHTML = `

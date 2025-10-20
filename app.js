@@ -274,72 +274,91 @@ function themKhachTaiQuan() {
 // ================================
 // 🧾 MỞ CHI TIẾT ĐƠN
 // ================================
+// Thay thế hàm moChiTietDon trong app.js bằng đoạn này
 function moChiTietDon(id) {
   const don = hoaDonChinh.find(d => d.id === id);
-  if (!don) {
-    console.warn("Không tìm thấy đơn:", id);
-    return;
-  }
+  if (!don) return;
 
   const main = document.querySelector(".main-container");
   const header = document.querySelector("header");
-
-  // 💡 Thay thanh head cũ = thanh gọn: tên bàn + nút X
   header.innerHTML = `
-    <div class="header-left">
-      <h1>${don.name}</h1>
-    </div>
-    <div class="header-right">
-      <button id="btnCloseChiTiet" class="btn-close">×</button>
+    <h1>${don.name}</h1>
+    <div class="header-icons">
+      <button id="btnCloseChiTiet" class="btn-close-order">×</button>
     </div>
   `;
 
-  // 💡 Nội dung chính của đơn
+  const createdAt = new Date(don.createdAt);
+  const timeStr = createdAt.toLocaleString('vi-VN', {
+    hour: '2-digit', minute: '2-digit',
+    day: '2-digit', month: '2-digit', year: 'numeric'
+  });
+
   main.innerHTML = `
-    <div class="order-detail">
-      <div class="order-content">
-        ${don.cart.map(m => `
-          <div class="mon-item">
-            <div class="mon-left">
-              <div class="mon-name">${m.name}</div>
-              ${m.note ? `<div class="mon-note">${m.note}</div>` : ""}
-            </div>
-            <div class="mon-right">
-              <span class="mon-qty">x${m.soluong}</span>
-              <span class="mon-price">${(m.price * m.soluong).toLocaleString()}đ</span>
-            </div>
-          </div>
-        `).join("")}
+    <div class="order-detail-ct">
+      
+      <div class="invoice-header-ct">
+        <div class="invoice-title-ct">Hóa đơn</div>
+        <div class="invoice-time-ct">Thời gian tạo: ${timeStr}</div>
       </div>
 
-      <div class="order-total">
-        Tổng cộng: <strong>${don.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString()}đ</strong>
-      </div>
+      <div class="order-content-ct">
+        ${don.cart.map(m => {
+          // ✅ TÁCH TÊN GỐC (nếu name đã kèm ghi chú)
+          let tenGoc = m.name.includes("(")
+            ? m.name.split("(")[0].trim()
+            : m.name;
 
-      <div class="order-confirm">
-        <div class="slider-container" id="sliderConfirm">
-          <div class="slider-bg">Kéo để xác nhận đơn</div>
-          <div class="slider-thumb"><i class="fas fa-mug-hot"></i></div>
+          return `
+<div class="mon-item">
+  <div class="mon-left">
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <span class="mon-name">${tenGoc}</span>
+      ${m.note ? `<span class="mon-note">(${m.note})</span>` : ""}
+    </div>
+    <div class="mon-sub">
+      ${(m.price).toLocaleString()}đ x ${m.soluong}
+    </div>
+  </div>
+
+  <div class="mon-right">
+    ${(m.price * m.soluong).toLocaleString()}đ
+  </div>
+</div>
+
+          `;
+        }).join("")}
+
+        <div class="order-total-ct">
+          Tổng cộng: <strong>${don.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString()}đ</strong>
         </div>
       </div>
     </div>
+
+    <div class="order-footer-ct" id="footerChiTietDon">
+      <div class="slider-container" id="sliderConfirm">
+        <div class="slider-bg">Kéo để xác nhận đơn</div>
+        <div class="slider-thumb"><i class="fas fa-mug-hot"></i></div>
+      </div>
+    </div>
   `;
 
-  // 🔙 Nút thoát
-  document.getElementById("btnCloseChiTiet").addEventListener("click", () => {
-    header.innerHTML = `
-      <h1>BlackTea</h1>
-      <div class="header-icons">
-        <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
-        <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
-      </div>
-    `;
-    hienThiManHinhChinh();
-    renderTables();
-  });
+  const btnClose = document.getElementById("btnCloseChiTiet");
+  if (btnClose) {
+    btnClose.addEventListener("click", () => {
+      header.innerHTML = `
+        <h1>BlackTea</h1>
+        <div class="header-icons">
+          <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
+          <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
+        </div>
+      `;
+      hienThiManHinhChinh();
+      renderTables();
+    });
+  }
 
-  // 🎚️ Gọi hiệu ứng kéo xác nhận
-  khoiTaoSliderConfirm(don);
+  if (typeof khoiTaoSliderConfirm === 'function') khoiTaoSliderConfirm(don);
 }
 
 

@@ -18,9 +18,10 @@ function toggleNotePopup(item, btn) {
   const existing = document.querySelector(".popup-note");
   if (existing) existing.remove();
 
-  // Mặc định: Bình thường
-  item.sugarLevel = 2;
-  item.iceLevel = 3;
+// ✅ Chỉ gán mặc định nếu chưa có
+if (item.sugarLevel === undefined) item.sugarLevel = 2;
+if (item.iceLevel === undefined) item.iceLevel = 3;
+
 
   // Giao diện popup
   const popup = document.createElement("div");
