@@ -403,20 +403,21 @@ function khoiTaoSliderConfirm(don) {
 function autoLoadIcons() {
   document.querySelectorAll(".icon-app[data-icon]").forEach(el => {
     const name = el.dataset.icon;
+
     fetch(`icons/${name}.svg`)
       .then(res => res.text())
       .then(svg => {
         svg = svg.replace(/fill="[^"]*"/g, 'fill="currentColor"');
         el.innerHTML = svg;
-        // ✅ Gán đúng màu chủ đạo ngay từ đầu
-        el.style.color = getComputedStyle(document.documentElement)
-          .getPropertyValue('--mauchinh')
+
+        const mau = getComputedStyle(document.documentElement)
+          .getPropertyValue("--mauchinh")
           .trim();
-      })
-      .catch(err => console.error("Không tải được icon:", name, err));
+
+        el.style.color = mau || "#00AEEF";
+      });
   });
 }
-
 
 
 
