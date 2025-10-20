@@ -318,14 +318,10 @@ function datLai() {
   }
 }
 
-// -------------------------------
-// -------------------------------
-// Lưu đơn
-// -------------------------------
 // Lưu đơn
 function luuDon() {
   if (hoaDonTam.length === 0) {
-    alert("Chưa có món nào để lưu!");
+    hienThongBao("⚠️ Chưa có món nào để lưu");
     return;
   }
 
@@ -347,7 +343,8 @@ function luuDon() {
   hoaDonTam = [];
   capNhatHoaDon();
 
-  alert("✅ Đã lưu đơn!");
+  // ✅ Gọi thông báo đẹp của thầy
+  hienThongBao("Đã lưu đơn thành công", "success");
 
   const header = document.querySelector("header");
   header.innerHTML = `
@@ -357,10 +354,6 @@ function luuDon() {
       <span class="icon-btn">⚙️</span>
     </div>
   `;
-
-  hienThiManHinhChinh();
-  renderTables();
-}
 
   hienThiManHinhChinh();
   renderTables();
@@ -470,6 +463,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
