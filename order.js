@@ -305,9 +305,17 @@ function capNhatHoaDon() {
 // -------------------------------
 // Đặt lại đơn
 function datLai() {
-  hoaDonTam = [];
-  capNhatHoaDon();
-  hienThiMonTheoDanhMuc("");
+  // ⚙️ Nếu đang thêm món cho đơn có sẵn → chỉ bỏ phần vừa thêm, khôi phục đơn gốc
+  if (donDangChon) {
+    hoaDonTam = [...donDangChon.cart];
+    capNhatHoaDon();
+  } 
+  // 🆕 Nếu là đơn mới → xoá toàn bộ
+  else {
+    hoaDonTam = [];
+    capNhatHoaDon();
+    hienThiMonTheoDanhMuc("");
+  }
 }
 
 // -------------------------------
@@ -467,6 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
