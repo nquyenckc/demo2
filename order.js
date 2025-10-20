@@ -305,19 +305,13 @@ function capNhatHoaDon() {
 // -------------------------------
 // Đặt lại đơn
 function datLai() {
-  // ⚙️ Nếu đang thêm món cho đơn có sẵn → chỉ bỏ phần vừa thêm, khôi phục đơn gốc
-  if (donDangChon) {
-    hoaDonTam = [...donDangChon.cart];
-    capNhatHoaDon();
-  } 
-  // 🆕 Nếu là đơn mới → xoá toàn bộ
-  else {
-    hoaDonTam = [];
-    capNhatHoaDon();
-    hienThiMonTheoDanhMuc("");
-  }
+  hoaDonTam = [];
+  capNhatHoaDon();
+  hienThiMonTheoDanhMuc("");
 }
 
+// -------------------------------
+// -------------------------------
 // Lưu đơn
 function luuDon() {
   if (hoaDonTam.length === 0) {
@@ -337,13 +331,13 @@ function luuDon() {
       hoaDonChinh[index].updatedAt = Date.now();
     }
   } else {
-    // 🔹 Tạo đơn mới (mặc định trạng thái chờ phục vụ)
+    // 🔹 Tạo đơn mới (như cũ)
     const donMoi = {
       id: Date.now(),
       name: loaiKhachHienTai,
       cart: [...hoaDonTam],
       createdAt: Date.now(),
-      status: "waiting" // ✅ thêm dòng này thôi
+      status: "waiting"
     };
     hoaDonChinh.push(donMoi);
   }
@@ -353,21 +347,22 @@ function luuDon() {
   hoaDonTam = [];
   capNhatHoaDon();
 
-  hienThongBao("✅ Đã lưu đơn thành công");
+  hienThongBao("Đã lưu đơn");
 
   // 🔙 Trở về màn chính
   const header = document.querySelector("header");
   header.innerHTML = `
     <h1>BlackTea</h1>
-    <div class="header-icons">
+     <div class="header-icons">
       <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
       <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
-    </div>
+     </div>
   `;
 
   hienThiManHinhChinh();
   renderTables();
 }
+
 
 // -------------------------------
 // Tìm món theo từ khóa
@@ -472,10 +467,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
-
-
-
-
 
 
 
