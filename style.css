@@ -1183,18 +1183,7 @@ header h1 {
   transform: scale(1.1);
 }
 
-
-.icon-app {
-  width: 24px;
-  height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  fill: currentColor;
-  color: var(--mauchinh);
-}
-.icon-app svg {
-  width: 100%;
-  height: 100%;
-  fill: currentColor;
+.order-footer .icon-app {
+  color: var(--mauchinh) !important;
+  fill: currentColor !important;
 }
