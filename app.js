@@ -73,24 +73,7 @@ function khoiTaoUngDung() {
   hienThiManHinhChinh();
 }
 
-function loadIcon(name, selector) {
-  fetch(`icons/${name}.svg`)
-    .then(res => res.text())
-    .then(svg => {
-      const el = document.querySelector(selector);
-      if (!el) return;
 
-      // ✅ Xóa hết fill cứng, đổi thành currentColor
-      svg = svg.replace(/fill="[^"]*"/g, 'fill="currentColor"');
-
-      // ✅ Chèn lại SVG
-      el.innerHTML = svg;
-
-      // ✅ Đặt màu cho icon theo theme
-      el.style.color = "var(--mauchinh)";
-    })
-    .catch(err => console.error("Không tải được icon:", name, err));
-}
 // ================================
 // 🏠 Màn hình chính
 // ================================
@@ -416,6 +399,7 @@ function khoiTaoSliderConfirm(don) {
     }
   }
 }
+
 
 
 
