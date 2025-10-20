@@ -410,15 +410,14 @@ function autoLoadIcons() {
         svg = svg.replace(/fill="[^"]*"/g, 'fill="currentColor"');
         el.innerHTML = svg;
 
-        const mau = getComputedStyle(document.documentElement)
-          .getPropertyValue("--mauchinh")
-          .trim();
-
-        el.style.color = mau || "#00AEEF";
-      });
+        // ✅ Nếu phần tử chưa có màu cụ thể, dùng màu chính
+        const computedColor = getComputedStyle(el).color;
+        if (computedColor === "rgb(0, 0, 0)" || computedColor === "rgba(0, 0, 0, 0)" || !computedColor) {
+          const mauChinh = getComputedStyle(document.documentElement)
+            .getPropertyValue("--mauchinh").trim();
+          el.style.color = mauChinh;
+        }
+      })
+      .catch(() => {});
   });
 }
-
-
-
-
