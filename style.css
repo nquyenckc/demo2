@@ -1286,29 +1286,31 @@ header h1 {
   font-weight: 700;
 }
 
-/* === FOOTER CHI TIẾT ĐƠN === */
+/* ==== Footer chi tiết đơn: KHỚP HOÀN TOÀN = 74px ==== */
 .order-footer-ct {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
+  height: 74px;               /* match chính xác bên kia */
   background: #fff;
-  padding: 16px 18px;            /* giống footer order */
   border-top: 1px solid #eee;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
   z-index: 10;
 
   display: flex;
-  justify-content: flex-end;     /* slider nằm bên phải */
-  align-items: center;           /* căn giữa theo chiều dọc */
+  justify-content: flex-end;  /* slider ở phải */
+  align-items: center;        /* căn dọc giữa */
+  padding: 0 18px;            /* khoảng ngang giống footer order */
   border-radius: 0;
 }
 
-/* === SLIDER === */
+/* ==== Slider: cách trên 10px, dưới 10px -> cao = 54px ==== */
 .slider {
   position: relative;
-  width: 200px;
-  height: 48px;                 /* vừa khít với chiều cao footer order */
+  width: 200px;               /* bạn có thể điều chỉnh dài/ngắn */
+  height: 54px;               /* 74 - (10 + 10) = 54 */
+  margin-right: 10px;         /* cách mép phải 20px */
   background: linear-gradient(145deg, #e7ebf7, #cfd7ef);
   border-radius: 28px;
   box-shadow:
@@ -1320,12 +1322,11 @@ header h1 {
   transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Nút tròn */
+/* nút tròn vừa vặn trong slider 54px */
 .slider .handle {
   position: absolute;
-  top: 50%;
-  left: 6px;
-  transform: translateY(-50%);
+  top: 10px;                  /* cách trên 10px tương ứng */
+  left: 8px;
   width: 36px;
   height: 36px;
   background: #fff;
@@ -1336,7 +1337,7 @@ header h1 {
   box-shadow:
     0 3px 8px rgba(0,0,0,0.12),
     inset 1px 1px 3px rgba(255,255,255,0.8);
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
 }
 
 .slider .handle img.slider-icon {
@@ -1346,7 +1347,7 @@ header h1 {
   pointer-events: none;
 }
 
-/* Chữ */
+/* chữ căn giữa */
 .slider .text {
   position: absolute;
   left: 0;
@@ -1356,13 +1357,11 @@ header h1 {
   text-align: center;
   font-weight: 600;
   color: #4a69ad;
-  font-size: 13px;
+  font-size: 14px;
   pointer-events: none;
 }
 
-/* Khi xác nhận */
-.slider.success {
-  background: #4a69ad;
-}
+/* trạng thái xác nhận */
+.slider.success { background: #4a69ad; }
 .slider.success .text { color: #fff; }
-.slider.success .handle { transform: translateY(-50%) scale(1.05); }
+.slider.success .handle { transform: scale(1.04); }
