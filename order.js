@@ -162,9 +162,11 @@ function hienThiMonTheoDanhMuc(danhMuc) {
 }
 // -------------------------------
 // Thêm / giảm món
+// Thêm / giảm món
 function timSoLuong(id) {
-  const mon = hoaDonTam.find((m) => m.id === id);
-  return mon ? mon.soluong : 0;
+  return hoaDonTam
+    .filter((m) => m.id === id)
+    .reduce((sum, m) => sum + (m.soluong || 0), 0);
 }
 
 
@@ -512,6 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
