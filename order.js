@@ -20,58 +20,63 @@ function khoiTaoOrder(loaiKhach) {
 
   document.getElementById("btnCloseHeader").addEventListener("click", () => {
     header.innerHTML = `
-     <h1>BlackTea</h1>
-     <div class="header-icons">
-      <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
-      <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
-     </div>
+      <h1>BlackTea</h1>
+      <div class="header-icons">
+        <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
+        <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
+      </div>
     `;
     hienThiManHinhChinh();
     renderTables();
   });
 
   const main = document.querySelector(".main-container");
-main.innerHTML = `
-  <div class="order-container">
+  main.innerHTML = `
+    <div class="order-container">
 
-    <div class="order-search">
-      <input type="text" id="timMonInput" placeholder="Tìm món..." oninput="timMon()" />
+      <div class="order-search">
+        <input type="text" id="timMonInput" placeholder="Tìm món..." oninput="timMon()" />
+      </div>
+
+      <div class="order-categories" id="danhMucContainer"></div>
+
+      <!-- 🔹 Danh sách món -->
+      <div class="order-content">
+        <div class="order-list" id="dsMon"></div>
+      </div>
+
+      <!-- 🔹 Hóa đơn tạm -->
+      <div class="hoa-don-tam empty" id="hoaDonTam">Chưa có món nào</div>
+
+      <!-- 🔹 Thanh tổng / footer -->
+      <div class="order-footer">
+        <div class="order-total">
+          <div class="icon-app" data-icon="muahang"></div>
+          <span id="tongTien">0đ</span>
+        </div>
+        <div class="order-buttons">
+          <button id="btnDatLai" class="hieuung-nhat">Đặt lại</button>
+          <button id="btnLuuDon" class="btn-primary hieuung-noi">Lưu đơn</button>
+        </div>
+      </div>
+
     </div>
+  `;
 
-    <div class="order-categories" id="danhMucContainer"></div>
+  // ✅ Tự động load icon sau khi render footer
+  autoLoadIcons();
 
-    <!-- 🔹 Danh sách món (cuộn được) -->
-    <div class="order-content">
-      <div class="order-list" id="dsMon"></div>
-    </div>
-
-    <!-- 🔹 Hóa đơn tạm (cố định, không cuộn, nội dung bên trong cuộn) -->
-    <div class="hoa-don-tam empty" id="hoaDonTam">Chưa có món nào</div>
-
-    <!-- 🔹 Thanh tổng / footer (cố định đáy) -->
-    <div class="order-footer">
-  <div class="order-total">
-    <div class="icon-app"></div>
-    <span id="tongTien">0đ</span>
-</div>
-  <div class="order-buttons">
-    <button id="btnDatLai" class="hieuung-nhat">Đặt lại</button>
-    <button id="btnLuuDon" class="btn-primary hieuung-noi">Lưu đơn</button>
-  </div>
-</div>
-
-  </div>
-`;
-  // ✅ Gọi sau khi footer đã render xong
-loadIcon("muahang", ".order-total .icon-app");
+  // ✅ Render danh mục và món
   taoDanhMuc();
   hienThiMonTheoDanhMuc("");
 
+  // ✅ Gắn sự kiện
   document.getElementById("btnDatLai").addEventListener("click", datLai);
   document.getElementById("btnLuuDon").addEventListener("click", luuDon);
-  setTimeout(updateOrderOffsets, 100); // đợi render xong rồi tính lại
-}
 
+  // ✅ Cập nhật layout sau render
+  setTimeout(updateOrderOffsets, 100);
+}
 // -------------------------------
 function taoDanhMuc() {
   const dsDanhMuc = [...new Set(MENU.map((m) => m.cat))];
@@ -432,6 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
