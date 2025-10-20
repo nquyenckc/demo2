@@ -15,6 +15,8 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
   // 🔹 Nếu mở lại đơn cũ, giữ lại cart cũ
   if (donTonTai) {
     donDangChon = donTonTai; // biến toàn cục để thao tác tiếp
+    // ✅ Khởi tạo hoaDonGoc để so sánh số lượng gốc
+    window.hoaDonGoc = JSON.parse(JSON.stringify(donTonTai.cart));
   } else {
     donDangChon = { 
       id: Date.now(), 
@@ -23,18 +25,18 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
       status: "waiting", 
       createdAt: new Date().toISOString()
     };
+    window.hoaDonGoc = [];
   }
 
-
   const header = document.querySelector("header");
-header.innerHTML = `
-  <div class="header-left">
-    <h1>${loaiKhach}</h1>
-  </div>
-  <div class="header-right">
-    <button id="btnCloseHeader" class="btn-close">×</button>
-  </div>
-`;
+  header.innerHTML = `
+    <div class="header-left">
+      <h1>${loaiKhach}</h1>
+    </div>
+    <div class="header-right">
+      <button id="btnCloseHeader" class="btn-close">×</button>
+    </div>
+  `;
 
   document.getElementById("btnCloseHeader").addEventListener("click", () => {
     header.innerHTML = `
