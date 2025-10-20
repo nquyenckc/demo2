@@ -202,9 +202,23 @@ function themMon(id, note = "") {
 // ================================
 // GIẢM MÓN
 function giamMon(id, note = "") {
+function giamMon(id, note = "") {
   const noteNorm = (note || "").trim();
   let idx = -1;
 
+  // ✅ Không cho trừ nếu đã về bằng số lượng gốc
+  let tongHienTai = hoaDonTam
+    .filter((m) => m.id === id)
+    .reduce((sum, m) => sum + m.soluong, 0);
+
+  let soLuongGoc = 0;
+  if (window.hoaDonGoc) {
+    const goc = hoaDonGoc.find((m) => m.id === id);
+    if (goc) soLuongGoc = goc.soluong || 0;
+  }
+  if (tongHienTai <= soLuongGoc) return; // ✅ chặn trừ nếu đã bằng hoặc thấp hơn gốc
+
+  // --- phần còn lại giữ nguyên y chang ---
   // 1️⃣ Nếu có note: trừ đúng món ghi chú đó
   if (noteNorm) {
     idx = hoaDonTam.findIndex(
@@ -222,18 +236,6 @@ function giamMon(id, note = "") {
     idx = hoaDonTam.findIndex((m) => m.id === id && m.isNoteOnly);
   }
 
-  // ✅ Thêm đoạn kiểm tra: không cho trừ thấp hơn số lượng gốc
-  let soLuongGoc = 0;
-  if (typeof hoaDonGoc !== "undefined") {
-    const goc = hoaDonGoc.find((m) => m.id === id && !m.isNoteOnly);
-    if (goc) soLuongGoc = goc.soluong || 0;
-  }
-  const tongHienTai = hoaDonTam
-    .filter((m) => m.id === id)
-    .reduce((sum, m) => sum + m.soluong, 0);
-  if (tongHienTai <= soLuongGoc) return; // ✅ chặn trừ nếu đã bằng món gốc
-
-  // ✅ Hết phần thêm — dưới đây giữ nguyên code gốc
   if (idx > -1) {
     hoaDonTam[idx].soluong--;
     if (hoaDonTam[idx].soluong <= 0) hoaDonTam.splice(idx, 1);
@@ -266,7 +268,6 @@ function giamMon(id, note = "") {
 
   capNhatHoaDon();
 }
-
 // ================================
 // CẬP NHẬT HÓA ĐƠN
 function capNhatHoaDon() {
@@ -479,6 +480,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
