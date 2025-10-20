@@ -78,9 +78,24 @@ function loadIcon(name, selector) {
     .then(res => res.text())
     .then(svg => {
       const el = document.querySelector(selector);
-      if (el) el.innerHTML = svg;
+      if (!el) return;
+
+      // Chèn SVG vào phần tử
+      el.innerHTML = svg;
+
+      // Lấy SVG vừa thêm
+      const svgEl = el.querySelector("svg");
+      if (svgEl) {
+        // Ép màu SVG theo CSS
+        svgEl.setAttribute("fill", "currentColor");
+        svgEl.style.width = "100%";
+        svgEl.style.height = "100%";
+      }
+
+      // Đảm bảo màu ăn theo CSS cha
+      el.style.color = "var(--mauchinh)";
     })
-    .catch(err => console.error("Không tải được icon:", name));
+    .catch(err => console.error("Không tải được icon:", name, err));
 }
 // ================================
 // 🏠 Màn hình chính
@@ -407,6 +422,7 @@ function khoiTaoSliderConfirm(don) {
     }
   }
 }
+
 
 
 
