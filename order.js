@@ -305,9 +305,18 @@ function capNhatHoaDon() {
 // -------------------------------
 // Đặt lại đơn
 function datLai() {
-  hoaDonTam = [];
+  // Nếu đang chỉnh đơn cũ -> khôi phục lại từ dữ liệu gốc
+  if (typeof donDangChon !== "undefined" && donDangChon && hoaDonChinh.some(d => d.id === donDangChon.id)) {
+    const donCu = hoaDonChinh.find(d => d.id === donDangChon.id);
+    hoaDonTam = JSON.parse(JSON.stringify(donCu.cart)); // sao chép lại giỏ gốc
+  } else {
+    // Nếu là đơn mới thì xóa hết
+    hoaDonTam = [];
+  }
+
   capNhatHoaDon();
   hienThiMonTheoDanhMuc("");
+  hienThongBao("Đã khôi phục món ban đầu");
 }
 
 // -------------------------------
@@ -467,6 +476,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
