@@ -270,9 +270,6 @@ function themKhachTaiQuan() {
   };
 }
 
-// ================================
-// 🧾 MỞ CHI TIẾT ĐƠN
-// ================================
 
 function moChiTietDon(id) {
   const don = hoaDonChinh.find(d => d.id === id);
@@ -293,7 +290,6 @@ function moChiTietDon(id) {
     day: '2-digit', month: '2-digit', year: 'numeric'
   });
 
-  // ✅ Kiểm tra trạng thái đơn để render footer phù hợp
   const footerHTML = don.status === "serving"
     ? `
       <div class="order-footer-ct" id="footerChiTietDon">
@@ -370,42 +366,39 @@ function moChiTietDon(id) {
     });
   }
 
-// ✅ Gọi slider xác nhận mới (định nghĩa trong notes.js)
-if (typeof khoiTaoSliderXacNhan === 'function' && don.status !== "serving") {
-  khoiTaoSliderXacNhan(don, function (donDaXacNhan) {
-    // Cập nhật trạng thái đơn
-    donDaXacNhan.status = "serving";
+  // ✅ Slider xác nhận
+  if (typeof khoiTaoSliderXacNhan === 'function' && don.status !== "serving") {
+    khoiTaoSliderXacNhan(don, function (donDaXacNhan) {
+      donDaXacNhan.status = "serving";
 
-    // 🧩 Ẩn thanh kéo
-    const slider = document.getElementById("sliderConfirm");
-    if (slider) slider.style.display = "none";
+      const slider = document.getElementById("sliderConfirm");
+      if (slider) slider.style.display = "none";
 
-    // 🧩 Thêm 2 nút mới vào footer
-    const footer = document.getElementById("footerChiTietDon");
-    if (footer) {
-      footer.innerHTML = `
-        <div class="order-buttons">
-          <button class="btn-themmon">Thêm món</button>
-          <button class="btn-primary btn-thanhtoan">Thanh toán</button>
-        </div>
-      `;
-    }
+      const footer = document.getElementById("footerChiTietDon");
+      if (footer) {
+        footer.innerHTML = `
+          <div class="order-buttons">
+            <button class="btn-themmon">Thêm món</button>
+            <button class="btn-primary btn-thanhtoan">Thanh toán</button>
+          </div>
+        `;
+      }
 
-    // 🧩 Gắn sự kiện tạm thời
-    document.querySelector(".btn-themmon")?.addEventListener("click", () => {
-      hienThongBao("👉 Chức năng Thêm món sắp có!");
+      // 🔹 Fix: mở lại màn hình order trước rồi mới cập nhật hóa đơn tạm
+      document.querySelector(".btn-themmon")?.addEventListener("click", () => {
+        khoiTaoOrder(don.name, don); // mở màn hình order + giữ đơn cũ
+        hoaDonTam = [...don.cart];    // copy cart cũ
+        capNhatHoaDon();              // cập nhật hóa đơn tạm + tổng tiền
+      });
+
+      document.querySelector(".btn-thanhtoan")?.addEventListener("click", () => {
+        hienThongBao("💰 Chức năng Thanh toán sắp có!");
+      });
+
+      renderTables();
     });
-    document.querySelector(".btn-thanhtoan")?.addEventListener("click", () => {
-      hienThongBao("💰 Chức năng Thanh toán sắp có!");
-    });
-
-    // 🔄 Cập nhật lại danh sách ở nền
-    renderTables();
-  });
+  }
 }
-
-}
-
 
 
 function khoiTaoSliderConfirm(don) {

@@ -4,11 +4,27 @@
 
 let hoaDonTam = [];
 let loaiKhachHienTai = "";
+let donDangChon = null;
+
 
 // -------------------------------
 // Khởi tạo màn hình Order
-function khoiTaoOrder(loaiKhach) {
+function khoiTaoOrder(loaiKhach, donTonTai = null) {
   loaiKhachHienTai = loaiKhach;
+
+  // 🔹 Nếu mở lại đơn cũ, giữ lại cart cũ
+  if (donTonTai) {
+    donDangChon = donTonTai; // biến toàn cục để thao tác tiếp
+  } else {
+    donDangChon = { 
+      id: Date.now(), 
+      name: loaiKhach, 
+      cart: [], 
+      status: "waiting", 
+      createdAt: new Date().toISOString()
+    };
+  }
+
 
   const header = document.querySelector("header");
 header.innerHTML = `
@@ -307,15 +323,25 @@ function luuDon() {
     loaiKhachHienTai = taoTenKhach("Khách mang đi");
   }
 
-  const donMoi = {
-    id: Date.now(),
-    name: loaiKhachHienTai,
-    cart: [...hoaDonTam],
-    createdAt: Date.now()
-  };
+  // 🔹 Nếu đang chỉnh đơn cũ thì cập nhật thay vì tạo mới
+  if (typeof donDangChon !== "undefined" && donDangChon && hoaDonChinh.some(d => d.id === donDangChon.id)) {
+    const index = hoaDonChinh.findIndex(d => d.id === donDangChon.id);
+    if (index !== -1) {
+      hoaDonChinh[index].cart = [...hoaDonTam];
+      hoaDonChinh[index].updatedAt = Date.now();
+    }
+  } else {
+    // 🔹 Tạo đơn mới (như cũ)
+    const donMoi = {
+      id: Date.now(),
+      name: loaiKhachHienTai,
+      cart: [...hoaDonTam],
+      createdAt: Date.now(),
+      status: "waiting"
+    };
+    hoaDonChinh.push(donMoi);
+  }
 
-  // ✅ Đổi TABLES → hoaDonChinh để đồng bộ với tables.js mới
-  hoaDonChinh.push(donMoi);
   saveAll();
 
   hoaDonTam = [];
@@ -323,6 +349,7 @@ function luuDon() {
 
   hienThongBao("Đã lưu đơn");
 
+  // 🔙 Trở về màn chính
   const header = document.querySelector("header");
   header.innerHTML = `
     <h1>BlackTea</h1>
@@ -335,6 +362,7 @@ function luuDon() {
   hienThiManHinhChinh();
   renderTables();
 }
+
 
 // -------------------------------
 // Tìm món theo từ khóa
