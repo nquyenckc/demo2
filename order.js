@@ -303,21 +303,13 @@ function capNhatHoaDon() {
 }
 
 // -------------------------------
-// Đặt lại đơn 
+// Đặt lại đơn
 function datLai() {
-  if (!donDangChon) {
-    hoaDonTam = [];
-  } else {
-    // Giữ lại các món cũ trong đơn gốc
-    const monCu = donDangChon.cart.map(m => ({
-      ...m
-    }));
-    hoaDonTam = [...monCu];
-  }
-
+  hoaDonTam = [];
   capNhatHoaDon();
   hienThiMonTheoDanhMuc("");
 }
+
 // -------------------------------
 // -------------------------------
 // Lưu đơn
@@ -475,9 +467,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
-
-
-
 
 
 
