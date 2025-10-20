@@ -62,7 +62,8 @@ main.innerHTML = `
 
   </div>
 `;
-
+  // ✅ Gọi sau khi footer đã render xong
+loadIcon("muahang", ".order-total .icon-app");
   taoDanhMuc();
   hienThiMonTheoDanhMuc("");
 
@@ -431,6 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
