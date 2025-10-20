@@ -652,21 +652,20 @@ header h1 {
   display: flex;
   align-items: center;
   gap: 8px;
-  transform: scale(0.7);
-  transform-origin: left center;
+  /* bỏ scale để không ảnh hưởng layout chung */
 }
 
 .order-total .icon-app {
-  width: 54px;
-  height: 53px;
-  color: var(--mauchinh); /* tô đúng màu chủ đạo */
+  width: 46px;       /* giảm ~15% từ 54px */
+  height: 45px;
+  color: var(--mauchinh);
   flex-shrink: 0;
 }
 
 .order-total #tongTien {
   color: var(--mauchinh);
   font-weight: 700;
-  font-size: 22px;
+  font-size: 19px;   /* giảm ~15% từ 22px */
   line-height: 1;
   display: flex;
   align-items: center;
