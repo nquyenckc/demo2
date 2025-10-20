@@ -303,21 +303,21 @@ function capNhatHoaDon() {
 }
 
 // -------------------------------
-// Đặt lại đơn
+// Đặt lại đơn 
 function datLai() {
-  // Nếu đang chỉnh đơn cũ -> khôi phục lại từ dữ liệu gốc
-  if (typeof donDangChon !== "undefined" && donDangChon && hoaDonChinh.some(d => d.id === donDangChon.id)) {
-    const donCu = hoaDonChinh.find(d => d.id === donDangChon.id);
-    hoaDonTam = JSON.parse(JSON.stringify(donCu.cart)); // sao chép lại giỏ gốc
-  } else {
-    // Nếu là đơn mới thì xóa hết
+  if (!donDangChon) {
     hoaDonTam = [];
+  } else {
+    // Giữ lại các món cũ trong đơn gốc
+    const monCu = donDangChon.cart.map(m => ({
+      ...m
+    }));
+    hoaDonTam = [...monCu];
   }
 
   capNhatHoaDon();
   hienThiMonTheoDanhMuc("");
 }
-
 // -------------------------------
 // -------------------------------
 // Lưu đơn
@@ -475,6 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
