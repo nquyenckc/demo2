@@ -103,15 +103,17 @@ html, body, * {
   height: 22px;
   vertical-align: middle;
   fill: currentColor;
-  color: var(--mauchinh);          /* ✅ luôn dùng màu chính */
+  color: currentColor; /* sẽ được override bằng style hoặc biến cục bộ */
   transition: color 0.25s ease, transform 0.2s ease;
 }
 
+/* Hover nhẹ */
 .icon-app:hover {
   transform: scale(1.1);
   filter: brightness(1.1);
 }
 
+/* Hiệu ứng nổi */
 .hieuung-noi .icon-app {
   filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
 }
