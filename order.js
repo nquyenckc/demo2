@@ -124,6 +124,9 @@ function hienThiMonTheoDanhMuc(danhMuc) {
 
   loc.forEach((mon) => {
     const sl = timSoLuong(mon.id);
+    const slGoc =
+      hoaDonGoc?.find((x) => x.id === mon.id)?.soluong || 0; // ✅ số lượng gốc trước khi thêm
+
     const div = document.createElement("div");
     div.className = "mon-item";
     div.innerHTML = `
@@ -132,22 +135,22 @@ function hienThiMonTheoDanhMuc(danhMuc) {
         <div class="mon-gia">${mon.price.toLocaleString()}₫</div>
       </div>
       <div class="mon-qty" id="qty-${mon.id}">
-  <button class="note-btn ${sl > 0 ? '' : 'faded'}"
-          onclick="if(${sl} > 0) toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">
-    <i class="fa-regular fa-star"></i>
-  </button>
+        <button class="note-btn ${sl > slGoc ? '' : 'faded'}"
+                onclick="if(${sl} > ${slGoc}) toggleNotePopup(MENU.find(m => m.id === ${mon.id}), this)">
+          <i class="fa-regular fa-star"></i>
+        </button>
 
-  <button class="btn-minus ${sl > 0 ? '' : 'faded'}"
-          onclick="if(${sl} > 0) giamMon(${mon.id})">
-    <i class="fa-solid fa-minus"></i>
-  </button>
+        <button class="btn-minus ${sl > slGoc ? '' : 'faded'}"
+                onclick="if(${sl} > ${slGoc}) giamMon(${mon.id})">
+          <i class="fa-solid fa-minus"></i>
+        </button>
 
-  <span id="sl-${mon.id}">${sl}</span>
+        <span id="sl-${mon.id}">${sl}</span>
 
-  <button class="btn-plus" onclick="themMon(${mon.id})">
-    <i class="fa-solid fa-plus"></i>
-  </button>
-</div>
+        <button class="btn-plus" onclick="themMon(${mon.id})">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
     `;
     dsMon.appendChild(div);
   });
@@ -480,6 +483,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
