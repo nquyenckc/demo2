@@ -184,7 +184,6 @@ function themMon(id, note = "") {
 
   capNhatHoaDon();
 
-  // Cập nhật phần hiển thị số lượng gộp (theo id)
   const slTong = hoaDonTam
     .filter((m) => m.id === id)
     .reduce((sum, m) => sum + m.soluong, 0);
@@ -202,7 +201,7 @@ function themMon(id, note = "") {
 
     if (slEl) slEl.textContent = slTong;
 
-    // ✅ Ẩn/hiện nút trừ và sao theo điều kiện so với số lượng gốc
+    // ✅ Ẩn/hiện nút trừ và sao theo điều kiện
     if (slTong > slGoc) {
       if (noteBtn) {
         noteBtn.classList.remove("faded");
@@ -256,7 +255,9 @@ function giamMon(id, note = "") {
     if (hoaDonTam[idx].soluong <= 0) hoaDonTam.splice(idx, 1);
   }
 
-  // 🔄 Cập nhật lại tổng số lượng gộp cho ô menu
+  capNhatHoaDon();
+
+  // ✅ Tính lại sau khi trừ
   const slTong = hoaDonTam
     .filter((m) => m.id === id)
     .reduce((sum, m) => sum + m.soluong, 0);
@@ -268,13 +269,13 @@ function giamMon(id, note = "") {
 
   const qtyBox = document.querySelector(`#qty-${id}`);
   if (qtyBox) {
-    const slEl = document.getElementById(`sl-${id}`);
     const noteBtn = qtyBox.querySelector(".note-btn");
     const giamBtn = qtyBox.querySelector(".btn-minus");
+    const slEl = document.getElementById(`sl-${id}`);
 
     if (slEl) slEl.textContent = slTong;
 
-    // ✅ Ẩn/hiện nút khi giảm về đúng số lượng gốc
+    // ✅ Ẩn nút khi về lại đúng số lượng gốc
     if (slTong > slGoc) {
       if (noteBtn) {
         noteBtn.classList.remove("faded");
@@ -298,8 +299,6 @@ function giamMon(id, note = "") {
       }
     }
   }
-
-  capNhatHoaDon();
 }
 // ================================
 // CẬP NHẬT HÓA ĐƠN
@@ -513,6 +512,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
