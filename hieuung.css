@@ -102,18 +102,16 @@ html, body, * {
   width: 22px;
   height: 22px;
   vertical-align: middle;
-  fill: currentColor;         /* Lấy màu chữ hiện tại */
-  color: inherit;             /* Tự động dùng màu của vùng chứa */
+  fill: currentColor;
+  color: var(--mauchinh);          /* ✅ luôn dùng màu chính */
   transition: color 0.25s ease, transform 0.2s ease;
 }
 
-/* Hover nhẹ */
 .icon-app:hover {
   transform: scale(1.1);
   filter: brightness(1.1);
 }
 
-/* Khi nằm trong vùng có hiệu ứng nổi */
 .hieuung-noi .icon-app {
   filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
 }
