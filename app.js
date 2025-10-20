@@ -400,6 +400,18 @@ function khoiTaoSliderConfirm(don) {
   }
 }
 
+function loadIcon(name, selector) {
+  fetch(`icons/${name}.svg`)
+    .then(res => res.text())
+    .then(svg => {
+      const el = document.querySelector(selector);
+      if (!el) return;
+      svg = svg.replace(/fill="[^"]*"/g, 'fill="currentColor"');
+      el.innerHTML = svg;
+      el.style.color = "var(--mauchinh)";
+    })
+    .catch(err => console.error("Không tải được icon:", name, err));
+}
 
 
 
