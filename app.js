@@ -269,12 +269,9 @@ function themKhachTaiQuan() {
 }
 
 // ================================
-// 🧾 Mở chi tiết đơn full màn hình
-// ================================
-// ================================
 // 🧾 MỞ CHI TIẾT ĐƠN
 // ================================
-// Thay thế hàm moChiTietDon trong app.js bằng đoạn này
+
 function moChiTietDon(id) {
   const don = hoaDonChinh.find(d => d.id === id);
   if (!don) return;
@@ -325,7 +322,6 @@ function moChiTietDon(id) {
     ${(m.price * m.soluong).toLocaleString()}đ
   </div>
 </div>
-
           `;
         }).join("")}
 
@@ -335,14 +331,19 @@ function moChiTietDon(id) {
       </div>
     </div>
 
-    <div class="order-footer-ct" id="footerChiTietDon">
-      <div class="slider-container" id="sliderConfirm">
-        <div class="slider-bg">Kéo để xác nhận đơn</div>
-        <div class="slider-thumb"><i class="fas fa-mug-hot"></i></div>
-      </div>
+<!-- MỚI DÙNG ICON RIÊNG -->
+<div class="order-footer-ct" id="footerChiTietDon">
+  <div class="slider" id="sliderConfirm">
+    <div class="handle">
+      <img src="icon/caphe.svg" alt="icon" class="slider-icon">
     </div>
+    <div class="text">Kéo để xác nhận</div>
+  </div>
+</div>
+
   `;
 
+  // 🔙 Nút đóng chi tiết đơn
   const btnClose = document.getElementById("btnCloseChiTiet");
   if (btnClose) {
     btnClose.addEventListener("click", () => {
@@ -358,7 +359,25 @@ function moChiTietDon(id) {
     });
   }
 
-  if (typeof khoiTaoSliderConfirm === 'function') khoiTaoSliderConfirm(don);
+  // ✅ Gọi slider xác nhận mới (định nghĩa trong notes.js)
+  if (typeof khoiTaoSliderXacNhan === 'function') {
+    khoiTaoSliderXacNhan(don, function (donDaXacNhan) {
+      // 🧭 Logic cũ: đổi sang trạng thái “đang phục vụ”
+      donDaXacNhan.status = "serving";
+
+      // 🕒 Ghi thời điểm xác nhận (nếu muốn)
+      donDaXacNhan.startServeAt = new Date().toISOString();
+
+      saveAll();
+      hienThongBao("🍹 Đơn đã chuyển sang trạng thái ĐANG PHỤC VỤ");
+
+      // 🔄 Quay về màn chính & cập nhật danh sách bàn
+      setTimeout(() => {
+        hienThiManHinhChinh();
+        renderTables();
+      }, 800);
+    });
+  }
 }
 
 

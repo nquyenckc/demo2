@@ -272,3 +272,76 @@ function hopXacNhan(noiDung, khiDongY, khiHuy) {
 }
 
 
+// ================================
+// ☕ SLIDER XÁC NHẬN ĐƠN - có thể gọi từ app.js
+// ================================
+function khoiTaoSliderXacNhan(don, onXacNhan) {
+  const slider = document.getElementById("sliderConfirm");
+  if (!slider) return;
+
+  const handle = slider.querySelector(".handle");
+  const text = slider.querySelector(".text");
+
+  // 🔧 Đảm bảo icon đúng
+  handle.innerHTML = `<img src="icon/caphe.svg" alt="icon" class="slider-icon">`;
+
+  let isDragging = false;
+  let startX = 0;
+
+  handle.addEventListener("mousedown", startDrag);
+  handle.addEventListener("touchstart", startDrag, { passive: true });
+
+  function startDrag(e) {
+    if (slider.classList.contains("success")) return;
+    isDragging = true;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    document.addEventListener("mousemove", onDrag);
+    document.addEventListener("mouseup", endDrag);
+    document.addEventListener("touchmove", onDrag);
+    document.addEventListener("touchend", endDrag);
+  }
+
+  function onDrag(e) {
+    if (!isDragging) return;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    let diff = clientX - startX;
+    const max = slider.offsetWidth - handle.offsetWidth - 8;
+    if (diff < 0) diff = 0;
+    if (diff > max) diff = max;
+    handle.style.left = diff + "px";
+  }
+
+  function endDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    const maxPos = slider.offsetWidth - handle.offsetWidth - 8;
+    const current = parseInt(handle.style.left) || 0;
+
+    if (current >= maxPos * 0.9) {
+      // ✅ Thành công
+      slider.classList.add("success");
+      handle.style.left = maxPos + "px";
+      text.innerText = "Đã xác nhận";
+      slider.style.animation = "confirmShake 0.4s ease";
+
+      // 🔄 Hiệu ứng rung nhẹ cho icon
+      const img = handle.querySelector("img");
+      if (img) {
+        img.style.animation = "iconBounce 0.5s ease";
+        setTimeout(() => (img.style.animation = ""), 500);
+      }
+
+      // 🧩 Gọi callback
+      if (typeof onXacNhan === "function") onXacNhan(don);
+    } else {
+      // ❌ Trượt chưa đủ
+      handle.style.left = "5px";
+      handle.innerHTML = `<img src="icon/caphe.svg" alt="icon" class="slider-icon">`;
+    }
+
+    document.removeEventListener("mousemove", onDrag);
+    document.removeEventListener("mouseup", endDrag);
+    document.removeEventListener("touchmove", onDrag);
+    document.removeEventListener("touchend", endDrag);
+  }
+}
