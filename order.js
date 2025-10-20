@@ -17,6 +17,8 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
     donDangChon = donTonTai; // biến toàn cục để thao tác tiếp
     // ✅ Khởi tạo hoaDonGoc để so sánh số lượng gốc
     window.hoaDonGoc = JSON.parse(JSON.stringify(donTonTai.cart));
+    // ✅ Lưu snapshot ban đầu cho nút Đặt lại
+    window.hoaDonTamGoc = JSON.parse(JSON.stringify(donTonTai.cart));
   } else {
     donDangChon = { 
       id: Date.now(), 
@@ -26,6 +28,7 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
       createdAt: new Date().toISOString()
     };
     window.hoaDonGoc = [];
+    window.hoaDonTamGoc = []; // snapshot ban đầu rỗng
   }
 
   const header = document.querySelector("header");
@@ -96,6 +99,13 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
 
   // ✅ Cập nhật layout sau render
   setTimeout(updateOrderOffsets, 100);
+}
+
+// ✅ Sửa hàm datLai để reset về snapshot ban đầu
+function datLai() {
+  hoaDonTam = [...(window.hoaDonTamGoc || [])]; // reset về trạng thái lúc mở
+  capNhatHoaDon();
+  hienThiMonTheoDanhMuc("");
 }
 // -------------------------------
 function taoDanhMuc() {
@@ -522,6 +532,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
