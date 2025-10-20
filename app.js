@@ -400,17 +400,21 @@ function khoiTaoSliderConfirm(don) {
   }
 }
 
-function loadIcon(name, selector) {
-  fetch(`icons/${name}.svg`)
-    .then(res => res.text())
-    .then(svg => {
-      const el = document.querySelector(selector);
-      if (!el) return;
-      svg = svg.replace(/fill="[^"]*"/g, 'fill="currentColor"');
-      el.innerHTML = svg;
-      el.style.color = "var(--mauchinh)";
-    })
-    .catch(err => console.error("Không tải được icon:", name, err));
+function autoLoadIcons() {
+  document.querySelectorAll(".icon-app[data-icon]").forEach(el => {
+    const name = el.dataset.icon;
+    fetch(`icons/${name}.svg`)
+      .then(res => res.text())
+      .then(svg => {
+        svg = svg.replace(/fill="[^"]*"/g, 'fill="currentColor"');
+        el.innerHTML = svg;
+        // ✅ Gán đúng màu chủ đạo ngay từ đầu
+        el.style.color = getComputedStyle(document.documentElement)
+          .getPropertyValue('--mauchinh')
+          .trim();
+      })
+      .catch(err => console.error("Không tải được icon:", name, err));
+  });
 }
 
 
