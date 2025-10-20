@@ -316,7 +316,6 @@ function datLai() {
 
   capNhatHoaDon();
   hienThiMonTheoDanhMuc("");
-  hienThongBao("Đã khôi phục món ban đầu");
 }
 
 // -------------------------------
@@ -476,6 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
