@@ -656,8 +656,8 @@ header h1 {
 }
 
 .order-total .icon-app {
-  width: 46px;       /* giảm ~15% từ 54px */
-  height: 45px;
+  width: 40px;       /* giảm ~15% từ 54px */
+  height: 41px;
   color: var(--mauchinh);
   flex-shrink: 0;
 }
