@@ -51,7 +51,7 @@ main.innerHTML = `
     <!-- 🔹 Thanh tổng / footer (cố định đáy) -->
     <div class="order-footer">
   <div class="order-total">
-    <img src="icons/muahang.svg" class="icon-app" alt="Mua hàng">
+    <div class="icon-app"></div>
     <span id="tongTien">0đ</span>
 </div>
   <div class="order-buttons">
@@ -432,6 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
