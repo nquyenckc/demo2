@@ -116,6 +116,7 @@ function taoDanhMuc() {
 
 // -------------------------------
 // Hiển thị danh sách món
+// Hiển thị danh sách món
 function hienThiMonTheoDanhMuc(danhMuc) {
   const dsMon = document.getElementById("dsMon");
   dsMon.innerHTML = "";
@@ -124,8 +125,12 @@ function hienThiMonTheoDanhMuc(danhMuc) {
 
   loc.forEach((mon) => {
     const sl = timSoLuong(mon.id);
+
+    // ✅ Lấy số lượng gốc (nếu có), an toàn khi hoaDonGoc chưa được khởi tạo
     const slGoc =
-      hoaDonGoc?.find((x) => x.id === mon.id)?.soluong || 0; // ✅ số lượng gốc trước khi thêm
+      (window.hoaDonGoc && Array.isArray(hoaDonGoc)
+        ? hoaDonGoc.find((x) => x.id === mon.id)?.soluong
+        : 0) || 0;
 
     const div = document.createElement("div");
     div.className = "mon-item";
@@ -155,7 +160,6 @@ function hienThiMonTheoDanhMuc(danhMuc) {
     dsMon.appendChild(div);
   });
 }
-
 // -------------------------------
 // Thêm / giảm món
 function timSoLuong(id) {
@@ -469,6 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
