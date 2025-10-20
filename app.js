@@ -114,7 +114,10 @@ function renderTables() {
     return;
   }
 
-  div.innerHTML = dsDon
+  // 🔄 Đảo ngược danh sách để đơn mới nhất lên đầu
+  const danhSachHienThi = [...dsDon].reverse();
+
+  div.innerHTML = danhSachHienThi
     .map((t, i) => {
       const tongTien = t.cart
         .reduce((a, m) => a + m.price * m.soluong, 0)
@@ -122,7 +125,6 @@ function renderTables() {
       const soMon = t.cart.length;
       const coGhiChu = t.cart.some((m) => m.note && m.note.trim() !== "");
 
-      // lấy trạng thái từ đơn (nếu có)
       const trangThai = t.status || "waiting";
       const iconTrangThai = `<img src="icons/caphe.svg" class="icon-app" alt="Cà phê">`;
       const iconNote = coGhiChu
@@ -150,17 +152,17 @@ function renderTables() {
     })
     .join("");
 
-  // 🧩 Gắn sự kiện click để mở chi tiết (sau này có thể thêm moChiTietDon)
+  // 🧩 Gắn sự kiện click để mở chi tiết
   div.querySelectorAll(".order-card").forEach((card) => {
     card.addEventListener("click", () => {
       const index = parseInt(card.dataset.index);
-      const don = dsDon[index];
+      const don = danhSachHienThi[index]; // ✅ dùng danh sách sau khi reverse
       if (!don) return;
-      // 👉 Sau này bạn có thể thay dòng này bằng moChiTietDon(don)
       moChiTietDon(don.id);
     });
   });
 }
+
 
 // ================================
 // 🪑 Popup chọn bàn kiểu icon ghế
@@ -368,17 +370,40 @@ function moChiTietDon(id) {
     });
   }
 
-  // ✅ Gọi slider xác nhận mới (định nghĩa trong notes.js)
-  if (typeof khoiTaoSliderXacNhan === 'function' && don.status !== "serving") {
-    khoiTaoSliderXacNhan(don, function (donDaXacNhan) {
-      donDaXacNhan.status = "serving";
-      // Sau khi xác nhận thì sẽ quay về màn chính & render lại danh sách
-      setTimeout(() => {
-        hienThiManHinhChinh();
-        renderTables();
-      }, 800);
+// ✅ Gọi slider xác nhận mới (định nghĩa trong notes.js)
+if (typeof khoiTaoSliderXacNhan === 'function' && don.status !== "serving") {
+  khoiTaoSliderXacNhan(don, function (donDaXacNhan) {
+    // Cập nhật trạng thái đơn
+    donDaXacNhan.status = "serving";
+
+    // 🧩 Ẩn thanh kéo
+    const slider = document.getElementById("sliderConfirm");
+    if (slider) slider.style.display = "none";
+
+    // 🧩 Thêm 2 nút mới vào footer
+    const footer = document.getElementById("footerChiTietDon");
+    if (footer) {
+      footer.innerHTML = `
+        <div class="order-buttons">
+          <button class="btn-themmon">Thêm món</button>
+          <button class="btn-primary btn-thanhtoan">Thanh toán</button>
+        </div>
+      `;
+    }
+
+    // 🧩 Gắn sự kiện tạm thời
+    document.querySelector(".btn-themmon")?.addEventListener("click", () => {
+      hienThongBao("👉 Chức năng Thêm món sắp có!");
     });
-  }
+    document.querySelector(".btn-thanhtoan")?.addEventListener("click", () => {
+      hienThongBao("💰 Chức năng Thanh toán sắp có!");
+    });
+
+    // 🔄 Cập nhật lại danh sách ở nền
+    renderTables();
+  });
+}
+
 }
 
 
