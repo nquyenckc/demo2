@@ -1308,7 +1308,7 @@ header h1 {
 /* ==== Slider: cách trên 10px, dưới 10px -> cao = 54px ==== */
 .slider {
   position: relative;
-  width: 200px;               /* bạn có thể điều chỉnh dài/ngắn */
+  width: 270px;               /* bạn có thể điều chỉnh dài/ngắn */
   height: 54px;               /* 74 - (10 + 10) = 54 */
   margin-right: 5px;         /* cách mép phải 20px */
   background: linear-gradient(145deg, #e7ebf7, #cfd7ef);
