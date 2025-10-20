@@ -222,6 +222,18 @@ function giamMon(id, note = "") {
     idx = hoaDonTam.findIndex((m) => m.id === id && m.isNoteOnly);
   }
 
+  // ✅ Thêm đoạn kiểm tra: không cho trừ thấp hơn số lượng gốc
+  let soLuongGoc = 0;
+  if (typeof hoaDonGoc !== "undefined") {
+    const goc = hoaDonGoc.find((m) => m.id === id && !m.isNoteOnly);
+    if (goc) soLuongGoc = goc.soluong || 0;
+  }
+  const tongHienTai = hoaDonTam
+    .filter((m) => m.id === id)
+    .reduce((sum, m) => sum + m.soluong, 0);
+  if (tongHienTai <= soLuongGoc) return; // ✅ chặn trừ nếu đã bằng món gốc
+
+  // ✅ Hết phần thêm — dưới đây giữ nguyên code gốc
   if (idx > -1) {
     hoaDonTam[idx].soluong--;
     if (hoaDonTam[idx].soluong <= 0) hoaDonTam.splice(idx, 1);
@@ -467,6 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
