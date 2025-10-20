@@ -167,6 +167,7 @@ function timSoLuong(id) {
   return mon ? mon.soluong : 0;
 }
 
+
 // ================================
 // THÊM MÓN
 function themMon(id, note = "") {
@@ -188,6 +189,11 @@ function themMon(id, note = "") {
     .filter((m) => m.id === id)
     .reduce((sum, m) => sum + m.soluong, 0);
 
+  const slGoc =
+    (window.hoaDonGoc && Array.isArray(hoaDonGoc)
+      ? hoaDonGoc.find((x) => x.id === id)?.soluong
+      : 0) || 0;
+
   const qtyBox = document.querySelector(`#qty-${id}`);
   if (qtyBox) {
     const noteBtn = qtyBox.querySelector(".note-btn");
@@ -195,14 +201,30 @@ function themMon(id, note = "") {
     const slEl = document.getElementById(`sl-${id}`);
 
     if (slEl) slEl.textContent = slTong;
-    if (noteBtn) noteBtn.classList.remove("faded");
-    if (giamBtn) giamBtn.classList.remove("faded");
 
-    noteBtn.setAttribute(
-      "onclick",
-      `toggleNotePopup(MENU.find(m => m.id === ${id}), this)`
-    );
-    giamBtn.setAttribute("onclick", `giamMon(${id})`);
+    // ✅ Ẩn/hiện nút trừ và sao theo điều kiện so với số lượng gốc
+    if (slTong > slGoc) {
+      if (noteBtn) {
+        noteBtn.classList.remove("faded");
+        noteBtn.setAttribute(
+          "onclick",
+          `toggleNotePopup(MENU.find(m => m.id === ${id}), this)`
+        );
+      }
+      if (giamBtn) {
+        giamBtn.classList.remove("faded");
+        giamBtn.setAttribute("onclick", `giamMon(${id})`);
+      }
+    } else {
+      if (noteBtn) {
+        noteBtn.classList.add("faded");
+        noteBtn.removeAttribute("onclick");
+      }
+      if (giamBtn) {
+        giamBtn.classList.add("faded");
+        giamBtn.removeAttribute("onclick");
+      }
+    }
   }
 }
 
@@ -239,6 +261,11 @@ function giamMon(id, note = "") {
     .filter((m) => m.id === id)
     .reduce((sum, m) => sum + m.soluong, 0);
 
+  const slGoc =
+    (window.hoaDonGoc && Array.isArray(hoaDonGoc)
+      ? hoaDonGoc.find((x) => x.id === id)?.soluong
+      : 0) || 0;
+
   const qtyBox = document.querySelector(`#qty-${id}`);
   if (qtyBox) {
     const slEl = document.getElementById(`sl-${id}`);
@@ -247,7 +274,20 @@ function giamMon(id, note = "") {
 
     if (slEl) slEl.textContent = slTong;
 
-    if (slTong === 0) {
+    // ✅ Ẩn/hiện nút khi giảm về đúng số lượng gốc
+    if (slTong > slGoc) {
+      if (noteBtn) {
+        noteBtn.classList.remove("faded");
+        noteBtn.setAttribute(
+          "onclick",
+          `toggleNotePopup(MENU.find(m => m.id === ${id}), this)`
+        );
+      }
+      if (giamBtn) {
+        giamBtn.classList.remove("faded");
+        giamBtn.setAttribute("onclick", `giamMon(${id})`);
+      }
+    } else {
       if (noteBtn) {
         noteBtn.classList.add("faded");
         noteBtn.removeAttribute("onclick");
@@ -473,6 +513,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
