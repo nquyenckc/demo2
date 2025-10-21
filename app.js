@@ -376,7 +376,7 @@ function moChiTietDon(id) {
 
       const slider = document.getElementById("sliderConfirm");
       if (slider) slider.style.display = "none";
-
+      saveAll();
       const footer = document.getElementById("footerChiTietDon");
       if (footer) {
         footer.innerHTML = `
@@ -489,3 +489,4 @@ function autoLoadIcons() {
       });
   });
 }
+
