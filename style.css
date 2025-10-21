@@ -1290,9 +1290,13 @@ header h1 {
 }
 
 /* Hiệu ứng rung icon khi xác nhận */
-@keyframes iconBounce {
-  0%, 100% { transform: translateY(0); }
-  30% { transform: translateY(-3px); }
-  60% { transform: translateY(2px); }
-  80% { transform: translateY(-1px); }
+@keyframes fadeInSmooth {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
