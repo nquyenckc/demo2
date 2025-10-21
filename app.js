@@ -395,8 +395,15 @@ function moChiTietDon(id) {
       });
 
       document.querySelector(".btn-thanhtoan")?.addEventListener("click", () => {
-        hienThongBao("💰 Chức năng Thanh toán sắp có!");
-      });
+  if (!don || !don.cart || don.cart.length === 0) return; // không có đơn thì bỏ qua
+  if (typeof moThanhToan === "function") {
+    // Ẩn trang chính, hiển thị màn thanh toán
+    document.getElementById("home-screen")?.style.display = "none";
+    document.getElementById("order-screen")?.style.display = "none";
+    document.getElementById("payment-screen")?.style.display = "block";
+    moThanhToan(don);
+  }
+});
 
       renderTables();
     });
@@ -489,4 +496,5 @@ function autoLoadIcons() {
       });
   });
 }
+
 
