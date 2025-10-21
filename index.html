@@ -1,71 +1,80 @@
 <!doctype html>
 <html lang="vi">
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>BlackTea POS v2</title>
+
+  <!-- Font Awesome & CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="hieuung.css"/>
+  <link rel="stylesheet" href="hieuung.css" />
 </head>
+
 <body>
-<header>
-  <h1>BlackTea</h1>
-  <div class="header-icons">
-    <!-- ✅ thêm nút lịch sử -->
-    <span class="icon-btn" onclick="moLichSu()" title="Lịch sử thanh toán">
-      <i class="fas fa-clock-rotate-left" style="color:white;"></i>
-    </span>
-    <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
-  </div>
-</header>
+  <!-- ================= HEADER ================= -->
+  <header>
+    <h1>BlackTea</h1>
+    <div class="header-icons">
+      <!-- Nút lịch sử -->
+      <span class="icon-btn" onclick="moLichSu()" title="Lịch sử thanh toán">
+        <i class="fas fa-clock-rotate-left" style="color:white;"></i>
+      </span>
+      <!-- Nút cài đặt -->
+      <span class="icon-btn" title="Cài đặt">
+        <i class="fas fa-gear" style="color:white;"></i>
+      </span>
+    </div>
+  </header>
 
-<main class="main-container">
-  <div class="btn-group">
-    <button class="btn hieuung-noi" id="btn-takeaway">Khách mang đi</button>
-    <button class="btn hieuung-noi" id="btn-dinein">Khách ghé quán</button>
-  </div>
+  <!-- ================= MAIN ================= -->
+  <main class="main-container">
+    <!-- 🏠 Màn hình chính -->
+    <section id="home-screen" class="screen">
+      <div class="btn-group">
+        <button class="btn hieuung-noi" id="btnMangDi">Khách mang đi</button>
+        <button class="btn hieuung-noi" id="btnGheQuan">Khách ghé quán</button>
+      </div>
+      <div class="table-list">
+        <p class="empty-state">Chưa có đơn hàng nào</p>
+      </div>
+    </section>
 
-  <div class="table-list">
-    <p class="empty-state">Chưa có đơn hàng nào</p>
-  </div>
+    <!-- 🧾 Màn hình chi tiết / gọi món -->
+    <section id="order-screen" class="screen" style="display:none;">
+      <div id="order-container"></div>
+    </section>
 
-  <!-- ✅ Thêm vùng gọi món (ẩn trước) -->
-  <div id="order-container" style="display:none;"></div>
+    <!-- 💵 Màn hình thanh toán -->
+    <section id="payment-screen" class="screen" style="display:none;">
+      <div id="paymentContent"></div>
+    </section>
 
-  <!-- ✅ Màn hình thanh toán + lịch sử -->
-  <div id="payment-screen" class="screen" style="display:none;">
-    <div id="paymentContent"></div>
-  </div>
+    <!-- 📜 Màn hình lịch sử -->
+    <section id="history-screen" class="screen" style="display:none;">
+      <div id="historyContent"></div>
+    </section>
+  </main>
 
-  <div id="history-screen" class="screen" style="display:none;">
-    <div id="historyContent"></div>
-  </div>
-</main>
+  <!-- ================= FIREBASE ================= -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-<!-- ✅ Nạp Firebase trước -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
 
-<script>
-  // 🔧 Cấu hình Firebase của bạn
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID"
-  };
-  firebase.initializeApp(firebaseConfig);
-</script>
-
-<!-- Các file logic chính -->
-<script src="menu.js"></script>
-<script src="tables.js"></script>
-<script src="notes.js"></script>
-<script src="order.js"></script>
-<script src="app.js"></script>
-
-<!-- ✅ Thêm file thanh toán + lịch sử -->
-<script src="thanhtoan.js"></script>
-
+  <!-- ================= JS FILES ================= -->
+  <script src="menu.js"></script>
+  <script src="tables.js"></script>
+  <script src="notes.js"></script>
+  <script src="order.js"></script>
+  <script src="app.js"></script>
+  <script src="thanhtoan.js"></script>
 </body>
 </html>
