@@ -1057,13 +1057,6 @@ header h1 {
 /* =====================================
    🎨 ICON ỨNG DỤNG (SVG qua <img>)
    ===================================== */
-.icon-app {
-  width: 40px;              /* gọn lại một chút cho cân bố cục */
-  height: 40px;
-  object-fit: contain;
-  transition: all 0.3s ease;
-  display: block;
-}
 
 /* ===== BỐ CỤC STATUS BOX (cố định icon trên & dưới) ===== */
 .status-box {
