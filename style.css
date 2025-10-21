@@ -1057,22 +1057,49 @@ header h1 {
    🎨 ICON ỨNG DỤNG (SVG qua <img>)
    ===================================== */
 .icon-app {
-  width: 45px; /* to gấp đôi */
-  height: 44px;
+  width: 40px;              /* gọn lại một chút cho cân bố cục */
+  height: 40px;
   object-fit: contain;
   transition: all 0.3s ease;
+  display: block;
+}
+
+/* ===== BỐ CỤC STATUS BOX (cố định icon trên & dưới) ===== */
+.status-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* icon cà phê ở trên, icon note ở dưới */
+  height: 95px;                   /* tổng chiều cao khối icon */
+  padding: 4px 0;
+}
+
+/* ===== ICON CÀ PHÊ (phần trên) ===== */
+.status-box .icon-app.caphe {
+  margin-bottom: auto;
   filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%);
 }
 
+/* ===== ICON NOTE (phần dưới) ===== */
+.status-box .icon-note {
+  width: 32px;
+  height: 32px;
+  margin-top: auto;
+  opacity: 0.9;
+}
+
 /* Màu xám nhạt khi CHỜ */
-.status-box.waiting .icon-app {
-  filter: brightness(0) saturate(100%) invert(85%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%);
+.status-box.waiting .icon-app.caphe {
+  filter: brightness(0) saturate(100%) invert(85%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(85%) contrast(85%);
+  opacity: 0.8;
 }
 
 /* Màu chính khi PHỤC VỤ */
-.status-box.serving .icon-app {
-  filter: brightness(0) saturate(100%) invert(41%) sepia(17%) saturate(1600%) hue-rotate(195deg) brightness(95%) contrast(90%);
-  transform: scale(1.1);
+.status-box.serving .icon-app.caphe {
+  filter: brightness(0) saturate(100%) invert(41%) sepia(17%) saturate(1600%) hue-rotate(195deg) brightness(100%) contrast(90%);
+  transform: scale(1.15);
+  transition: all 0.3s ease;
 }
 
 
