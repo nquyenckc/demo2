@@ -760,100 +760,6 @@ header h1 {
 }
 
 /* ===============================
-   ⭐ Popup Ghi chú (Độ ngọt / Mức đá) - Bố cục dọc
-   =============================== */
-
-.popup-note {
-  position: absolute;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  padding: 16px 18px;
-  width: 240px;
-  font-family: inherit;
-  color: #333;
-  z-index: 1000;
-  animation: fadeInSmooth 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
-  transform-origin: top center;
-  will-change: transform, opacity;
-  border: 1px solid #e5e7eb;
-}
-
-/* 🟢 Hiệu ứng mượt khi mở popup */
-@keyframes fadeInSmooth {
-  from {
-    opacity: 0;
-    transform: scale(0.94);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* ===============================
-   ⭐ Popup Ghi chú (Độ ngọt / Mức đá)
-   =============================== */
-
-.popup-note {
-  position: absolute;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  padding: 16px 18px;
-  width: 240px;
-  font-family: inherit;
-  color: #333;
-  z-index: 1000;
-  animation: fadeInSmooth 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
-  transform-origin: top center;
-  border: 1px solid #e5e7eb;
-}
-
-/* 🟢 Hiệu ứng mở mượt */
-@keyframes fadeInSmooth {
-  from {
-    opacity: 0;
-    transform: scale(0.94);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* ===============================
-   ⭐ Popup Ghi chú (Độ ngọt / Mức đá)
-   =============================== */
-
-.popup-note {
-  position: absolute;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  padding: 16px 18px;
-  width: 240px;
-  font-family: inherit;
-  color: #333;
-  z-index: 1000;
-  animation: fadeInSmooth 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
-  transform-origin: top center;
-  border: 1px solid #e5e7eb;
-}
-
-/* 🟢 Hiệu ứng mở mượt */
-@keyframes fadeInSmooth {
-  from {
-    opacity: 0;
-    transform: scale(0.94);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* ===============================
    ⭐ Popup Ghi chú (Độ ngọt / Mức đá)
    =============================== */
 .popup-note {
@@ -871,6 +777,7 @@ header h1 {
   border: 1px solid #e5e7eb;
 }
 
+/* 🟢 Hiệu ứng mở mượt khi popup hiển thị */
 @keyframes fadeInSmooth {
   from {
     opacity: 0;
@@ -880,7 +787,8 @@ header h1 {
     opacity: 1;
     transform: scale(1);
   }
-}
+};
+  
 
 /* ===============================
    🎚 Bố cục: tiêu đề + thanh trượt
