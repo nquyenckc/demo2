@@ -363,8 +363,13 @@ function capNhatHoaDon() {
 
 // -------------------------------
 function datLai() {
-  // ✅ reset hoaDonTam về snapshot lúc mở popup
-  hoaDonTam = [...(window.hoaDonTamGoc || [])];
+  // ✅ Reset hoaDonTam về trạng thái ban đầu khi mở popup
+  if (window.hoaDonTamGoc) {
+    hoaDonTam = window.hoaDonTamGoc.map(m => ({ ...m })); // deep copy
+  } else {
+    hoaDonTam = [];
+  }
+
   capNhatHoaDon();
   hienThiMonTheoDanhMuc("");
 }
@@ -526,6 +531,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
