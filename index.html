@@ -12,12 +12,15 @@
 <header>
   <h1>BlackTea</h1>
   <div class="header-icons">
-    <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
+    <!-- ✅ thêm nút lịch sử -->
+    <span class="icon-btn" onclick="moLichSu()" title="Lịch sử thanh toán">
+      <i class="fas fa-clock-rotate-left" style="color:white;"></i>
+    </span>
     <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
   </div>
 </header>
 
-  <main class="main-container">
+<main class="main-container">
   <div class="btn-group">
     <button class="btn hieuung-noi" id="btn-takeaway">Khách mang đi</button>
     <button class="btn hieuung-noi" id="btn-dinein">Khách ghé quán</button>
@@ -29,7 +32,17 @@
 
   <!-- ✅ Thêm vùng gọi món (ẩn trước) -->
   <div id="order-container" style="display:none;"></div>
+
+  <!-- ✅ Màn hình thanh toán + lịch sử -->
+  <div id="payment-screen" class="screen" style="display:none;">
+    <div id="paymentContent"></div>
+  </div>
+
+  <div id="history-screen" class="screen" style="display:none;">
+    <div id="historyContent"></div>
+  </div>
 </main>
+
 <!-- ✅ Nạp Firebase trước -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -43,12 +56,16 @@
   };
   firebase.initializeApp(firebaseConfig);
 </script>
+
+<!-- Các file logic chính -->
 <script src="menu.js"></script>
 <script src="tables.js"></script>
 <script src="notes.js"></script>
 <script src="order.js"></script>
 <script src="app.js"></script>
 
+<!-- ✅ Thêm file thanh toán + lịch sử -->
+<script src="thanhtoan.js"></script>
 
 </body>
 </html>
