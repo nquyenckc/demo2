@@ -380,22 +380,6 @@ header h1 {
   border-color: var(--mauchinh);
 }
 
-/* Footer cố định */
-.order-footer {
-  position: sticky;      /* ✅ cố định trong container */
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  padding: 14px 20px;
-  border-top: 1px solid #eee;
-  border-radius: 10px 10px 0 0;
-  z-index: 10;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
 /* ===== DANH SÁCH MÓN (PHẦN CUỘN GIỮA) ===== */
 
