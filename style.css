@@ -1054,11 +1054,12 @@ header h1 {
 }
 
 /* =====================================
-   🎨 ICON ỨNG DỤNG (SVG qua <img>) — bản to 2.5×, căn đều đẹp mắt
+/* =====================================
+   🎨 ICON ỨNG DỤNG (SVG qua <img>)
    ===================================== */
 .icon-app {
-  width: 100px;              /* to gấp ~2.5 lần (từ 40 → 100) */
-  height: 100px;
+  width: 40px;              /* gọn lại một chút cho cân bố cục */
+  height: 40px;
   object-fit: contain;
   transition: all 0.3s ease;
   display: block;
@@ -1070,29 +1071,24 @@ header h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* cà phê trên, note dưới */
-  height: 250px;                  /* khung cao hơn tương ứng với icon to */
-  padding: 12px 0;                /* cách đều trên–dưới */
-  box-sizing: border-box;
+  justify-content: space-between; /* icon cà phê ở trên, icon note ở dưới */
+  height: 95px;                   /* tổng chiều cao khối icon */
+  padding: 4px 0;
 }
 
 /* ===== ICON CÀ PHÊ (phần trên) ===== */
 .status-box .icon-app.caphe {
-  margin-top: 8px;               /* cách lề trên nhẹ */
   margin-bottom: auto;
   filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%);
 }
 
 /* ===== ICON NOTE (phần dưới) ===== */
 .status-box .icon-note {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 8px;           /* cách lề dưới nhẹ */
+  width: 32px;
+  height: 32px;
   margin-top: auto;
   opacity: 0.9;
 }
-
-/* ===== TRẠNG THÁI ===== */
 
 /* Màu xám nhạt khi CHỜ */
 .status-box.waiting .icon-app.caphe {
@@ -1103,7 +1099,7 @@ header h1 {
 /* Màu chính khi PHỤC VỤ */
 .status-box.serving .icon-app.caphe {
   filter: brightness(0) saturate(100%) invert(41%) sepia(17%) saturate(1600%) hue-rotate(195deg) brightness(100%) contrast(90%);
-  transform: scale(1.1);
+  transform: scale(1.15);
   transition: all 0.3s ease;
 }
 
