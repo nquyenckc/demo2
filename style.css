@@ -1054,43 +1054,45 @@ header h1 {
 }
 
 /* =====================================
-   🎨 ICON ỨNG DỤNG (SVG qua <img>) - căn giữa, hai icon bằng nhau, spacing đẹp
+   🎨 ICON ỨNG DỤNG (SVG qua <img>) — bản to 2.5×, căn đều đẹp mắt
    ===================================== */
 .icon-app {
-  width: 60px;
-  height: 60px;
+  width: 100px;              /* to gấp ~2.5 lần (từ 40 → 100) */
+  height: 100px;
   object-fit: contain;
   transition: all 0.3s ease;
   display: block;
 }
 
-/* ===== KHỐI TRẠNG THÁI (status-box) ===== */
+/* ===== BỐ CỤC STATUS BOX (cố định icon trên & dưới) ===== */
 .status-box {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* đẩy 2 icon ra trên & dưới */
-  height: 140px;                  /* khung cao vừa đẹp cho 2 icon bằng nhau */
-  padding: 10px 0;
+  justify-content: space-between; /* cà phê trên, note dưới */
+  height: 250px;                  /* khung cao hơn tương ứng với icon to */
+  padding: 12px 0;                /* cách đều trên–dưới */
   box-sizing: border-box;
 }
 
-/* ===== ICON CÀ PHÊ (trên) ===== */
+/* ===== ICON CÀ PHÊ (phần trên) ===== */
 .status-box .icon-app.caphe {
-  width: 60px;
-  height: 60px;
-  margin-top: 4px;  /* cách lề trên nhẹ */
+  margin-top: 8px;               /* cách lề trên nhẹ */
+  margin-bottom: auto;
   filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%);
 }
 
-/* ===== ICON NOTE (dưới) ===== */
+/* ===== ICON NOTE (phần dưới) ===== */
 .status-box .icon-note {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 4px; /* cách lề dưới nhẹ */
-  opacity: 0.95;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 8px;           /* cách lề dưới nhẹ */
+  margin-top: auto;
+  opacity: 0.9;
 }
+
+/* ===== TRẠNG THÁI ===== */
 
 /* Màu xám nhạt khi CHỜ */
 .status-box.waiting .icon-app.caphe {
@@ -1102,9 +1104,8 @@ header h1 {
 .status-box.serving .icon-app.caphe {
   filter: brightness(0) saturate(100%) invert(41%) sepia(17%) saturate(1600%) hue-rotate(195deg) brightness(100%) contrast(90%);
   transform: scale(1.1);
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
 }
-
 
 /* ===== CHI TIẾT ĐƠN (KHÔNG ẢNH HƯỞNG ORDER) ===== */
 
