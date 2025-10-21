@@ -96,7 +96,7 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
   // ✅ Gắn sự kiện
   document.getElementById("btnDatLai").addEventListener("click", datLai);
   document.getElementById("btnLuuDon").addEventListener("click", luuDon);
-
+  kichHoatTimMon(); // ô tìm kiếm hoạt động đúng
   // ✅ Cập nhật layout sau render
   setTimeout(updateOrderOffsets, 100);
 }
@@ -531,6 +531,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
+
 
 
 
