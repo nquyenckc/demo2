@@ -186,3 +186,26 @@ html, body, * {
 #sliderConfirm.success .handle {
   transform: translateX(calc(100% - 36px)) scale(1.05);
 }
+
+
+/* Mở trượt từ trái sang phải */
+.slide-in-right {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+.slide-in-right.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Trượt ra khi đóng */
+.slide-out-left {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+.slide-out-left.active {
+  transform: translateX(-100%);
+  opacity: 0;
+}
