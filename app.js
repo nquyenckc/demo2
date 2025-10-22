@@ -92,6 +92,8 @@ function hienThiManHinhChinh() {
   main.innerHTML = `
     <div class="btn-group">
       <button id="btnMangDi" class="btn hieuung-noi">Take Away</button>
+const orderContainer = document.querySelector(".order-container");
+if (orderContainer) openScreen(orderContainer);
       <button id="btnGheQuan" class="btn hieuung-noi">Khách ghé quán</button>
     </div>
 
@@ -292,6 +294,8 @@ function themKhachTaiQuan() {
 
     const tenDon = taoTenKhach("Khách tại bàn", banDuocChon);
     khoiTaoOrder(tenDon);
+const orderContainer = document.querySelector(".order-container");
+if (orderContainer) openScreen(orderContainer);
   });
 
   // Hàm chọn bàn icon
