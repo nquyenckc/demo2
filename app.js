@@ -47,7 +47,9 @@ function taoTenKhach(loai, maBan = "") {
   if (loai === "Take Away") {
   demMangDi++;
   saveDemMangDi();
-  return `Take Away ${demMangDi}`;
+  const soHienThi = demMangDi.toString().padStart(2, "0");
+
+  return `Take Away - ${soHienThi}`;
 }
 
   if (loai.startsWith("Khách tại bàn")) {
