@@ -1286,3 +1286,31 @@ header h1 {
 }
 
 
+
+/* 🎚 Thanh lọc lịch sử thanh toán */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.filter-bar input[type="date"],
+.filter-bar select {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.filter-bar input[type="date"]:focus,
+.filter-bar select:focus {
+  outline: none;
+  border-color: var(--mauchinh);
+  background-color: #fff;
+  box-shadow: 0 0 3px var(--mauchinh);
+}
