@@ -351,15 +351,33 @@ function khoiTaoSliderXacNhan(don, onXacNhan) {
 // Trượt màn hình
 function openScreen(el) {
   el.classList.add("slide-in-right");
-  // kích hoạt transition
   setTimeout(() => el.classList.add("active"), 50);
 }
 
 function closeScreen(el, callback) {
   if (!el) return;
-  el.classList.remove("active");         // bỏ active của slide-in
-  el.classList.add("slide-out-left");    // bật hiệu ứng trượt ra
+  el.classList.remove("active");
+  el.classList.add("slide-out-left");
   setTimeout(() => {
-    callback?.();                        // sau khi trượt xong, gọi callback
-  }, 400); // thời gian trùng CSS transition
+    callback?.();
+  }, 400);
 }
+
+// --- Auto attach cho tất cả nút đóng X ---
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn-close, .btn-cancel, .icon-close"); // tùy class nút đóng
+  if (!btn) return;
+
+  const popup = btn.closest(".slide-in-right, .popup-table, .order-detail-ct"); // element cần trượt
+  if (!popup) return;
+
+  closeScreen(popup, () => {
+    if (popup.classList.contains("order-detail-ct")) {
+      khoiPhucHeaderMacDinh();
+      hienThiManHinhChinh();
+      renderTables();
+    } else {
+      popup.remove(); // popup khác, xóa khỏi DOM
+    }
+  });
+});
