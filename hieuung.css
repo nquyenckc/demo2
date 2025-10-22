@@ -192,7 +192,7 @@ html, body, * {
 .slide-in-right {
   transform: translateX(-100%);
   opacity: 0;
-  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  transition: transform 0.05s ease-out, opacity 0.05s ease-out;
 }
 .slide-in-right.active {
   transform: translateX(0);
@@ -203,7 +203,7 @@ html, body, * {
 .slide-out-left {
   transform: translateX(0);
   opacity: 1;
-  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  transition: transform 0.05s ease-out, opacity 0.05s ease-out;
 }
 .slide-out-left.active {
   transform: translateX(-100%);
