@@ -93,7 +93,7 @@ function hienThiManHinhChinh() {
 
   // 👉 Gắn sự kiện cho nút order
   document.getElementById("btnMangDi").addEventListener("click", () => {
-    khoiTaoOrder("Khách mang đi");
+    khoiTaoOrder("Take away");
   });
 
   document.getElementById("btnGheQuan").addEventListener("click", () => {
