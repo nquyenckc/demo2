@@ -1286,28 +1286,3 @@ header h1 {
 }
 
 
-/* GIAO DIEN THANH TOAN */
-.order-footer-ct {
-  display: flex;
-  justify-content: space-between; /* cách đều 2 nút */
-  align-items: center;
-  padding: 0 18px;
-  gap: 10px; /* khoảng cách giữa 2 nút */
-}
-
-.btn-payment {
-  flex: 1; /* 2 nút chia đều */
-  padding: 12px 0; /* tăng chiều cao để đẹp hơn */
-  font-size: 15px;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #fff;
-  background-color: var(--mauchinh);
-}
-
-.btn-payment:hover {
-  background-color: #3a5590; /* hover nhẹ */
-}
