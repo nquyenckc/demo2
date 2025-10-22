@@ -283,25 +283,18 @@ function themKhachTaiQuan() {
 
   let banDuocChon = null;
 
-  // Nút huỷ popup
-  popup.querySelector(".btn-cancel").addEventListener("click", () => closeScreen(overlay));
+  // Sự kiện cho các nút
+  popup.querySelector(".btn-cancel").addEventListener("click", () => overlay.remove());
 
-  // Nút chọn bàn
   popup.querySelector(".btn-primary").addEventListener("click", () => {
     if (!banDuocChon) {
       hienThongBao("Vui lòng chọn bàn");
       return;
     }
-    closeScreen(overlay); // ✅ đóng popup trượt ra
+    overlay.remove();
 
     const tenDon = taoTenKhach("Khách tại bàn", banDuocChon);
     khoiTaoOrder(tenDon);
-
-    // ✅ Mở trượt order-container sau khi DOM render xong
-    requestAnimationFrame(() => {
-      const orderContainer = document.querySelector(".order-container");
-      if (orderContainer) openScreen(orderContainer);
-    });
   });
 
   // Hàm chọn bàn icon
