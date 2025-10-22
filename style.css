@@ -703,11 +703,6 @@ header h1 {
 
 /* === Nút sao ghi chú === */
 
-.note-btn i {
-  font-size: 18px;
-  color: var(--mauchinh);
-  transition: color 0.2s ease, transform 0.15s ease;
-}
 
 /* Hover: hơi lớn hơn 1 chút, xanh đậm hơn */
 .note-btn:hover i {
