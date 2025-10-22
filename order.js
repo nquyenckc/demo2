@@ -102,8 +102,7 @@ function taoDanhMuc() {
 }
 
 // -------------------------------
-// Hiển thị danh sách món
-// Hiển thị danh sách món
+// Hiển thị danh sách món
 function hienThiMonTheoDanhMuc(danhMuc) {
   const dsMon = document.getElementById("dsMon");
   dsMon.innerHTML = "";
@@ -147,8 +146,7 @@ function hienThiMonTheoDanhMuc(danhMuc) {
     dsMon.appendChild(div);
   });
 }
-// -------------------------------
-// Thêm / giảm món
+// -------------------------------
 // Thêm / giảm món
 function timSoLuong(id) {
   return hoaDonTam
@@ -354,9 +352,9 @@ function luuDon() {
     return;
   }
 
-  if (loaiKhachHienTai === "Khách mang đi") {
-    loaiKhachHienTai = taoTenKhach("Khách mang đi");
-  }
+ if (loaiKhachHienTai === "Take Away") {
+  loaiKhachHienTai = taoTenKhach("Take Away");
+}
 
   if (typeof donDangChon !== "undefined" && donDangChon && hoaDonChinh.some(d => d.id === donDangChon.id)) {
     const index = hoaDonChinh.findIndex(d => d.id === donDangChon.id);
