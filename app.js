@@ -81,7 +81,7 @@ function hienThiManHinhChinh() {
   const main = document.querySelector(".main-container");
   main.innerHTML = `
     <div class="btn-group">
-      <button id="btnMangDi" class="btn hieuung-noi">Khách mang đi</button>
+      <button id="btnMangDi" class="btn hieuung-noi">Take Away</button>
       <button id="btnGheQuan" class="btn hieuung-noi">Khách ghé quán</button>
     </div>
 
