@@ -44,11 +44,11 @@ function saveDemMangDi() {
 
 // ✅ Sinh tên khách theo loại
 function taoTenKhach(loai, maBan = "") {
-  if (loai === "Khách mang đi") {
-    demMangDi++;
-    saveDemMangDi();
-    return `Mang đi ${demMangDi}`;
-  }
+  if (loai === "Take Away") {
+  demMangDi++;
+  saveDemMangDi();
+  return `Take Away ${demMangDi}`;
+}
 
   if (loai.startsWith("Khách tại bàn")) {
     if (maBan.startsWith("L")) return `Bàn lầu ${maBan.slice(1)}`;
