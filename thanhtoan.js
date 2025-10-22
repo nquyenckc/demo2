@@ -2,38 +2,52 @@
 // 💰 Thanh Toán + Lịch sử - BlackTea POS v2.6
 // ================================
 
-// 🔹 Mở màn hình thanh toán
+// 🔹 Mở màn hình thanh toán (bố cục giống mochitietdon)
 function moManHinhThanhToan(don) {
   if (!don) return;
   const main = document.querySelector(".main-container");
   const header = document.querySelector("header");
 
-  // Header riêng cho màn thanh toán
+  // Header giống mochitietdon
   header.innerHTML = `
-    <h1>Thanh toán</h1>
+    <h1 class="invoice-title-ct">Thanh toán</h1>
     <div class="header-icons">
-      <button id="btnBackPayment" class="btn-close-order" title="Quay lại">×</button>
+      <button id="btnBackPayment" class="btn-close">×</button>
     </div>
   `;
 
-  const tongTien = don.cart.reduce((a, m) => a + m.price * m.soluong, 0);
+  // Danh sách món
   const htmlChiTiet = don.cart.map(m => `
-    <div>
-      ${m.name} — ${m.soluong} × ${m.price.toLocaleString()}đ
+    <div class="mon-item">
+      <div class="mon-left">
+        <span class="mon-name">${m.name}</span>
+        <span class="mon-sub">${m.soluong} × ${m.price.toLocaleString()}đ</span>
+      </div>
+      <div class="mon-right">${(m.soluong * m.price).toLocaleString()}đ</div>
     </div>
   `).join("");
 
-  main.innerHTML = `
-    <div>
-      <h2>${don.name}</h2>
-      <p>Thời gian tạo: ${new Date(don.createdAt).toLocaleString("vi-VN")}</p>
-      <div>${htmlChiTiet}</div>
-      <hr>
-      <p><strong>Tổng cộng: ${tongTien.toLocaleString()}đ</strong></p>
+  // Tổng tiền
+  const tongTien = don.cart.reduce((a, m) => a + m.price * m.soluong, 0);
 
-      <div>
-        <button id="btnChuyenKhoan">💳 Chuyển khoản</button>
-        <button id="btnTienMat">💵 Tiền mặt</button>
+  main.innerHTML = `
+    <div class="order-detail-ct">
+      <div class="invoice-header-ct">
+        <div class="invoice-title-ct">${don.name}</div>
+        <div class="invoice-time-ct">Thời gian: ${new Date(don.createdAt).toLocaleString("vi-VN")}</div>
+      </div>
+
+      <div class="order-content-ct">
+        ${htmlChiTiet}
+      </div>
+
+      <div class="order-total-ct">
+        <strong>Tổng cộng: ${tongTien.toLocaleString()}đ</strong>
+      </div>
+
+      <div class="order-footer-ct">
+        <button id="btnChuyenKhoan" class="btn-primary">💳 Chuyển khoản</button>
+        <button id="btnTienMat" class="btn-primary">💵 Tiền mặt</button>
       </div>
     </div>
   `;
@@ -53,8 +67,6 @@ function moManHinhThanhToan(don) {
     xuLyThanhToan(don, "Tiền mặt");
   });
 }
-
-
 
 // ================================
 // ✅ Xử lý thanh toán thật sự
