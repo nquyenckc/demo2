@@ -380,6 +380,8 @@ function luuDon() {
   hienThongBao("Đã lưu đơn");
 
   // 🔹 Trở về màn hình chính với header đồng bộ
+ const orderContainer = document.querySelector(".order-container");
+if (orderContainer) openScreen(orderContainer);
   khoiPhucHeaderMacDinh();
   hienThiManHinhChinh();
   renderTables();
