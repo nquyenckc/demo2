@@ -99,8 +99,8 @@ html, body, * {
    🎨 ICON ỨNG DỤNG (SVG tuỳ chỉnh)
    ===================================== */
 .icon-app {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   vertical-align: middle;
   fill: currentColor;
   color: currentColor; /* sẽ được override bằng style hoặc biến cục bộ */
