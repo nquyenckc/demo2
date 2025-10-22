@@ -408,8 +408,8 @@ function moChiTietDon(id) {
       capNhatHoaDon();
     });
     document.querySelector(".btn-thanhtoan")?.addEventListener("click", () => {
-      hienThongBao("💰 Chức năng Thanh toán sắp có!");
-    });
+  if (typeof xuLyThanhToan === "function") xuLyThanhToan(don);
+});
   }
 }
 
