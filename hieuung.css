@@ -117,3 +117,72 @@ html, body, * {
 .hieuung-noi .icon-app {
   filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
 }
+
+
+/* Slider container */
+#sliderConfirm {
+  position: relative;
+  width: 270px;
+  height: 54px;
+  background: linear-gradient(145deg, #e7ebf7, #cfd7ef);
+  border-radius: 28px;
+  box-shadow:
+    inset 1px 1px 4px rgba(255,255,255,0.8),
+    inset -2px -2px 6px rgba(0,0,0,0.08),
+    0 3px 8px rgba(0,0,0,0.05);
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-x;          /* chỉ trượt ngang */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Handle */
+#sliderConfirm .handle {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.12),
+    inset 1px 1px 3px rgba(255,255,255,0.8);
+  transition: transform 0.1s ease;
+  will-change: transform;       /* GPU xử lý mượt */
+  user-select: none;
+}
+
+/* Icon bên trong handle */
+#sliderConfirm .handle img.slider-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* Text giữa slider */
+#sliderConfirm .text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-weight: 600;
+  color: #4a69ad;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* Khi xác nhận */
+#sliderConfirm.success .text {
+  color: #fff;
+}
+
+#sliderConfirm.success .handle {
+  transform: translateX(calc(100% - 36px)) scale(1.05);
+}
