@@ -2,6 +2,9 @@
 // ⚙️ MÀN HÌNH CÀI ĐẶT
 // ================================
 function moManHinhCaiDat() {
+  // Ẩn các màn hình khác
+  document.querySelectorAll(".screen").forEach(s => s.style.display = "none");
+  
   const main = document.querySelector(".main-container");
   const header = document.querySelector("header");
 
@@ -13,8 +16,8 @@ function moManHinhCaiDat() {
     </div>
   `;
 
-  // Giao diện 3 mục cài đặt
-  main.innerHTML = `
+  // Nội dung cài đặt
+  document.getElementById("settingsContent").innerHTML = `
     <div class="setting-container">
       <div class="setting-tabs">
         <button class="tab-btn active" data-tab="menu">📋 Cài đặt menu</button>
@@ -43,6 +46,9 @@ function moManHinhCaiDat() {
       </div>
     </div>
   `;
+
+  // Hiển thị màn hình settings
+  document.getElementById("settings-screen").style.display = "block";
 
   // Nút quay lại
   document.getElementById("btnBackSetting")?.addEventListener("click", () => {
