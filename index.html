@@ -18,11 +18,12 @@
     <h1>BlackTea</h1>
     <div class="header-icons">
       <!-- Nút lịch sử -->
-     <span class="icon-btn" onclick="moLichSu()" title="Lịch sử thanh toán">
-  <i class="fas fa-clock-rotate-left" style="color:white;"></i>
-</span>
+      <span class="icon-btn" onclick="moLichSu()" title="Lịch sử thanh toán">
+        <i class="fas fa-clock-rotate-left" style="color:white;"></i>
+      </span>
+
       <!-- Nút cài đặt -->
-      <span class="icon-btn" title="Cài đặt">
+      <span class="icon-btn" title="Cài đặt" onclick="moManHinhCaiDat()">
         <i class="fas fa-gear" style="color:white;"></i>
       </span>
     </div>
@@ -55,6 +56,11 @@
     <section id="history-screen" class="screen" style="display:none;">
       <div id="historyContent"></div>
     </section>
+
+    <!-- ⚙️ Màn hình cài đặt -->
+    <section id="settings-screen" class="screen" style="display:none;">
+      <div id="settingsContent"></div>
+    </section>
   </main>
 
   <!-- ================= FIREBASE ================= -->
@@ -77,5 +83,6 @@
   <script src="order.js"></script>
   <script src="app.js"></script>
   <script src="thanhtoan.js"></script>
+  <script src="caidat.js"></script>
 </body>
 </html>
