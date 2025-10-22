@@ -1,8 +1,35 @@
 // ================================
-// 💰 Xử lý Thanh Toán + Lịch sử - BlackTea POS v2.3
+// 💰 Xử lý Thanh Toán + Lịch sử - BlackTea POS v2.4 (no CSS inline)
 // ================================
 
+// 🔹 Mở lịch sử từ icon trên header
+function moLichSu() {
+  hienThiLichSuThanhToan();
+}
+
+// 🔹 Quay lại màn hình chính
+function dongLichSu() {
+  const header = document.querySelector("header");
+  header.innerHTML = `
+    <h1>BlackTea</h1>
+    <div class="header-icons">
+      <span class="icon-btn" onclick="moLichSu()" title="Lịch sử thanh toán">
+        <i class="fas fa-clock-rotate-left" style="color:white;"></i>
+      </span>
+      <span class="icon-btn" title="Cài đặt">
+        <i class="fas fa-gear" style="color:white;"></i>
+      </span>
+    </div>
+  `;
+  if (typeof hienThiManHinhChinh === "function") hienThiManHinhChinh();
+  if (typeof renderTables === "function") renderTables();
+}
+
+
+
+// ================================
 // 🧾 Hàm xử lý thanh toán đơn
+// ================================
 function xuLyThanhToan(don) {
   if (!don) return;
 
@@ -34,24 +61,7 @@ function xuLyThanhToan(don) {
   }
 
   // ✅ Quay lại màn hình chính
-  const header = document.querySelector("header");
-  if (header) {
-    header.innerHTML = `
-      <h1>BlackTea</h1>
-      <div class="header-icons">
-        <span id="btnLichSu" class="icon-btn" title="Lịch sử">
-          <i class="fas fa-clock-rotate-left" style="color:white;"></i>
-        </span>
-        <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
-      </div>
-    `;
-  }
-
-  if (typeof hienThiManHinhChinh === "function") hienThiManHinhChinh();
-  if (typeof renderTables === "function") renderTables();
-
-  // Gắn lại sự kiện cho nút xem lịch sử
-  document.getElementById("btnLichSu")?.addEventListener("click", hienThiLichSuThanhToan);
+  dongLichSu();
 }
 
 
@@ -64,33 +74,20 @@ function hienThiLichSuThanhToan() {
   const main = document.querySelector(".main-container");
   const header = document.querySelector("header");
 
-  if (header) {
-    header.innerHTML = `
-      <h1>Lịch sử thanh toán</h1>
-      <div class="header-icons">
-        <button id="btnBack" class="btn-close-order">×</button>
-      </div>
-    `;
-  }
+  header.innerHTML = `
+    <h1>Lịch sử thanh toán</h1>
+    <div class="header-icons">
+      <button id="btnBack" class="btn-close-order" title="Quay lại">×</button>
+    </div>
+  `;
 
   if (!data.length) {
     main.innerHTML = `
       <div class="lichsu-trong">
-        <p>Chưa có hóa đơn nào đã thanh toán.</p>
+        <p>📭 Chưa có hóa đơn nào đã thanh toán.</p>
       </div>
     `;
-    document.getElementById("btnBack")?.addEventListener("click", () => {
-      header.innerHTML = `
-        <h1>BlackTea</h1>
-        <div class="header-icons">
-          <span id="btnLichSu" class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
-          <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
-        </div>
-      `;
-      hienThiManHinhChinh();
-      renderTables();
-      document.getElementById("btnLichSu")?.addEventListener("click", hienThiLichSuThanhToan);
-    });
+    document.getElementById("btnBack")?.addEventListener("click", dongLichSu);
     return;
   }
 
@@ -112,19 +109,21 @@ function hienThiLichSuThanhToan() {
         </div>
       `).join("")}
     </div>
+
+    <div class="lichsu-footer">
+      <button class="btn-xoa-lichsu">🗑 Xóa toàn bộ lịch sử</button>
+    </div>
   `;
 
   // 🔙 Nút quay lại
-  document.getElementById("btnBack")?.addEventListener("click", () => {
-    header.innerHTML = `
-      <h1>BlackTea</h1>
-      <div class="header-icons">
-        <span id="btnLichSu" class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
-        <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
-      </div>
-    `;
-    hienThiManHinhChinh();
-    renderTables();
-    document.getElementById("btnLichSu")?.addEventListener("click", hienThiLichSuThanhToan);
+  document.getElementById("btnBack")?.addEventListener("click", dongLichSu);
+
+  // 🗑 Xóa toàn bộ lịch sử
+  document.querySelector(".btn-xoa-lichsu")?.addEventListener("click", () => {
+    if (confirm("Bạn có chắc muốn xóa toàn bộ lịch sử thanh toán?")) {
+      localStorage.removeItem("BT_LICHSU_THANHTOAN");
+      if (typeof hienThongBao === "function") hienThongBao("🧹 Đã xóa toàn bộ lịch sử!");
+      hienThiLichSuThanhToan();
+    }
   });
 }
