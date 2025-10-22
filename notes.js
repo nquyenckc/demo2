@@ -24,30 +24,30 @@ if (item.iceLevel === undefined) item.iceLevel = 3;
 
 
   // Giao diện popup
-  const popup = document.createElement("div");
-  popup.className = "popup-note";
-  popup.innerHTML = `
-    <div class="popup-row">
-      <div class="row-top">
-        <label>Độ ngọt:</label>
-        <span class="slider-label">${getSugarLabels()[item.sugarLevel]}</span>
-      </div>
-      <input type="range" min="0" max="4" step="1" value="${item.sugarLevel}" class="slider" data-type="sugar">
+const popup = document.createElement("div");
+popup.className = "popup-note";
+popup.innerHTML = `
+  <div class="popup-row">
+    <div class="row-top">
+      <label>Độ ngọt:</label>
+      <span class="slider-label">${getSugarLabels()[item.sugarLevel]}</span>
     </div>
+    <input type="range" min="0" max="4" step="1" value="${item.sugarLevel}" class="slider" data-type="sugar">
+  </div>
 
-    <div class="popup-row">
-      <div class="row-top">
-        <label>Mức đá:</label>
-        <span class="slider-label">${getIceLabels()[item.iceLevel]}</span>
-      </div>
-      <input type="range" min="0" max="3" step="1" value="${item.iceLevel}" class="slider" data-type="ice">
+  <div class="popup-row">
+    <div class="row-top">
+      <label>Mức đá:</label>
+      <span class="slider-label">${getIceLabels()[item.iceLevel]}</span>
     </div>
+    <input type="range" min="0" max="3" step="1" value="${item.iceLevel}" class="slider" data-type="ice">
+  </div>
 
-    <div class="popup-actions">
-      <button class="cancel">✖</button>
-      <button class="confirm">✔</button>
-    </div>
-  `;
+  <div class="popup-actions">
+    <button class="btn hieuung-nhat cancel">✖</button>
+    <button class="btn hieuung-noi confirm">✔</button>
+  </div>
+`;
   document.body.appendChild(popup);
   positionPopupNearButton(popup, btn);
 
