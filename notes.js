@@ -346,3 +346,20 @@ function khoiTaoSliderXacNhan(don, onXacNhan) {
     document.removeEventListener("touchend", endDrag);
   }
 }
+
+
+// Trượt màn hình
+function openScreen(el) {
+  el.classList.add("slide-in-right");
+  // kích hoạt transition
+  setTimeout(() => el.classList.add("active"), 50);
+}
+
+function closeScreen(el, callback) {
+  if (!el) return;
+  el.classList.remove("active");         // bỏ active của slide-in
+  el.classList.add("slide-out-left");    // bật hiệu ứng trượt ra
+  setTimeout(() => {
+    callback?.();                        // sau khi trượt xong, gọi callback
+  }, 400); // thời gian trùng CSS transition
+}
