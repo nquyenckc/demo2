@@ -269,8 +269,6 @@ function themKhachTaiQuan() {
     </div>
   `;
 
-const orderContainer = document.querySelector(".order-container");
-if (orderContainer) openScreen(orderContainer);
   overlay.appendChild(popup);
   document.body.appendChild(overlay);
 
@@ -288,6 +286,10 @@ if (orderContainer) openScreen(orderContainer);
 
     const tenDon = taoTenKhach("Khách tại bàn", banDuocChon);
     khoiTaoOrder(tenDon);
+
+    // ✅ Mới mở hiệu ứng trượt
+    const orderContainer = document.querySelector(".order-container");
+    if (orderContainer) openScreen(orderContainer);
   });
 
   // Hàm chọn bàn icon
