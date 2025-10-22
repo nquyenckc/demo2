@@ -408,7 +408,7 @@ function moChiTietDon(id) {
       capNhatHoaDon();
     });
     document.querySelector(".btn-thanhtoan")?.addEventListener("click", () => {
-  if (typeof xuLyThanhToan === "function") xuLyThanhToan(don);
+  moManHinhThanhToan(don);
 });
   }
 }
