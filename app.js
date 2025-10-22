@@ -265,6 +265,8 @@ function themKhachTaiQuan() {
     </div>
   `;
 
+const orderContainer = document.querySelector(".order-container");
+if (orderContainer) openScreen(orderContainer);
   overlay.appendChild(popup);
   document.body.appendChild(overlay);
 
