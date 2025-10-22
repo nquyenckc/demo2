@@ -369,7 +369,7 @@ function moChiTietDon(id) {
     });
   }
 
-  // ✅ Gọi slider xác nhận mới (định nghĩa trong notes.js)
+  // ✅ Nếu chưa xác nhận -> khởi tạo slider
   if (typeof khoiTaoSliderXacNhan === 'function' && don.status !== "serving") {
     khoiTaoSliderXacNhan(don, function (donDaXacNhan) {
       donDaXacNhan.status = "serving";
@@ -377,6 +377,7 @@ function moChiTietDon(id) {
       const slider = document.getElementById("sliderConfirm");
       if (slider) slider.style.display = "none";
       saveAll();
+
       const footer = document.getElementById("footerChiTietDon");
       if (footer) {
         footer.innerHTML = `
@@ -387,32 +388,33 @@ function moChiTietDon(id) {
         `;
       }
 
-      // 🔹 Bấm "Thêm món" giữ nguyên đơn cũ + mở màn hình order
+      // 🔹 Bấm "Thêm món"
       document.querySelector(".btn-themmon")?.addEventListener("click", () => {
         khoiTaoOrder(don.name, don);
-        hoaDonTam = [...don.cart, ...hoaDonTam]; // giữ món cũ + món từ đơn
-        capNhatHoaDon();                         // cập nhật hóa đơn tạm + tổng tiền
+        hoaDonTam = [...don.cart, ...hoaDonTam];
+        capNhatHoaDon();
       });
 
+      // 🔹 Bấm "Thanh toán" — hoạt động ngay sau xác nhận
       document.querySelector(".btn-thanhtoan")?.addEventListener("click", () => {
-  if (!don || !don.cart || don.cart.length === 0) return; // không có đơn thì bỏ qua
-});
+        moManHinhThanhToan(don);
+      });
 
       renderTables();
     });
   } else if (don.status === "serving") {
-    // Nếu trạng thái serving cũng cần gắn nút thêm món
+    // ✅ Nếu đơn đang phục vụ thì gắn nút luôn
     document.querySelector(".btn-themmon")?.addEventListener("click", () => {
       khoiTaoOrder(don.name, don);
       hoaDonTam = [...don.cart, ...hoaDonTam];
       capNhatHoaDon();
     });
+
     document.querySelector(".btn-thanhtoan")?.addEventListener("click", () => {
-  moManHinhThanhToan(don);
-});
+      moManHinhThanhToan(don);
+    });
   }
 }
-
 
 
 function khoiTaoSliderConfirm(don) {
