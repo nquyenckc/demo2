@@ -108,7 +108,7 @@ function xuLyThanhToan(don, kieuThanhToan = "") {
 // 📜 Lịch sử Thanh Toán
 // ================================
 function hienThiLichSuThanhToan() {
-  const data = JSON.parse(localStorage.getItem("BT_LICHSU_THANHTOAN") || "[]");
+  let data = JSON.parse(localStorage.getItem("BT_LICHSU_THANHTOAN") || "[]");
   const main = document.querySelector(".main-container");
   const header = document.querySelector("header");
 
@@ -119,33 +119,47 @@ function hienThiLichSuThanhToan() {
     </div>
   `;
 
-  // 🔹 Thêm ô lọc ngày
+  // 🔹 Thanh lọc ở trên cùng
   main.innerHTML = `
-    <div style="text-align:right; padding:8px 12px;">
-      <input type="date" id="filterDate" style="padding:6px 8px; border-radius:6px; border:1px solid #ccc;">
+    <div class="filter-bar">
+      <input type="date" id="filterDate">
+      <select id="filterType">
+        <option value="all">Tất cả</option>
+        <option value="Chuyển khoản">Chuyển khoản</option>
+        <option value="Tiền mặt">Tiền mặt</option>
+      </select>
     </div>
-    <div id="lichsuContainer"></div>
+    <div id="historyList"></div>
   `;
 
-  const lichsuContainer = document.getElementById("lichsuContainer");
+  const renderList = () => {
+    const dateVal = document.getElementById("filterDate").value;
+    const typeVal = document.getElementById("filterType").value;
+    const container = document.getElementById("historyList");
 
-  // 🔹 Hàm render theo ngày
-  function renderLichSu(ngayChon = null) {
-    let danhSach = [...data].reverse();
+    let filtered = [...data];
 
-    if (ngayChon) {
-      danhSach = danhSach.filter(d => {
+    // Lọc theo ngày
+    if (dateVal) {
+      filtered = filtered.filter(d => {
         const ngayThanhToan = new Date(d.paidAt).toLocaleDateString("vi-VN");
-        return ngayThanhToan === new Date(ngayChon).toLocaleDateString("vi-VN");
+        const ngayChon = new Date(dateVal).toLocaleDateString("vi-VN");
+        return ngayThanhToan === ngayChon;
       });
     }
 
-    if (!danhSach.length) {
-      lichsuContainer.innerHTML = `<p style="padding:10px;">📭 Không có hóa đơn nào trong ngày này.</p>`;
+    // Lọc theo hình thức thanh toán
+    if (typeVal !== "all") {
+      filtered = filtered.filter(d => d.paymentType === typeVal);
+    }
+
+    if (!filtered.length) {
+      container.innerHTML = `<p>📭 Không có hóa đơn nào phù hợp.</p>`;
       return;
     }
 
-    lichsuContainer.innerHTML = danhSach.map(d => `
+    const danhSach = [...filtered].reverse();
+    container.innerHTML = danhSach.map(d => `
       <div>
         <strong>${d.name}</strong> 
         (${new Date(d.paidAt).toLocaleString("vi-VN")})<br>
@@ -155,22 +169,20 @@ function hienThiLichSuThanhToan() {
       </div>
       <hr>
     `).join("");
-  }
+  };
 
-  renderLichSu(); // hiển thị mặc định (tất cả)
+  renderList();
 
-  // 🔹 Lọc khi chọn ngày
-  document.getElementById("filterDate").addEventListener("change", (e) => {
-    renderLichSu(e.target.value);
-  });
+  // Gắn sự kiện lọc
+  document.getElementById("filterDate").addEventListener("change", renderList);
+  document.getElementById("filterType").addEventListener("change", renderList);
 
-  // 🔙 Nút quay lại
+  // Nút quay lại
   document.getElementById("btnBack")?.addEventListener("click", () => {
     khoiPhucHeaderMacDinh();
     hienThiManHinhChinh();
     renderTables();
   });
 }
-
 
 
