@@ -130,6 +130,18 @@ function hienThiLichSuThanhToan() {
       </select>
     </div>
     <div id="historyList"></div>
+
+    <!-- 🔹 Popup xem lại -->
+    <div id="popupChiTiet" class="popup hidden">
+      <div class="popup-content">
+        <button id="btnDongPopup" class="popup-close">×</button>
+        <div id="popupNoiDung"></div>
+        <div class="popup-actions">
+          <button id="btnThoatPopup" class="btn-secondary hieuung-nhat">Thoát</button>
+          <button id="btnInLai" class="btn-primary hieuung-noi">🖨️ In lại</button>
+        </div>
+      </div>
+    </div>
   `;
 
   const renderList = () => {
@@ -159,16 +171,33 @@ function hienThiLichSuThanhToan() {
     }
 
     const danhSach = [...filtered].reverse();
-    container.innerHTML = danhSach.map(d => `
-      <div>
-        <strong>${d.name}</strong> 
-        (${new Date(d.paidAt).toLocaleString("vi-VN")})<br>
-        ${d.cart.length} món • 
-        Tổng: ${d.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString()}đ<br>
-        Hình thức: ${d.paymentType || "Không rõ"}
+    container.innerHTML = danhSach
+      .map(
+        (d, i) => `
+      <div class="lichsu-item">
+        <div>
+          <strong>${d.name}</strong> 
+          (${new Date(d.paidAt).toLocaleString("vi-VN")})<br>
+          ${d.cart.length} món • 
+          Tổng: ${d.cart
+            .reduce((a, m) => a + m.price * m.soluong, 0)
+            .toLocaleString()}đ<br>
+          Hình thức: ${d.paymentType || "Không rõ"}
+        </div>
+        <button class="btn-primary btn-xemlai hieuung-noi" data-index="${i}">👁️ Xem lại</button>
       </div>
-      <hr>
-    `).join("");
+      <hr>`
+      )
+      .join("");
+
+    // Gắn sự kiện Xem lại
+    document.querySelectorAll(".btn-xemlai").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const idx = e.target.dataset.index;
+        const don = filtered[filtered.length - 1 - idx];
+        moPopupChiTietDon(don);
+      });
+    });
   };
 
   renderList();
@@ -182,6 +211,47 @@ function hienThiLichSuThanhToan() {
     khoiPhucHeaderMacDinh();
     hienThiManHinhChinh();
     renderTables();
+  });
+}
+
+// 🔹 Popup xem chi tiết hóa đơn
+function moPopupChiTietDon(don) {
+  const popup = document.getElementById("popupChiTiet");
+  const noiDung = document.getElementById("popupNoiDung");
+  if (!popup || !noiDung) return;
+
+  const tongTien = don.cart.reduce((a, m) => a + m.price * m.soluong, 0);
+  const timeStr = new Date(don.paidAt || don.createdAt).toLocaleString("vi-VN");
+
+  noiDung.innerHTML = `
+    <h3>${don.name}</h3>
+    <p><small>Thanh toán lúc: ${timeStr}</small></p>
+    <div class="popup-list">
+      ${don.cart
+        .map(
+          (m) => `
+        <div class="popup-item">
+          <span>${m.name}</span>
+          <span>${m.soluong} × ${m.price.toLocaleString()}đ</span>
+        </div>`
+        )
+        .join("")}
+    </div>
+    <hr>
+    <p><strong>Tổng cộng: ${tongTien.toLocaleString()}đ</strong></p>
+    <p>Hình thức: ${don.paymentType || "Không rõ"}</p>
+  `;
+
+  popup.classList.remove("hidden");
+
+  // Đóng popup (nút × hoặc Thoát)
+  const closePopup = () => popup.classList.add("hidden");
+  document.getElementById("btnDongPopup")?.addEventListener("click", closePopup);
+  document.getElementById("btnThoatPopup")?.addEventListener("click", closePopup);
+
+  // In lại hóa đơn
+  document.getElementById("btnInLai")?.addEventListener("click", () => {
+    window.print();
   });
 }
 
