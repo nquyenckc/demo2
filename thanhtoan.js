@@ -133,25 +133,3 @@ function hienThiLichSuThanhToan() {
 
 
 
-// ================================
-// 🔁 Hàm khôi phục header gốc + gắn lại nút lịch sử
-// ================================
-function khoiPhucHeaderMacDinh() {
-  const header = document.querySelector("header");
-  if (!header) return;
-
-  header.innerHTML = `
-    <h1>BlackTea</h1>
-    <div class="header-icons">
-      <span id="btnLichSu" class="icon-btn" title="Lịch sử thanh toán">
-        <i class="fas fa-clock-rotate-left" style="color:white;"></i>
-      </span>
-      <span class="icon-btn" title="Cài đặt">
-        <i class="fas fa-gear" style="color:white;"></i>
-      </span>
-    </div>
-  `;
-
-  // Gắn lại sự kiện
-  document.getElementById("btnLichSu")?.addEventListener("click", hienThiLichSuThanhToan);
-}
