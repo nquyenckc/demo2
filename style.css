@@ -1024,11 +1024,15 @@ header h1 {
   flex: 1;
   padding: 14px 18px;
 }
+/* --- TÊN BÀN / TÊN ĐƠN --- */
 .order-name {
   font-weight: 600;
   font-size: 16px;
   color: #24344F;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);  /* 💫 đổ bóng nhẹ giúp chữ nổi hơn */
+  transition: text-shadow 0.25s ease, transform 0.25s ease;
 }
+
 .order-info {
   font-size: 14px;
   color: var(--mauchinh);
