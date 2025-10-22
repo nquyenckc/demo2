@@ -352,9 +352,9 @@ function luuDon() {
     return;
   }
 
- if (loaiKhachHienTai === "Take Away") {
-  loaiKhachHienTai = taoTenKhach("Take Away");
-}
+  if (loaiKhachHienTai === "Take Away") {
+    loaiKhachHienTai = taoTenKhach("Take Away");
+  }
 
   if (typeof donDangChon !== "undefined" && donDangChon && hoaDonChinh.some(d => d.id === donDangChon.id)) {
     const index = hoaDonChinh.findIndex(d => d.id === donDangChon.id);
@@ -379,12 +379,16 @@ function luuDon() {
 
   hienThongBao("Đã lưu đơn");
 
-  // 🔹 Trở về màn hình chính với header đồng bộ
- const orderContainer = document.querySelector(".order-container");
-if (orderContainer) openScreen(orderContainer);
-  khoiPhucHeaderMacDinh();
-  hienThiManHinhChinh();
-  renderTables();
+  // 🔹 Trượt order-container ra khỏi màn hình như nút X
+  const orderContainer = document.querySelector(".order-container");
+  if (orderContainer) {
+    closeScreen(orderContainer, () => {
+      // Callback sau khi trượt xong
+      khoiPhucHeaderMacDinh();
+      hienThiManHinhChinh();
+      renderTables();
+    });
+  }
 }
 
 // -------------------------------
