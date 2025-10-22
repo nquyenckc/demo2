@@ -8,16 +8,12 @@ let donDangChon = null;
 
 
 // -------------------------------
-// Khởi tạo màn hình Order
 function khoiTaoOrder(loaiKhach, donTonTai = null) {
   loaiKhachHienTai = loaiKhach;
 
-  // 🔹 Nếu mở lại đơn cũ, giữ lại cart cũ
   if (donTonTai) {
-    donDangChon = donTonTai; // biến toàn cục để thao tác tiếp
-    // ✅ Khởi tạo hoaDonGoc để so sánh số lượng gốc
+    donDangChon = donTonTai;
     window.hoaDonGoc = JSON.parse(JSON.stringify(donTonTai.cart));
-    // ✅ Lưu snapshot ban đầu cho nút Đặt lại
     window.hoaDonTamGoc = JSON.parse(JSON.stringify(donTonTai.cart));
   } else {
     donDangChon = { 
@@ -28,7 +24,7 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
       createdAt: new Date().toISOString()
     };
     window.hoaDonGoc = [];
-    window.hoaDonTamGoc = []; // snapshot ban đầu rỗng
+    window.hoaDonTamGoc = [];
   }
 
   const header = document.querySelector("header");
@@ -42,36 +38,28 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
   `;
 
   document.getElementById("btnCloseHeader").addEventListener("click", () => {
-    header.innerHTML = `
-      <h1>BlackTea</h1>
-      <div class="header-icons">
-        <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
-        <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
-      </div>
-    `;
+    // ✅ Sử dụng chung khoiPhucHeaderMacDinh() thay vì gắn cứng
+    khoiPhucHeaderMacDinh();
     hienThiManHinhChinh();
     renderTables();
   });
 
+  // Phần main và footer giữ nguyên như cũ
   const main = document.querySelector(".main-container");
   main.innerHTML = `
     <div class="order-container">
-
       <div class="order-search">
         <input type="text" id="timMonInput" placeholder="Tìm món..." oninput="timMon()" />
       </div>
 
       <div class="order-categories" id="danhMucContainer"></div>
 
-      <!-- 🔹 Danh sách món -->
       <div class="order-content">
         <div class="order-list" id="dsMon"></div>
       </div>
 
-      <!-- 🔹 Hóa đơn tạm -->
       <div class="hoa-don-tam empty" id="hoaDonTam">Chưa có món nào</div>
 
-      <!-- 🔹 Thanh tổng / footer -->
       <div class="order-footer">
         <div class="order-total">
           <div class="icon-app" data-icon="muahang"></div>
@@ -82,30 +70,17 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
           <button id="btnLuuDon" class="btn-primary hieuung-noi">Lưu đơn</button>
         </div>
       </div>
-
     </div>
   `;
 
-  // ✅ Tự động load icon sau khi render footer
   autoLoadIcons();
-
-  // ✅ Render danh mục và món
   taoDanhMuc();
   hienThiMonTheoDanhMuc("");
 
-  // ✅ Gắn sự kiện
   document.getElementById("btnDatLai").addEventListener("click", datLai);
   document.getElementById("btnLuuDon").addEventListener("click", luuDon);
-  kichHoatTimMon(); // ô tìm kiếm hoạt động đúng
-  // ✅ Cập nhật layout sau render
+  kichHoatTimMon();
   setTimeout(updateOrderOffsets, 100);
-}
-
-// ✅ Sửa hàm datLai để reset về snapshot ban đầu
-function datLai() {
-  hoaDonTam = [...(window.hoaDonTamGoc || [])]; // reset về trạng thái lúc mở
-  capNhatHoaDon();
-  hienThiMonTheoDanhMuc("");
 }
 // -------------------------------
 function taoDanhMuc() {
