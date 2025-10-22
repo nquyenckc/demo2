@@ -348,10 +348,6 @@ function datLai() {
   capNhatHoaDon();
   hienThiMonTheoDanhMuc("");
 }
-
-// -------------------------------
-// -------------------------------
-// Lưu đơn
 function luuDon() {
   if (hoaDonTam.length === 0) {
     hienThongBao("Chưa có món nào để lưu");
@@ -362,7 +358,6 @@ function luuDon() {
     loaiKhachHienTai = taoTenKhach("Khách mang đi");
   }
 
-  // 🔹 Nếu đang chỉnh đơn cũ thì cập nhật thay vì tạo mới
   if (typeof donDangChon !== "undefined" && donDangChon && hoaDonChinh.some(d => d.id === donDangChon.id)) {
     const index = hoaDonChinh.findIndex(d => d.id === donDangChon.id);
     if (index !== -1) {
@@ -370,7 +365,6 @@ function luuDon() {
       hoaDonChinh[index].updatedAt = Date.now();
     }
   } else {
-    // 🔹 Tạo đơn mới (như cũ)
     const donMoi = {
       id: Date.now(),
       name: loaiKhachHienTai,
@@ -382,26 +376,16 @@ function luuDon() {
   }
 
   saveAll();
-
   hoaDonTam = [];
   capNhatHoaDon();
 
   hienThongBao("Đã lưu đơn");
 
-  // 🔙 Trở về màn chính
-  const header = document.querySelector("header");
-  header.innerHTML = `
-    <h1>BlackTea</h1>
-     <div class="header-icons">
-      <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
-      <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
-     </div>
-  `;
-
+  // 🔹 Trở về màn hình chính với header đồng bộ
+  khoiPhucHeaderMacDinh();
   hienThiManHinhChinh();
   renderTables();
 }
-
 
 // -------------------------------
 // Tìm món theo từ khóa
