@@ -1,5 +1,5 @@
 // ================================
-// 💰 Xử lý Thanh Toán - BlackTea POS v2.5
+// 💰 Thanh Toán + Lịch sử - BlackTea POS v2.6
 // ================================
 
 // 🔹 Mở màn hình thanh toán
@@ -8,6 +8,7 @@ function moManHinhThanhToan(don) {
   const main = document.querySelector(".main-container");
   const header = document.querySelector("header");
 
+  // Header riêng cho màn thanh toán
   header.innerHTML = `
     <h1>Thanh toán</h1>
     <div class="header-icons">
@@ -15,53 +16,39 @@ function moManHinhThanhToan(don) {
     </div>
   `;
 
-  // 🧾 Chi tiết đơn hàng
   const tongTien = don.cart.reduce((a, m) => a + m.price * m.soluong, 0);
-  const htmlChiTiet = don.cart
-    .map(
-      (m) => `
-      <div class="pay-item">
-        <span>${m.name}</span>
-        <span>${m.soluong} × ${m.price.toLocaleString()}đ</span>
-      </div>
-    `
-    )
-    .join("");
+  const htmlChiTiet = don.cart.map(m => `
+    <div>
+      ${m.name} — ${m.soluong} × ${m.price.toLocaleString()}đ
+    </div>
+  `).join("");
 
   main.innerHTML = `
-    <div class="payment-screen">
-      <div class="payment-info">
-        <h2>${don.name}</h2>
-        <p>Thời gian tạo: ${new Date(don.createdAt).toLocaleString("vi-VN")}</p>
-      </div>
+    <div>
+      <h2>${don.name}</h2>
+      <p>Thời gian tạo: ${new Date(don.createdAt).toLocaleString("vi-VN")}</p>
+      <div>${htmlChiTiet}</div>
+      <hr>
+      <p><strong>Tổng cộng: ${tongTien.toLocaleString()}đ</strong></p>
 
-      <div class="payment-items">
-        ${htmlChiTiet}
-      </div>
-
-      <div class="payment-total">
-        Tổng cộng: <strong>${tongTien.toLocaleString()}đ</strong>
-      </div>
-
-      <div class="payment-methods">
-        <button class="btn-payment" id="btnChuyenKhoan">💳 Chuyển khoản</button>
-        <button class="btn-payment" id="btnTienMat">💵 Tiền mặt</button>
+      <div>
+        <button id="btnChuyenKhoan">💳 Chuyển khoản</button>
+        <button id="btnTienMat">💵 Tiền mặt</button>
       </div>
     </div>
   `;
 
-  // 🔙 Nút quay lại
+  // Nút quay lại
   document.getElementById("btnBackPayment")?.addEventListener("click", () => {
+    khoiPhucHeaderMacDinh();
     hienThiManHinhChinh();
     renderTables();
   });
 
-  // 💳 Thanh toán chuyển khoản
+  // Hai hình thức thanh toán
   document.getElementById("btnChuyenKhoan")?.addEventListener("click", () => {
     xuLyThanhToan(don, "Chuyển khoản");
   });
-
-  // 💵 Thanh toán tiền mặt
   document.getElementById("btnTienMat")?.addEventListener("click", () => {
     xuLyThanhToan(don, "Tiền mặt");
   });
@@ -70,38 +57,36 @@ function moManHinhThanhToan(don) {
 
 
 // ================================
-// ✅ Hàm xử lý thanh toán thật sự
+// ✅ Xử lý thanh toán thật sự
 // ================================
 function xuLyThanhToan(don, kieuThanhToan = "") {
   if (!don) return;
-
-  const xacNhan = confirm(
-    `Xác nhận thanh toán đơn "${don.name}" bằng hình thức "${kieuThanhToan}"?`
-  );
+  const xacNhan = confirm(`Xác nhận thanh toán "${don.name}" (${kieuThanhToan})?`);
   if (!xacNhan) return;
 
-  // 🧾 Cập nhật trạng thái
   don.status = "done";
   don.paidAt = new Date().toISOString();
   don.paymentType = kieuThanhToan;
 
-  // 💾 Lưu vào lịch sử
+  // Lưu lịch sử
   let lichSu = JSON.parse(localStorage.getItem("BT_LICHSU_THANHTOAN") || "[]");
   lichSu.push(don);
   localStorage.setItem("BT_LICHSU_THANHTOAN", JSON.stringify(lichSu));
 
-  // 🗑 Xoá khỏi danh sách đang phục vụ
-  if (typeof hoaDonChinh !== "undefined" && Array.isArray(hoaDonChinh)) {
-    hoaDonChinh = hoaDonChinh.filter((d) => d.id !== don.id);
-  }
+  // Xoá khỏi danh sách đang phục vụ
+  if (typeof hoaDonChinh !== "undefined" && Array.isArray(hoaDonChinh))
+    hoaDonChinh = hoaDonChinh.filter(d => d.id !== don.id);
+
   if (typeof saveAll === "function") saveAll();
 
-  // ✅ Thông báo
+  // Thông báo
   if (typeof hienThongBao === "function")
     hienThongBao(`💰 Đã thanh toán ${don.name} (${kieuThanhToan})`);
-  else alert(`💰 Đã thanh toán ${don.name} (${kieuThanhToan})`);
+  else
+    alert(`💰 Đã thanh toán ${don.name} (${kieuThanhToan})`);
 
-  // ↩ Quay lại màn hình chính
+  // 🧭 Quay về màn chính + khôi phục header
+  khoiPhucHeaderMacDinh();
   hienThiManHinhChinh();
   renderTables();
 }
@@ -124,54 +109,49 @@ function hienThiLichSuThanhToan() {
   `;
 
   if (!data.length) {
-    main.innerHTML = `<div class="lichsu-trong"><p>📭 Chưa có hóa đơn nào đã thanh toán.</p></div>`;
-    document.getElementById("btnBack")?.addEventListener("click", () => {
-      hienThiManHinhChinh();
-      renderTables();
-    });
-    return;
+    main.innerHTML = `<p>📭 Chưa có hóa đơn nào đã thanh toán.</p>`;
+  } else {
+    const danhSach = [...data].reverse();
+    main.innerHTML = danhSach.map(d => `
+      <div>
+        <strong>${d.name}</strong> 
+        (${new Date(d.paidAt).toLocaleString("vi-VN")})<br>
+        ${d.cart.length} món • 
+        Tổng: ${d.cart.reduce((a, m) => a + m.price * m.soluong, 0).toLocaleString()}đ<br>
+        Hình thức: ${d.paymentType || "Không rõ"}
+      </div>
+      <hr>
+    `).join("");
   }
 
-  const danhSach = [...data].reverse();
-
-  main.innerHTML = `
-    <div class="lichsu-list">
-      ${danhSach
-        .map(
-          (d) => `
-        <div class="lichsu-item">
-          <div class="lichsu-header">
-            <strong>${d.name}</strong>
-            <span class="lichsu-time">${new Date(d.paidAt).toLocaleString(
-              "vi-VN"
-            )}</span>
-          </div>
-          <div class="lichsu-info">
-            ${d.cart.length} món • Tổng: <strong>${d.cart
-              .reduce((a, m) => a + m.price * m.soluong, 0)
-              .toLocaleString()}đ</strong>
-            <div class="lichsu-type">💳 ${d.paymentType || "Không rõ"}</div>
-          </div>
-        </div>
-      `
-        )
-        .join("")}
-    </div>
-
-    <div class="lichsu-footer">
-      <button class="btn-xoa-lichsu">🗑 Xóa toàn bộ lịch sử</button>
-    </div>
-  `;
-
   document.getElementById("btnBack")?.addEventListener("click", () => {
+    khoiPhucHeaderMacDinh();
     hienThiManHinhChinh();
     renderTables();
   });
+}
 
-  document.querySelector(".btn-xoa-lichsu")?.addEventListener("click", () => {
-    if (confirm("Xóa toàn bộ lịch sử thanh toán?")) {
-      localStorage.removeItem("BT_LICHSU_THANHTOAN");
-      hienThiLichSuThanhToan();
-    }
-  });
+
+
+// ================================
+// 🔁 Hàm khôi phục header gốc + gắn lại nút lịch sử
+// ================================
+function khoiPhucHeaderMacDinh() {
+  const header = document.querySelector("header");
+  if (!header) return;
+
+  header.innerHTML = `
+    <h1>BlackTea</h1>
+    <div class="header-icons">
+      <span id="btnLichSu" class="icon-btn" title="Lịch sử thanh toán">
+        <i class="fas fa-clock-rotate-left" style="color:white;"></i>
+      </span>
+      <span class="icon-btn" title="Cài đặt">
+        <i class="fas fa-gear" style="color:white;"></i>
+      </span>
+    </div>
+  `;
+
+  // Gắn lại sự kiện
+  document.getElementById("btnLichSu")?.addEventListener("click", hienThiLichSuThanhToan);
 }
