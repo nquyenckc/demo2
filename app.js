@@ -98,44 +98,25 @@ function hienThiManHinhChinh() {
     <div class="table-list"></div>
   `;
 
-  // 🔹 Đồng bộ header + gắn nút Lịch sử
+  // Đồng bộ header + gắn nút Lịch sử
   khoiPhucHeaderMacDinh();
 
-  // 👉 Gắn sự kiện cho nút order
+  // 👉 Gắn sự kiện cho nút Take Away
   document.getElementById("btnMangDi").addEventListener("click", () => {
     khoiTaoOrder("Take Away");
     const orderContainer = document.querySelector(".order-container");
-    if (orderContainer) openScreen(orderContainer); // ✅ mở trượt
+    if (orderContainer) openScreen(orderContainer); // Mở trượt
   });
 
+  // 👉 Gắn sự kiện cho nút Khách ghé quán
   document.getElementById("btnGheQuan").addEventListener("click", () => {
     themKhachTaiQuan();
     const popup = document.querySelector(".popup-table");
-    if (popup) openScreen(popup); // ✅ mở trượt popup chọn bàn
+    if (popup) openScreen(popup); // Mở trượt popup chọn bàn
   });
 
-  // 🔹 Render danh sách đơn
+  // Render danh sách đơn
   renderTables();
-}
-// Khôi phục màn hình chính
-function khoiPhucHeaderMacDinh() {
-  const header = document.querySelector("header");
-  if (!header) return;
-
-  header.innerHTML = `
-    <h1>BlackTea</h1>
-    <div class="header-icons">
-      <span id="btnLichSu" class="icon-btn" title="Lịch sử thanh toán">
-        <i class="fas fa-clock-rotate-left" style="color:white;"></i>
-      </span>
-      <span class="icon-btn" title="Cài đặt">
-        <i class="fas fa-gear" style="color:white;"></i>
-      </span>
-    </div>
-  `;
-
-  // Gắn lại sự kiện cho nút lịch sử
-  document.getElementById("btnLichSu")?.addEventListener("click", hienThiLichSuThanhToan);
 }
 // ================================
 // 🧾 Hiển thị danh sách đơn ngoài màn hình chính
