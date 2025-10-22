@@ -45,19 +45,27 @@ function saveDemMangDi() {
 // ✅ Sinh tên khách theo loại
 function taoTenKhach(loai, maBan = "") {
   if (loai === "Take Away") {
-  demMangDi++;
-  saveDemMangDi();
-  const soHienThi = demMangDi.toString().padStart(2, "0");
-
-  return `Take Away - ${soHienThi}`;
-}
+    demMangDi++;
+    saveDemMangDi();
+    const soHienThi = demMangDi.toString().padStart(2, "0");
+    return `Take Away - ${soHienThi}`;
+  }
 
   if (loai.startsWith("Khách tại bàn")) {
-    if (maBan.startsWith("L")) return `Bàn lầu ${maBan.slice(1)}`;
-    if (maBan.startsWith("NT")) return `Bàn ngoài trời ${maBan.slice(2)}`;
-    if (maBan.startsWith("T")) return `Bàn tường ${maBan.slice(1)}`;
-    if (maBan.startsWith("G")) return `Bàn giữa ${maBan.slice(1)}`;
-    if (maBan.startsWith("N")) return `Bàn nệm ${maBan.slice(1)}`;
+    let soBan = "";
+    if (maBan.startsWith("L")) soBan = maBan.slice(1);
+    else if (maBan.startsWith("NT")) soBan = maBan.slice(2);
+    else if (maBan.startsWith("T")) soBan = maBan.slice(1);
+    else if (maBan.startsWith("G")) soBan = maBan.slice(1);
+    else if (maBan.startsWith("N")) soBan = maBan.slice(1);
+
+    const soHienThi = soBan.toString().padStart(2, "0");
+
+    if (maBan.startsWith("L")) return `Bàn trên lầu - ${soHienThi}`;
+    if (maBan.startsWith("NT")) return `Bàn ngoài trời - ${soHienThi}`;
+    if (maBan.startsWith("T")) return `Bàn tường - ${soHienThi}`;
+    if (maBan.startsWith("G")) return `Bàn giữa - ${soHienThi}`;
+    if (maBan.startsWith("N")) return `Bàn nệm - ${soHienThi}`;
   }
 
   return loai;
