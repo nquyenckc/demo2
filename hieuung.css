@@ -190,9 +190,14 @@ html, body, * {
 
 /* Mở trượt từ trái sang phải */
 .slide-in-right {
+  position: absolute;      /* ❌ quan trọng: tránh đẩy layout xuống */
+  top: 0;
+  left: 0;
+  width: 100%;
   transform: translateX(-100%);
   opacity: 0;
-  transition: transform 0.05s ease-out, opacity 0.05s ease-out;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* tăng thời gian cho mượt */
+  z-index: 1000;           /* ưu tiên hiển thị trên các phần khác */
 }
 .slide-in-right.active {
   transform: translateX(0);
@@ -201,9 +206,14 @@ html, body, * {
 
 /* Trượt ra khi đóng */
 .slide-out-left {
+  position: absolute;      /* ❌ tránh layout nhảy */
+  top: 0;
+  left: 0;
+  width: 100%;
   transform: translateX(0);
   opacity: 1;
-  transition: transform 0.05s ease-out, opacity 0.05s ease-out;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  z-index: 1000;
 }
 .slide-out-left.active {
   transform: translateX(-100%);
