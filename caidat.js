@@ -1,3 +1,6 @@
+// ================================
+// ⚙️ MÀN HÌNH CÀI ĐẶT
+// ================================
 function moManHinhCaiDat() {
   // Ẩn tất cả màn hình
   document.querySelectorAll(".screen").forEach(s => s.style.display = "none");
@@ -6,8 +9,10 @@ function moManHinhCaiDat() {
   const settingsScreen = document.getElementById("settings-screen");
   settingsScreen.style.display = "block";
 
-  // Header
   const header = document.querySelector("header");
+  const main = document.getElementById("settingsContent");
+
+  // Cập nhật header
   header.innerHTML = `
     <h1>Cài đặt</h1>
     <div class="header-icons">
@@ -16,8 +21,7 @@ function moManHinhCaiDat() {
   `;
 
   // Nội dung cài đặt
-  const settingsContent = document.getElementById("settingsContent");
-  settingsContent.innerHTML = `
+  main.innerHTML = `
     <div class="setting-container">
       <div class="setting-tabs">
         <button class="tab-btn active" data-tab="menu">📋 Cài đặt menu</button>
@@ -49,9 +53,9 @@ function moManHinhCaiDat() {
 
   // Nút quay lại
   document.getElementById("btnBackSetting")?.addEventListener("click", () => {
-    khoiPhucHeaderMacDinh();
-    hienThiManHinhChinh();
-    renderTables();
+    khoiPhucHeaderMacDinh();   // Khôi phục header ban đầu
+    hienThiManHinhChinh();     // Hiển thị màn hình chính
+    renderTables();             // Render lại danh sách bàn
   });
 
   // Chuyển tab
@@ -64,6 +68,6 @@ function moManHinhCaiDat() {
     });
   });
 
-  // Gọi danh sách menu
-  taiDanhSachMenu();
+  // Gọi danh sách menu (nếu có)
+  if (typeof taiDanhSachMenu === "function") taiDanhSachMenu();
 }
