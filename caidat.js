@@ -1,14 +1,13 @@
-// ================================
-// ⚙️ MÀN HÌNH CÀI ĐẶT
-// ================================
 function moManHinhCaiDat() {
-  // Ẩn các màn hình khác
+  // Ẩn tất cả màn hình
   document.querySelectorAll(".screen").forEach(s => s.style.display = "none");
-  
-  const main = document.querySelector(".main-container");
-  const header = document.querySelector("header");
+
+  // Hiển thị màn hình settings
+  const settingsScreen = document.getElementById("settings-screen");
+  settingsScreen.style.display = "block";
 
   // Header
+  const header = document.querySelector("header");
   header.innerHTML = `
     <h1>Cài đặt</h1>
     <div class="header-icons">
@@ -17,7 +16,8 @@ function moManHinhCaiDat() {
   `;
 
   // Nội dung cài đặt
-  document.getElementById("settingsContent").innerHTML = `
+  const settingsContent = document.getElementById("settingsContent");
+  settingsContent.innerHTML = `
     <div class="setting-container">
       <div class="setting-tabs">
         <button class="tab-btn active" data-tab="menu">📋 Cài đặt menu</button>
@@ -46,9 +46,6 @@ function moManHinhCaiDat() {
       </div>
     </div>
   `;
-
-  // Hiển thị màn hình settings
-  document.getElementById("settings-screen").style.display = "block";
 
   // Nút quay lại
   document.getElementById("btnBackSetting")?.addEventListener("click", () => {
