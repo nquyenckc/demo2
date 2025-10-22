@@ -381,6 +381,10 @@ function moChiTietDon(id) {
     ${footerHTML}
   `;
 
+// ✅ Thêm hiệu ứng trượt
+const detail = main.querySelector(".order-detail-ct");
+openScreen(detail);
+
   // 🔙 Nút đóng chi tiết đơn
   const btnClose = document.getElementById("btnCloseChiTiet");
   if (btnClose) {
