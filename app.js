@@ -44,28 +44,18 @@ function saveDemMangDi() {
 
 // ✅ Sinh tên khách theo loại
 function taoTenKhach(loai, maBan = "") {
-  if (loai === "Take Away") {
+  if (loai === "Khách mang đi") {
     demMangDi++;
     saveDemMangDi();
-    const soHienThi = demMangDi.toString().padStart(2, "0");
-    return `Take Away - ${soHienThi}`;
+    return `Mang đi ${demMangDi}`;
   }
 
   if (loai.startsWith("Khách tại bàn")) {
-    let soBan = "";
-    if (maBan.startsWith("L")) soBan = maBan.slice(1);
-    else if (maBan.startsWith("NT")) soBan = maBan.slice(2);
-    else if (maBan.startsWith("T")) soBan = maBan.slice(1);
-    else if (maBan.startsWith("G")) soBan = maBan.slice(1);
-    else if (maBan.startsWith("N")) soBan = maBan.slice(1);
-
-    const soHienThi = soBan.toString().padStart(2, "0");
-
-    if (maBan.startsWith("L")) return `Bàn trên lầu - ${soHienThi}`;
-    if (maBan.startsWith("NT")) return `Bàn ngoài trời - ${soHienThi}`;
-    if (maBan.startsWith("T")) return `Bàn tường - ${soHienThi}`;
-    if (maBan.startsWith("G")) return `Bàn giữa - ${soHienThi}`;
-    if (maBan.startsWith("N")) return `Bàn nệm - ${soHienThi}`;
+    if (maBan.startsWith("L")) return `Bàn lầu ${maBan.slice(1)}`;
+    if (maBan.startsWith("NT")) return `Bàn ngoài trời ${maBan.slice(2)}`;
+    if (maBan.startsWith("T")) return `Bàn tường ${maBan.slice(1)}`;
+    if (maBan.startsWith("G")) return `Bàn giữa ${maBan.slice(1)}`;
+    if (maBan.startsWith("N")) return `Bàn nệm ${maBan.slice(1)}`;
   }
 
   return loai;
@@ -91,32 +81,48 @@ function hienThiManHinhChinh() {
   const main = document.querySelector(".main-container");
   main.innerHTML = `
     <div class="btn-group">
-      <button id="btnMangDi" class="btn hieuung-noi">Take Away</button>
+      <button id="btnMangDi" class="btn hieuung-noi">Khách mang đi</button>
       <button id="btnGheQuan" class="btn hieuung-noi">Khách ghé quán</button>
     </div>
 
     <div class="table-list"></div>
   `;
 
-  // Đồng bộ header + gắn nút Lịch sử
+  // 🔹 Đồng bộ header + gắn nút Lịch sử
   khoiPhucHeaderMacDinh();
 
-  // 👉 Gắn sự kiện cho nút Take Away
+  // 👉 Gắn sự kiện cho nút order
   document.getElementById("btnMangDi").addEventListener("click", () => {
-    khoiTaoOrder("Take Away");
-    const orderContainer = document.querySelector(".order-container");
-    if (orderContainer) openScreen(orderContainer); // Mở trượt
+    khoiTaoOrder("Khách mang đi");
   });
 
-  // 👉 Gắn sự kiện cho nút Khách ghé quán
   document.getElementById("btnGheQuan").addEventListener("click", () => {
     themKhachTaiQuan();
-    const popup = document.querySelector(".popup-table");
-    if (popup) openScreen(popup); // Mở trượt popup chọn bàn
   });
 
-  // Render danh sách đơn
+  // 🔹 Render danh sách đơn
   renderTables();
+}
+
+// Khôi phục màn hình chính
+function khoiPhucHeaderMacDinh() {
+  const header = document.querySelector("header");
+  if (!header) return;
+
+  header.innerHTML = `
+    <h1>BlackTea</h1>
+    <div class="header-icons">
+      <span id="btnLichSu" class="icon-btn" title="Lịch sử thanh toán">
+        <i class="fas fa-clock-rotate-left" style="color:white;"></i>
+      </span>
+      <span class="icon-btn" title="Cài đặt">
+        <i class="fas fa-gear" style="color:white;"></i>
+      </span>
+    </div>
+  `;
+
+  // Gắn lại sự kiện cho nút lịch sử
+  document.getElementById("btnLichSu")?.addEventListener("click", hienThiLichSuThanhToan);
 }
 // ================================
 // 🧾 Hiển thị danh sách đơn ngoài màn hình chính
@@ -306,14 +312,14 @@ function moChiTietDon(id) {
   });
 
   const footerHTML = don.status === "serving"
-  ? `
-    <div class="order-footer-ct" id="footerChiTietDon">
-      <div class="order-buttons">
-        <button class="btn-themmon hieuung-nhat">Thêm món</button>
-        <button class="btn-primary btn-thanhtoan hieuung-noi">Thanh toán</button>
+    ? `
+      <div class="order-footer-ct" id="footerChiTietDon">
+        <div class="order-buttons">
+          <button class="btn-themmon">Thêm món</button>
+          <button class="btn-primary btn-thanhtoan">Thanh toán</button>
+        </div>
       </div>
-    </div>
-  `
+    `
     : `
       <div class="order-footer-ct" id="footerChiTietDon">
         <div class="slider" id="sliderConfirm">
@@ -365,10 +371,6 @@ function moChiTietDon(id) {
     ${footerHTML}
   `;
 
-// ✅ Thêm hiệu ứng trượt
-const detail = main.querySelector(".order-detail-ct");
-openScreen(detail);
-
   // 🔙 Nút đóng chi tiết đơn
   const btnClose = document.getElementById("btnCloseChiTiet");
   if (btnClose) {
@@ -392,9 +394,9 @@ openScreen(detail);
       if (footer) {
         footer.innerHTML = `
           <div class="order-buttons">
-          <button class="btn-themmon    hieuung-nhat">Thêm món</button>
-          <button class="btn-primary btn-thanhtoan hieuung-noi">Thanh toán</button>
-</div>
+            <button class="btn-themmon">Thêm món</button>
+            <button class="btn-primary btn-thanhtoan">Thanh toán</button>
+          </div>
         `;
       }
 
