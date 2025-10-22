@@ -88,19 +88,23 @@ function hienThiManHinhChinh() {
     <div class="table-list"></div>
   `;
 
-  // 🔹 Đồng bộ header + gắn nút Lịch sử
+  // Đồng bộ header + gắn nút Lịch sử
   khoiPhucHeaderMacDinh();
 
-  // 👉 Gắn sự kiện cho nút order
+  // 👉 Take Away
   document.getElementById("btnMangDi").addEventListener("click", () => {
     khoiTaoOrder("Khách mang đi");
+    const orderContainer = document.querySelector(".order-container");
+    if (orderContainer) openScreen(orderContainer); // ✅ Chỉ Take Away trượt
   });
 
+  // 👉 Khách ghé quán
   document.getElementById("btnGheQuan").addEventListener("click", () => {
-    themKhachTaiQuan();
+    themKhachTaiQuan(); 
+    // popup chọn bàn không trượt
   });
 
-  // 🔹 Render danh sách đơn
+  // Render danh sách đơn
   renderTables();
 }
 
