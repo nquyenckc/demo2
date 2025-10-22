@@ -88,7 +88,10 @@ function hienThiManHinhChinh() {
     <div class="table-list"></div>
   `;
 
-  // 👉 Gắn sự kiện
+  // 🔹 Đồng bộ header + gắn nút Lịch sử
+  khoiPhucHeaderMacDinh();
+
+  // 👉 Gắn sự kiện cho nút order
   document.getElementById("btnMangDi").addEventListener("click", () => {
     khoiTaoOrder("Khách mang đi");
   });
@@ -97,6 +100,7 @@ function hienThiManHinhChinh() {
     themKhachTaiQuan();
   });
 
+  // 🔹 Render danh sách đơn
   renderTables();
 }
 
