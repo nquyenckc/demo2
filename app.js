@@ -92,8 +92,6 @@ function hienThiManHinhChinh() {
   main.innerHTML = `
     <div class="btn-group">
       <button id="btnMangDi" class="btn hieuung-noi">Take Away</button>
-const orderContainer = document.querySelector(".order-container");
-if (orderContainer) openScreen(orderContainer);
       <button id="btnGheQuan" class="btn hieuung-noi">Khách ghé quán</button>
     </div>
 
@@ -106,16 +104,19 @@ if (orderContainer) openScreen(orderContainer);
   // 👉 Gắn sự kiện cho nút order
   document.getElementById("btnMangDi").addEventListener("click", () => {
     khoiTaoOrder("Take Away");
+    const orderContainer = document.querySelector(".order-container");
+    if (orderContainer) openScreen(orderContainer); // ✅ mở trượt
   });
 
   document.getElementById("btnGheQuan").addEventListener("click", () => {
     themKhachTaiQuan();
+    const popup = document.querySelector(".popup-table");
+    if (popup) openScreen(popup); // ✅ mở trượt popup chọn bàn
   });
 
   // 🔹 Render danh sách đơn
   renderTables();
 }
-
 // Khôi phục màn hình chính
 function khoiPhucHeaderMacDinh() {
   const header = document.querySelector("header");
