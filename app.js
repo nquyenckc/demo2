@@ -394,9 +394,9 @@ function moChiTietDon(id) {
       if (footer) {
         footer.innerHTML = `
           <div class="order-buttons">
-            <button class="btn-themmon">Thêm món</button>
-            <button class="btn-primary btn-thanhtoan">Thanh toán</button>
-          </div>
+          <button class="btn-themmon    hieuung-nhat">Thêm món</button>
+          <button class="btn-primary btn-thanhtoan hieuung-noi">Thanh toán</button>
+</div>
         `;
       }
 
