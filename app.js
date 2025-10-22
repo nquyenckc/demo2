@@ -288,10 +288,6 @@ function themKhachTaiQuan() {
   };
 }
 
-
-// ================================
-// 🧾 MỞ CHI TIẾT ĐƠN
-// ================================
 function moChiTietDon(id) {
   const don = hoaDonChinh.find(d => d.id === id);
   if (!don) return;
@@ -375,13 +371,7 @@ function moChiTietDon(id) {
   const btnClose = document.getElementById("btnCloseChiTiet");
   if (btnClose) {
     btnClose.addEventListener("click", () => {
-      header.innerHTML = `
-        <h1>BlackTea</h1>
-        <div class="header-icons">
-          <span class="icon-btn"><i class="fas fa-clock-rotate-left" style="color:white;"></i></span>
-          <span class="icon-btn"><i class="fas fa-gear" style="color:white;"></i></span>
-        </div>
-      `;
+      khoiPhucHeaderMacDinh();  // ✅ dùng chung
       hienThiManHinhChinh();
       renderTables();
     });
@@ -413,7 +403,7 @@ function moChiTietDon(id) {
         capNhatHoaDon();
       });
 
-      // 🔹 Bấm "Thanh toán" — hoạt động ngay sau xác nhận
+      // 🔹 Bấm "Thanh toán"
       document.querySelector(".btn-thanhtoan")?.addEventListener("click", () => {
         moManHinhThanhToan(don);
       });
