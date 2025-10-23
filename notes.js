@@ -347,72 +347,27 @@ function khoiTaoSliderXacNhan(don, onXacNhan) {
   }
 }
 
-// Mở màn hình từ trái sang phải
 function openScreen(el) {
   if (!el) return;
-  el.classList.remove('slide-out-left', 'active');  // reset nếu đang đóng
-  el.classList.add('slide-in-right');              // chuẩn bị class mở
-  // cho trình duyệt nhận class mới trước khi thêm active
+  el.classList.remove('slide-out-left', 'active');
+  el.classList.add('slide-in-right');
   requestAnimationFrame(() => el.classList.add('active'));
 }
 
-// Đóng màn hình sang trái (trượt ngược)
 function closeScreen(el, cb) {
   if (!el) {
     if (typeof cb === 'function') cb();
     return;
   }
-  el.classList.remove('slide-in-right', 'active'); // reset nếu đang mở
-  el.classList.add('slide-out-left');              // chuẩn bị đóng
+  el.classList.remove('slide-in-right', 'active');
+  el.classList.add('slide-out-left');
   requestAnimationFrame(() => el.classList.add('active'));
 
   // callback khi transition kết thúc
   const onTransitionEnd = () => {
     el.removeEventListener('transitionend', onTransitionEnd);
     if (typeof cb === 'function') cb();
+    el.remove(); // nếu muốn tự remove popup sau khi trượt
   };
   el.addEventListener('transitionend', onTransitionEnd);
-}
-
-// Make globally available
-window.openScreen = openScreen;
-window.closeScreen = closeScreen;
-
-/**
- * closeScreen: Trượt phần tử ra khỏi màn hình và gọi callback sau khi kết thúc.
- * @param {HTMLElement} el - Phần tử cần trượt ra
- * @param {Function} callback - Hàm sẽ gọi sau khi trượt xong
- */
-function closeScreen(el, callback) {
-  if (!el) return;
-
-  // Thêm class slide-out-left để trượt ra
-  el.classList.add("slide-out-left");
-
-  // Đảm bảo layout đã được repaint trước khi active
-  requestAnimationFrame(() => {
-    el.classList.add("active");
-  });
-
-  // Thời gian transition phải trùng với CSS (~0.3s)
-  const transitionTime = 300; 
-
-  setTimeout(() => {
-    // Xóa phần tử hoặc reset class
-    el.classList.remove("slide-out-left", "active");
-    if (typeof callback === "function") callback();
-  }, transitionTime);
-}
-
-/**
- * openScreen: Trượt phần tử vào màn hình từ trái sang phải
- * @param {HTMLElement} el 
- */
-function openScreen(el) {
-  if (!el) return;
-
-  el.classList.add("slide-in-right");
-  requestAnimationFrame(() => {
-    el.classList.add("active");
-  });
 }
