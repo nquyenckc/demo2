@@ -378,13 +378,18 @@ function moChiTietDon(id) {
     ${footerHTML}
   `;
 
-  // 🔙 Nút đóng chi tiết đơn
+  // 🔙 Nút đóng chi tiết đơn — đóng bằng animation rồi restore main
 const btnClose = document.getElementById("btnCloseChiTiet");
 if (btnClose) {
   btnClose.addEventListener("click", () => {
-    khoiPhucHeaderMacDinh();  // ✅ dùng chung
-    hienThiManHinhChinh();
-    renderTables();
+    const orderScreen = document.querySelector(".order-detail-ct"); // phần đang hiển thị
+    // đóng sang trái (trượt ngược lại phải → trái)
+    closeScreen(orderScreen, { to: 'left' }, () => {
+      // sau khi animation kết thúc, restore header + màn hình chính
+      khoiPhucHeaderMacDinh();
+      hienThiManHinhChinh();
+      renderTables();
+    });
   });
 }
 
