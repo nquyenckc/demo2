@@ -359,15 +359,17 @@ function closeScreen(el, cb) {
     if (typeof cb === 'function') cb();
     return;
   }
+
+  // Trượt sang trái
   el.classList.remove('slide-in-right', 'active');
   el.classList.add('slide-out-left');
   requestAnimationFrame(() => el.classList.add('active'));
 
-  // callback khi transition kết thúc
-  const onTransitionEnd = () => {
+  // Callback khi transition kết thúc
+  const onTransitionEnd = (e) => {
+    if (e.propertyName !== 'transform') return; // chỉ chạy khi trượt xong
     el.removeEventListener('transitionend', onTransitionEnd);
     if (typeof cb === 'function') cb();
-    el.remove(); // nếu muốn tự remove popup sau khi trượt
   };
   el.addEventListener('transitionend', onTransitionEnd);
 }
