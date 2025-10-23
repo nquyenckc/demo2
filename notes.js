@@ -347,43 +347,33 @@ function khoiTaoSliderXacNhan(don, onXacNhan) {
   }
 }
 
-
-// Mở màn hình với animation (from: 'left' | 'right')
-function openScreen(el, opts = { from: 'left' }) {
+// Mở màn hình từ trái sang phải
+function openScreen(el) {
   if (!el) return;
-  // Hiện phần tử nếu bị display:none
-  el.style.display = el.style.display === 'none' ? '' : el.style.display;
-  el.classList.remove('screen-exit-left', 'screen-exit-right', 'screen-enter-left', 'screen-enter-right');
-  if (opts.from === 'right') el.classList.add('screen-enter-right');
-  else el.classList.add('screen-enter-left');
-
-  const h = () => {
-    el.classList.remove('screen-enter-left', 'screen-enter-right');
-    el.removeEventListener('animationend', h);
-  };
-  el.addEventListener('animationend', h);
+  el.classList.remove('slide-out-left', 'active');  // reset nếu đang đóng
+  el.classList.add('slide-in-right');              // chuẩn bị class mở
+  // cho trình duyệt nhận class mới trước khi thêm active
+  requestAnimationFrame(() => el.classList.add('active'));
 }
 
-// Đóng màn hình với animation (to: 'left' | 'right'), callback khi xong
-function closeScreen(el, opts = { to: 'left' }, cb) {
+// Đóng màn hình sang trái (trượt ngược)
+function closeScreen(el, cb) {
   if (!el) {
     if (typeof cb === 'function') cb();
     return;
   }
-  el.classList.remove('screen-enter-left', 'screen-enter-right', 'screen-exit-left', 'screen-exit-right');
-  if (opts.to === 'right') el.classList.add('screen-exit-right');
-  else el.classList.add('screen-exit-left');
+  el.classList.remove('slide-in-right', 'active'); // reset nếu đang mở
+  el.classList.add('slide-out-left');              // chuẩn bị đóng
+  requestAnimationFrame(() => el.classList.add('active'));
 
-  const h = () => {
-    // ẩn sau khi chạy xong để tránh chồng chéo DOM
-    try { el.style.display = 'none'; } catch (e) {}
-    el.classList.remove('screen-exit-left', 'screen-exit-right');
-    el.removeEventListener('animationend', h);
+  // callback khi transition kết thúc
+  const onTransitionEnd = () => {
+    el.removeEventListener('transitionend', onTransitionEnd);
     if (typeof cb === 'function') cb();
   };
-  el.addEventListener('animationend', h);
+  el.addEventListener('transitionend', onTransitionEnd);
 }
 
-// Make available globally if other code gọi
+// Make globally available
 window.openScreen = openScreen;
 window.closeScreen = closeScreen;
