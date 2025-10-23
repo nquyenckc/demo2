@@ -403,14 +403,15 @@ function moChiTietDon(id) {
       if (slider) slider.style.display = "none";
       saveAll();
 
-      const footer = document.getElementById("footerChiTietDon");
-      if (footer) {
-        footer.innerHTML = `
-          <div class="order-buttons">
-            <button class="btn-themmon">Thêm món</button>
-            <button class="btn-primary btn-thanhtoan">Thanh toán</button>
-          </div>
-        `;
+      const footerHTML = don.status === "serving"
+  ? `
+    <div class="order-footer-ct" id="footerChiTietDon">
+      <div class="order-buttons">
+        <button class="btn-themmon">Thêm món</button>
+        <button class="btn-primary btn-thanhtoan">Thanh toán</button>
+      </div>
+    </div>
+  `;
       }
 
       // 🔹 Bấm "Thêm món"
