@@ -348,36 +348,42 @@ function khoiTaoSliderXacNhan(don, onXacNhan) {
 }
 
 
-// Trượt màn hình
-function openScreen(el) {
-  el.classList.add("slide-in-right");
-  setTimeout(() => el.classList.add("active"), 50);
-}
-
-function closeScreen(el, callback) {
+// Mở màn hình với animation (from: 'left' | 'right')
+function openScreen(el, opts = { from: 'left' }) {
   if (!el) return;
-  el.classList.remove("active");
-  el.classList.add("slide-out-left");
-  setTimeout(() => {
-    callback?.();
-  }, 400);
+  // Hiện phần tử nếu bị display:none
+  el.style.display = el.style.display === 'none' ? '' : el.style.display;
+  el.classList.remove('screen-exit-left', 'screen-exit-right', 'screen-enter-left', 'screen-enter-right');
+  if (opts.from === 'right') el.classList.add('screen-enter-right');
+  else el.classList.add('screen-enter-left');
+
+  const h = () => {
+    el.classList.remove('screen-enter-left', 'screen-enter-right');
+    el.removeEventListener('animationend', h);
+  };
+  el.addEventListener('animationend', h);
 }
 
-// --- Auto attach cho tất cả nút đóng X ---
-document.addEventListener("click", (e) => {
-  const btn = e.target.closest(".btn-close, .btn-cancel, .icon-close"); // tùy class nút đóng
-  if (!btn) return;
+// Đóng màn hình với animation (to: 'left' | 'right'), callback khi xong
+function closeScreen(el, opts = { to: 'left' }, cb) {
+  if (!el) {
+    if (typeof cb === 'function') cb();
+    return;
+  }
+  el.classList.remove('screen-enter-left', 'screen-enter-right', 'screen-exit-left', 'screen-exit-right');
+  if (opts.to === 'right') el.classList.add('screen-exit-right');
+  else el.classList.add('screen-exit-left');
 
-  const popup = btn.closest(".slide-in-right, .popup-table, .order-detail-ct"); // element cần trượt
-  if (!popup) return;
+  const h = () => {
+    // ẩn sau khi chạy xong để tránh chồng chéo DOM
+    try { el.style.display = 'none'; } catch (e) {}
+    el.classList.remove('screen-exit-left', 'screen-exit-right');
+    el.removeEventListener('animationend', h);
+    if (typeof cb === 'function') cb();
+  };
+  el.addEventListener('animationend', h);
+}
 
-  closeScreen(popup, () => {
-    if (popup.classList.contains("order-detail-ct")) {
-      khoiPhucHeaderMacDinh();
-      hienThiManHinhChinh();
-      renderTables();
-    } else {
-      popup.remove(); // popup khác, xóa khỏi DOM
-    }
-  });
-});
+// Make available globally if other code gọi
+window.openScreen = openScreen;
+window.closeScreen = closeScreen;
