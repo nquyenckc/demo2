@@ -326,13 +326,13 @@ function moChiTietDon(id) {
 
   const footerHTML = don.status === "serving"
     ? `
-      <div class="order-footer-ct" id="footerChiTietDon">
-        <div class="order-buttons">
-          <button class="btn-themmon">Thêm món</button>
-          <button class="btn-primary btn-thanhtoan">Thanh toán</button>
-        </div>
+    <div class="order-footer-ct" id="footerChiTietDon">
+      <div class="order-buttons">
+        <button class="btn-themmon">Thêm món</button>
+        <button class="btn-primary btn-thanhtoan">Thanh toán</button>
       </div>
-    `
+    </div>
+  `
     : `
       <div class="order-footer-ct" id="footerChiTietDon">
         <div class="slider" id="sliderConfirm">
