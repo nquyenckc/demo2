@@ -377,15 +377,12 @@ function moChiTietDon(id) {
 
     ${footerHTML}
   `;
-
-  // 🔙 Nút đóng chi tiết đơn — đóng bằng animation rồi restore main
 const btnClose = document.getElementById("btnCloseChiTiet");
 if (btnClose) {
   btnClose.addEventListener("click", () => {
-    const orderScreen = document.querySelector(".order-detail-ct"); // phần đang hiển thị
-    // đóng sang trái (trượt ngược lại phải → trái)
-    closeScreen(orderScreen, { to: 'left' }, () => {
-      // sau khi animation kết thúc, restore header + màn hình chính
+    const orderScreen = document.querySelector(".order-detail-ct");
+    closeScreen(orderScreen, () => {
+      // restore màn hình chính sau khi trượt xong
       khoiPhucHeaderMacDinh();
       hienThiManHinhChinh();
       renderTables();
