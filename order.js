@@ -38,10 +38,20 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
   `;
 
   document.getElementById("btnCloseHeader").addEventListener("click", () => {
-    // ✅ Sử dụng chung khoiPhucHeaderMacDinh() thay vì gắn cứng
-    khoiPhucHeaderMacDinh();
-    hienThiManHinhChinh();
-    renderTables();
+    const orderContainer = document.querySelector(".order-container");
+    if (orderContainer) {
+      closeScreen(orderContainer, () => {
+        // Callback sau khi trượt xong
+        khoiPhucHeaderMacDinh();
+        hienThiManHinhChinh();
+        renderTables();
+      });
+    } else {
+      // fallback nếu không tìm thấy orderContainer
+      khoiPhucHeaderMacDinh();
+      hienThiManHinhChinh();
+      renderTables();
+    }
   });
 
   // Phần main và footer giữ nguyên như cũ
