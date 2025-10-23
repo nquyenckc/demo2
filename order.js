@@ -1,11 +1,27 @@
 // ===============================
-// ☕ ORDER.JS - BlackTea v2.3 (có logic sao động)
+// ☕ ORDER.JS - BlackTea v2.3 (nút X chạy chung)
 // ===============================
 
 let hoaDonTam = [];
 let loaiKhachHienTai = "";
 let donDangChon = null;
 
+// -------------------------------
+// ✅ Delegation chung cho tất cả nút X trong order
+document.body.addEventListener("click", (e) => {
+  const btnX = e.target.closest(".btn-x");
+  if (!btnX) return;
+
+  // Nếu trong order-container hoặc chi tiết đơn
+  const orderContainer = btnX.closest(".order-container, .order-detail-ct");
+  if (orderContainer) {
+    closeScreen(orderContainer, () => {
+      khoiPhucHeaderMacDinh();
+      hienThiManHinhChinh();
+      renderTables();
+    });
+  }
+});
 
 // -------------------------------
 function khoiTaoOrder(loaiKhach, donTonTai = null) {
@@ -34,7 +50,7 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
       <h1>${loaiKhach}</h1>
     </div>
     <div class="header-right">
-      <button id="btnCloseHeader" class="btn-close">×</button>
+      <button class="btn-x btn-close">×</button>
     </div>
   `;
 
@@ -73,26 +89,6 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
   kichHoatTimMon();
   setTimeout(updateOrderOffsets, 100);
 
-  // ===== GẮN EVENT NÚT X =====
-  const btnX = document.getElementById("btnCloseHeader");
-  if (btnX) {
-    btnX.addEventListener("click", () => {
-      console.log("Đã click nút X"); // debug
-      const orderContainer = document.querySelector(".order-container");
-      if (orderContainer) {
-        closeScreen(orderContainer, () => {
-          khoiPhucHeaderMacDinh();
-          hienThiManHinhChinh();
-          renderTables();
-        });
-      } else {
-        khoiPhucHeaderMacDinh();
-        hienThiManHinhChinh();
-        renderTables();
-      }
-    });
-  }
-
   // ===== GẮN EVENT BUTTONS =====
   document.getElementById("btnDatLai")?.addEventListener("click", datLai);
   document.getElementById("btnLuuDon")?.addEventListener("click", luuDon);
@@ -100,11 +96,12 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
   // ===== MỞ ORDER CONTAINER =====
   const orderContainer = document.querySelector(".order-container");
   if (orderContainer) {
-    // dùng setTimeout 0 để đảm bảo DOM đã render xong trước khi animation
     setTimeout(() => openScreen(orderContainer), 0);
   }
 }
+
 // -------------------------------
+// Các hàm khác giữ nguyên
 function taoDanhMuc() {
   const dsDanhMuc = [...new Set(MENU.map((m) => m.cat))];
   const container = document.getElementById("danhMucContainer");
@@ -123,8 +120,6 @@ function taoDanhMuc() {
   });
 }
 
-// -------------------------------
-// Hiển thị danh sách món
 function hienThiMonTheoDanhMuc(danhMuc) {
   const dsMon = document.getElementById("dsMon");
   dsMon.innerHTML = "";
@@ -134,7 +129,6 @@ function hienThiMonTheoDanhMuc(danhMuc) {
   loc.forEach((mon) => {
     const sl = timSoLuong(mon.id);
 
-    // ✅ Lấy số lượng gốc (nếu có), an toàn khi hoaDonGoc chưa được khởi tạo
     const slGoc =
       (window.hoaDonGoc && Array.isArray(hoaDonGoc)
         ? hoaDonGoc.find((x) => x.id === mon.id)?.soluong
@@ -168,22 +162,17 @@ function hienThiMonTheoDanhMuc(danhMuc) {
     dsMon.appendChild(div);
   });
 }
-// -------------------------------
-// Thêm / giảm món
+
 function timSoLuong(id) {
   return hoaDonTam
     .filter((m) => m.id === id)
     .reduce((sum, m) => sum + (m.soluong || 0), 0);
 }
 
-
-// ================================
-// THÊM MÓN
 function themMon(id, note = "") {
   const mon = MENU.find((m) => m.id === id);
   if (!mon) return;
 
-  // Kiểm tra món có cùng id + note
   const tonTai = hoaDonTam.find(
     (m) => m.id === id && (m.note || "") === (note || "")
   );
@@ -210,7 +199,6 @@ function themMon(id, note = "") {
 
     if (slEl) slEl.textContent = slTong;
 
-    // ✅ Ẩn/hiện nút trừ và sao theo điều kiện
     if (slTong > slGoc) {
       if (noteBtn) {
         noteBtn.classList.remove("faded");
@@ -236,25 +224,20 @@ function themMon(id, note = "") {
   }
 }
 
-// ================================
-// GIẢM MÓN
 function giamMon(id, note = "") {
   const noteNorm = (note || "").trim();
   let idx = -1;
 
-  // 1️⃣ Nếu có note: trừ đúng món ghi chú đó
   if (noteNorm) {
     idx = hoaDonTam.findIndex(
       (m) => m.id === id && (m.note || "").trim() === noteNorm && m.isNoteOnly
     );
   }
 
-  // 2️⃣ Nếu không có note: trừ món thường (không ghi chú)
   if (idx === -1 && !noteNorm) {
     idx = hoaDonTam.findIndex((m) => m.id === id && !m.isNoteOnly);
   }
 
-  // 3️⃣ Nếu món thường không còn, thử trừ món ghi chú đầu tiên (đảm bảo tổng luôn giảm)
   if (idx === -1) {
     idx = hoaDonTam.findIndex((m) => m.id === id && m.isNoteOnly);
   }
@@ -266,7 +249,6 @@ function giamMon(id, note = "") {
 
   capNhatHoaDon();
 
-  // ✅ Tính lại sau khi trừ
   const slTong = hoaDonTam
     .filter((m) => m.id === id)
     .reduce((sum, m) => sum + m.soluong, 0);
@@ -284,7 +266,6 @@ function giamMon(id, note = "") {
 
     if (slEl) slEl.textContent = slTong;
 
-    // ✅ Ẩn nút khi về lại đúng số lượng gốc
     if (slTong > slGoc) {
       if (noteBtn) {
         noteBtn.classList.remove("faded");
@@ -309,8 +290,7 @@ function giamMon(id, note = "") {
     }
   }
 }
-// ================================
-// CẬP NHẬT HÓA ĐƠN
+
 function capNhatHoaDon() {
   const hdDiv = document.getElementById("hoaDonTam");
   hdDiv.innerHTML = "";
@@ -324,7 +304,6 @@ function capNhatHoaDon() {
       const dong = document.createElement("div");
       dong.className = "hoa-don-item";
 
-      // ✅ Nếu tên đã có ngoặc thì không chèn note nữa
       const hienTen = m.name.includes("(")
         ? m.name
         : m.note
@@ -342,11 +321,9 @@ function capNhatHoaDon() {
     });
   }
 
-  // ✅ Tổng tiền
   const tong = hoaDonTam.reduce((t, m) => t + m.price * m.soluong, 0);
   document.getElementById("tongTien").textContent = `${tong.toLocaleString()}₫`;
 
-  // ✅ Cập nhật lại số lượng tổng trong menu
   MENU.forEach((mon) => {
     const slTong = hoaDonTam
       .filter((m) => m.id === mon.id)
@@ -356,11 +333,9 @@ function capNhatHoaDon() {
   });
 }
 
-// -------------------------------
 function datLai() {
-  // ✅ Reset hoaDonTam về trạng thái ban đầu khi mở popup
   if (window.hoaDonTamGoc) {
-    hoaDonTam = window.hoaDonTamGoc.map(m => ({ ...m })); // deep copy
+    hoaDonTam = window.hoaDonTamGoc.map(m => ({ ...m }));
   } else {
     hoaDonTam = [];
   }
@@ -368,6 +343,7 @@ function datLai() {
   capNhatHoaDon();
   hienThiMonTheoDanhMuc("");
 }
+
 function luuDon() {
   if (hoaDonTam.length === 0) {
     hienThongBao("Chưa có món nào để lưu");
@@ -378,7 +354,7 @@ function luuDon() {
     loaiKhachHienTai = taoTenKhach("Take Away");
   }
 
-  if (typeof donDangChon !== "undefined" && donDangChon && hoaDonChinh.some(d => d.id === donDangChon.id)) {
+  if (donDangChon && hoaDonChinh.some(d => d.id === donDangChon.id)) {
     const index = hoaDonChinh.findIndex(d => d.id === donDangChon.id);
     if (index !== -1) {
       hoaDonChinh[index].cart = [...hoaDonTam];
@@ -401,11 +377,9 @@ function luuDon() {
 
   hienThongBao("Đã lưu đơn");
 
-  // 🔹 Trượt order-container ra khỏi màn hình như nút X
   const orderContainer = document.querySelector(".order-container");
   if (orderContainer) {
     closeScreen(orderContainer, () => {
-      // Callback sau khi trượt xong
       khoiPhucHeaderMacDinh();
       hienThiManHinhChinh();
       renderTables();
@@ -413,8 +387,6 @@ function luuDon() {
   }
 }
 
-// -------------------------------
-// Tìm món theo từ khóa
 function timMon() {
   const input = document.getElementById("timMonInput");
   if (!input) return;
@@ -422,7 +394,6 @@ function timMon() {
   const keyword = input.value.toLowerCase().trim();
   const items = document.querySelectorAll("#dsMon .mon-item");
 
-  // 👉 Hàm bỏ dấu + chuẩn hóa
   const normalize = (str) => str
     .toLowerCase()
     .normalize("NFD")
@@ -433,7 +404,6 @@ function timMon() {
 
   const kw = normalize(keyword);
 
-  // 🧩 Nếu chưa gõ gì → hiện tất cả
   if (kw === "") {
     items.forEach(item => item.style.display = "");
     return;
@@ -454,10 +424,6 @@ function timMon() {
   });
 }
 
-
-// =============================================
-// 📏 Tự tính khoảng trống hiển thị cho danh sách món
-// =============================================
 function updateOrderOffsets() {
   const header = document.querySelector('header');
   const search = document.querySelector('.order-search');
@@ -472,71 +438,36 @@ function updateOrderOffsets() {
   const hoaDonH = hoaDon ? hoaDon.offsetHeight : 0;
   const footerH = footer ? footer.offsetHeight : 0;
 
-  // top = header + 10 + search + 10 + categories + 10
   const topPx = headerH + gap + searchH + gap + catH + gap;
-  // bottom = hoa-don + 10 + footer + 10
   const bottomPx = hoaDonH + gap + footerH + gap;
 
   document.documentElement.style.setProperty('--order-top', `${topPx}px`);
   document.documentElement.style.setProperty('--order-bottom', `${bottomPx}px`);
 }
 
-// Sau khi render xong popup, gọi updateOffset:
 window.addEventListener('resize', updateOrderOffsets);
 
-
-
-// === Tự động bỏ lọc danh mục khi click vào ô tìm món ===
 function kichHoatTimMon() {
   const input = document.getElementById("timMonInput");
   if (!input) return;
 
-  // Xóa listener cũ nếu có (tránh gắn trùng khi gọi lại)
   input.removeEventListener("focus", onFocusSearch);
 
   function onFocusSearch() {
-    // Bỏ trạng thái nút danh mục đang chọn
     document.querySelectorAll(".danh-muc-btn.active").forEach(btn => {
       btn.classList.remove("active");
     });
 
-    // Gọi lại toàn bộ danh sách món (bỏ lọc danh mục)
     if (typeof hienThiMonTheoDanhMuc === "function") {
-      hienThiMonTheoDanhMuc(""); // truyền "" để hiển tất cả
+      hienThiMonTheoDanhMuc("");
     }
   }
 
   input.addEventListener("focus", onFocusSearch);
 }
 
-// Gọi lặp lại để đảm bảo input tồn tại (vì đôi khi DOM tạo sau load)
 document.addEventListener("DOMContentLoaded", () => {
   kichHoatTimMon();
-  // kiểm tra lại sau một chút
   setTimeout(kichHoatTimMon, 500);
   setTimeout(kichHoatTimMon, 1500);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
