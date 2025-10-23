@@ -377,3 +377,42 @@ function closeScreen(el, cb) {
 // Make globally available
 window.openScreen = openScreen;
 window.closeScreen = closeScreen;
+
+/**
+ * closeScreen: Trượt phần tử ra khỏi màn hình và gọi callback sau khi kết thúc.
+ * @param {HTMLElement} el - Phần tử cần trượt ra
+ * @param {Function} callback - Hàm sẽ gọi sau khi trượt xong
+ */
+function closeScreen(el, callback) {
+  if (!el) return;
+
+  // Thêm class slide-out-left để trượt ra
+  el.classList.add("slide-out-left");
+
+  // Đảm bảo layout đã được repaint trước khi active
+  requestAnimationFrame(() => {
+    el.classList.add("active");
+  });
+
+  // Thời gian transition phải trùng với CSS (~0.3s)
+  const transitionTime = 300; 
+
+  setTimeout(() => {
+    // Xóa phần tử hoặc reset class
+    el.classList.remove("slide-out-left", "active");
+    if (typeof callback === "function") callback();
+  }, transitionTime);
+}
+
+/**
+ * openScreen: Trượt phần tử vào màn hình từ trái sang phải
+ * @param {HTMLElement} el 
+ */
+function openScreen(el) {
+  if (!el) return;
+
+  el.classList.add("slide-in-right");
+  requestAnimationFrame(() => {
+    el.classList.add("active");
+  });
+}
