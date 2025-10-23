@@ -37,6 +37,7 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
     </div>
   `;
 
+  // Nút X trượt giống nút Lưu đơn
   document.getElementById("btnCloseHeader").addEventListener("click", () => {
     const orderContainer = document.querySelector(".order-container");
     if (orderContainer) {
@@ -54,7 +55,7 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
     }
   });
 
-  // Phần main và footer giữ nguyên như cũ
+  // Phần main và footer
   const main = document.querySelector(".main-container");
   main.innerHTML = `
     <div class="order-container">
