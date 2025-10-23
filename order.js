@@ -27,6 +27,7 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
     window.hoaDonTamGoc = [];
   }
 
+  // ===== HEADER =====
   const header = document.querySelector("header");
   header.innerHTML = `
     <div class="header-left">
@@ -37,25 +38,7 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
     </div>
   `;
 
-  // Nút X trượt giống nút Lưu đơn
-  document.getElementById("btnCloseHeader").addEventListener("click", () => {
-    const orderContainer = document.querySelector(".order-container");
-    if (orderContainer) {
-      closeScreen(orderContainer, () => {
-        // Callback sau khi trượt xong
-        khoiPhucHeaderMacDinh();
-        hienThiManHinhChinh();
-        renderTables();
-      });
-    } else {
-      // fallback nếu không tìm thấy orderContainer
-      khoiPhucHeaderMacDinh();
-      hienThiManHinhChinh();
-      renderTables();
-    }
-  });
-
-  // Phần main và footer
+  // ===== MAIN =====
   const main = document.querySelector(".main-container");
   main.innerHTML = `
     <div class="order-container">
@@ -87,11 +70,39 @@ function khoiTaoOrder(loaiKhach, donTonTai = null) {
   autoLoadIcons();
   taoDanhMuc();
   hienThiMonTheoDanhMuc("");
-
-  document.getElementById("btnDatLai").addEventListener("click", datLai);
-  document.getElementById("btnLuuDon").addEventListener("click", luuDon);
   kichHoatTimMon();
   setTimeout(updateOrderOffsets, 100);
+
+  // ===== GẮN EVENT NÚT X =====
+  const btnX = document.getElementById("btnCloseHeader");
+  if (btnX) {
+    btnX.addEventListener("click", () => {
+      console.log("Đã click nút X"); // debug
+      const orderContainer = document.querySelector(".order-container");
+      if (orderContainer) {
+        closeScreen(orderContainer, () => {
+          khoiPhucHeaderMacDinh();
+          hienThiManHinhChinh();
+          renderTables();
+        });
+      } else {
+        khoiPhucHeaderMacDinh();
+        hienThiManHinhChinh();
+        renderTables();
+      }
+    });
+  }
+
+  // ===== GẮN EVENT BUTTONS =====
+  document.getElementById("btnDatLai")?.addEventListener("click", datLai);
+  document.getElementById("btnLuuDon")?.addEventListener("click", luuDon);
+
+  // ===== MỞ ORDER CONTAINER =====
+  const orderContainer = document.querySelector(".order-container");
+  if (orderContainer) {
+    // dùng setTimeout 0 để đảm bảo DOM đã render xong trước khi animation
+    setTimeout(() => openScreen(orderContainer), 0);
+  }
 }
 // -------------------------------
 function taoDanhMuc() {
