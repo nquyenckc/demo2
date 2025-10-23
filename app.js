@@ -379,14 +379,14 @@ function moChiTietDon(id) {
   `;
 
   // 🔙 Nút đóng chi tiết đơn
-  const btnClose = document.getElementById("btnCloseChiTiet");
-  if (btnClose) {
-    btnClose.addEventListener("click", () => {
-      khoiPhucHeaderMacDinh();  // ✅ dùng chung
-      hienThiManHinhChinh();
-      renderTables();
-    });
-  }
+const btnClose = document.getElementById("btnCloseChiTiet");
+if (btnClose) {
+  btnClose.addEventListener("click", () => {
+    khoiPhucHeaderMacDinh();  // ✅ dùng chung
+    hienThiManHinhChinh();
+    renderTables();
+  });
+}
 
   // ✅ Nếu chưa xác nhận -> khởi tạo slider
   if (typeof khoiTaoSliderXacNhan === 'function' && don.status !== "serving") {
