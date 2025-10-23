@@ -44,11 +44,11 @@ function saveDemMangDi() {
 
 // ✅ Sinh tên khách theo loại
 function taoTenKhach(loai, maBan = "") {
-  if (loai === "Take Away") {
+  if (loai === "Take away") {
     demMangDi++;
     saveDemMangDi();
     const soHienThi = demMangDi.toString().padStart(2, "0");
-    return `Take Away - ${soHienThi}`;
+    return `Take away - ${soHienThi}`;
   }
 
   if (loai.startsWith("Khách tại bàn")) {
@@ -94,7 +94,7 @@ function hienThiManHinhChinh() {
   const main = document.querySelector(".main-container");
   main.innerHTML = `
     <div class="btn-group">
-      <button id="btnMangDi" class="btn hieuung-noi">Khách mang đi</button>
+      <button id="btnMangDi" class="btn hieuung-noi">Take away</button>
       <button id="btnGheQuan" class="btn hieuung-noi">Khách ghé quán</button>
     </div>
 
